@@ -1,16 +1,30 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
 import Home from "../views/Home.vue";
+import AuthLogin from "@/components/Auth/AuthLogin.vue";
 import AppContent from "@/components/Content/AppContent.vue";
 
 Vue.use(VueRouter);
 
+// const EmptyParentComponent = {
+//   template: "<router-view></router-view>"
+// };
+
 const routes = [
-  // {
-  //   path: "/",
-  //   name: "Home",
-  //   component: Home,
-  // },
+  {
+    path: "/login",
+    component: AuthLogin,
+    // meta: {
+    //   login: true
+    // },
+    children: [
+      {
+        name: "Login",
+        path: "",
+        component: () => import("../views/Auth/Login.vue")
+      }
+    ]
+  },
   {
     path: "/",
     name: "app-content",

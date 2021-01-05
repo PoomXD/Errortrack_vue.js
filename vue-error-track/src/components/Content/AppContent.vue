@@ -9,8 +9,8 @@
 </template>
 
 <script>
-import Header from "@/components/Header";
-import Sidebar from "@/components/Sidebar";
+import Header from "@/components/Content/Header";
+import Sidebar from "@/components/Content/Sidebar";
 
 export default {
   name: "app-content",
