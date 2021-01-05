@@ -24,7 +24,7 @@ export default {
 <style lang="scss" scroped>
 main{
     min-height: calc(100vh - 60px);
-     margin-left:200px;
+     margin-left:250px;
     padding: 2rem;
   }
 </style>
