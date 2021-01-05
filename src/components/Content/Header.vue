@@ -1,6 +1,6 @@
 <template>
-  <div class="header">
-    <span>Header</span>
+  <div class="header d-flex align-items-center ">
+    <span>Project Management</span>
   </div>
 </template>
 
@@ -10,8 +10,3 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
-.header {
-  background-color: lightblue;
-}
-</style>

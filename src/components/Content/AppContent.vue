@@ -2,7 +2,7 @@
   <div class="app-content">
     <app-header></app-header>
     <app-sidebar></app-sidebar>
-    <main>
+    <main  class="content-wrapper">
       <router-view></router-view>
     </main>
   </div>
@@ -21,5 +21,10 @@ export default {
 };
 </script>
 
-<style>
+<style lang="scss" scroped>
+main{
+    min-height: calc(100vh - 60px);
+     margin-left:200px;
+    padding: 2rem;
+  }
 </style>

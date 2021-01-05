@@ -1,0 +1,47 @@
+.sidebar{
+    box-shadow: 2px 4px 10px rgba(0, 0, 0, 0.15);
+    background-color: $white;
+    height: 100%;
+    width: 200px;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    transition: 0.5s;
+    padding-top: 12px;
+    text-align:left;
+    li{
+        width:100%;
+        border-bottom: 0.5px solid #BACFE7;
+        margin: 0px 15px;
+        &:last-child {
+         border-bottom: 0px solid #BACFE7;
+      }
+    a {
+    padding-top: 15px ;
+    padding-bottom: 15px ;
+    padding-left: 15px ;
+    text-decoration: none;
+    font-size: 16px;
+    color: $black;
+    display: block;
+    transition: 0.3s;
+  }
+   a.router-link-active{
+      position: relative;
+      color:$blue;
+        &::after {
+        content: "";
+        position: absolute;
+        height: 100%;
+        width: 6px;
+        top: 0;
+        background: $blue;
+        border-radius: 0px 2px 2px 0px;
+        left: -15px;
+        }
+    }
+}
+  
+}
+

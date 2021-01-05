@@ -1,8 +1,21 @@
 <template>
   <div class="sidebar">
+  <div class="text-center">
+    <img src="/img/logo-system.png" style="height:40px;"/>
+    </div>
     <!-- <router-link to="/">Main</router-link> -->
-    <router-link to="/home">Home</router-link>
-    <router-link to="/about">About</router-link>
+    <div class="mt-5">
+    <ul class="nav">
+      <li><router-link to="/home">Monitor Error</router-link></li>
+      <li><router-link to="/about">Project Management</router-link></li>
+      <li><router-link to="/page">Dashboard</router-link></li>
+      <li><router-link to="/page">Document API</router-link></li>
+    </ul>
+    
+  
+    
+    
+    </div>
   </div>
 </template>
 
@@ -12,26 +25,6 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
-.sidebar {
-  height: 100%;
-  width: 200px;
-  position: fixed;
-  z-index: 1;
-  top: 0;
-  left: 0;
-  background-color: #111;
-  //   overflow-x: hidden;
-  transition: 0.5s;
-  padding-top: 60px;
 
-  a {
-    padding: 8px 8px 8px 32px;
-    text-decoration: none;
-    font-size: 25px;
-    color: #818181;
-    display: block;
-    transition: 0.3s;
-  }
-}
+
 </style>
