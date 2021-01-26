@@ -50,32 +50,32 @@ const routes = [
       },
       {
         path: "project",
-        name: "Project",
+        name: "ProjectManagement",
         component: EmptyParentComponent,
         children : [
           {
             path: "list",
             name: "ListProject",
             component: () =>
-              import("../views/MonitorError/ListError.vue"),
+              import("../views/ProjectManagement/ListProject.vue"),
           },
           {
             path: "project",
             name: "ProjectAdd",
             component: () =>
-              import("../views/MonitorError/AddList.vue"),
+              import("../views/ProjectManagement/ProjectAdd.vue"),
           },
           {
             path: "project",
             name: "ProjectEdit",
             component: () =>
-              import("../views/MonitorError/AddList.vue"),
+              import("../views/ProjectManagement/ProjectDetail.vue"),
           },
           {
             path: "project",
             name: "ProjectDetail",
             component: () =>
-              import("../views/MonitorError/AddList.vue"),
+              import("../views/ProjectManagement/ProjectEdit.vue"),
           }
         ]
       },
