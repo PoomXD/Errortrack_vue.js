@@ -1,12 +1,12 @@
 <template>
-  <div id="login">
-      Login TEST
+  <div >
+      Monitor Error
   </div>
 </template>
 
 <script>
 export default {
-    name: 'login'
+    name: "monitor-list"
 }
 </script>
 
