@@ -1,14 +1,13 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
-import Home from "../views/Home.vue";
 import AuthLogin from "@/components/Auth/AuthLogin.vue";
 import AppContent from "@/components/Content/AppContent.vue";
 
 Vue.use(VueRouter);
 
-// const EmptyParentComponent = {
-//   template: "<router-view></router-view>"
-// };
+const EmptyParentComponent = {
+  template: "<router-view></router-view>"
+};
 
 const routes = [
   {
@@ -31,9 +30,23 @@ const routes = [
     component: AppContent,
     children: [
       {
-        path: "home",
-        name: "Home",
-        component: Home,
+        path: "monitor",
+        name: "Monitor",
+        component: EmptyParentComponent,
+        children : [
+          {
+            path: "all",
+            name: "MonitorList",
+            component: () =>
+              import("../views/MonitorError/ListError.vue"),
+          },
+          {
+            path: "add",
+            name: "MonitorAdd",
+            component: () =>
+              import("../views/MonitorError/AddList.vue"),
+          }
+        ]
       },
       {
         path: "about",

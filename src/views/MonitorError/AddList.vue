@@ -1,12 +1,12 @@
 <template>
-  <div id="login">
-      Login TEST
+  <div>
+      Add List  Fa
   </div>
 </template>
 
 <script>
 export default {
-    name: 'login'
+    name :'monitor-add'
 }
 </script>
 

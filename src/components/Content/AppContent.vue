@@ -13,7 +13,7 @@ import Header from "@/components/Content/Header";
 import Sidebar from "@/components/Content/Sidebar";
 
 export default {
-  name: "app-content",
+  name: "app-content", 
   components: {
     "app-header": Header,
     "app-sidebar": Sidebar,
