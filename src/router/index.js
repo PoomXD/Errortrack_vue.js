@@ -49,6 +49,37 @@ const routes = [
         ]
       },
       {
+        path: "project",
+        name: "Project",
+        component: EmptyParentComponent,
+        children : [
+          {
+            path: "list",
+            name: "ListProject",
+            component: () =>
+              import("../views/MonitorError/ListError.vue"),
+          },
+          {
+            path: "project",
+            name: "ProjectAdd",
+            component: () =>
+              import("../views/MonitorError/AddList.vue"),
+          },
+          {
+            path: "project",
+            name: "ProjectEdit",
+            component: () =>
+              import("../views/MonitorError/AddList.vue"),
+          },
+          {
+            path: "project",
+            name: "ProjectDetail",
+            component: () =>
+              import("../views/MonitorError/AddList.vue"),
+          }
+        ]
+      },
+      {
         path: "about",
         name: "About",
         // route level code-splitting
