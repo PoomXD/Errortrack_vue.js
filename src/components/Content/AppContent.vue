@@ -1,5 +1,5 @@
 <template>
-  <div class="app-content">
+  <div class="app-content background">
     <app-header></app-header>
     <app-sidebar></app-sidebar>
     <main  class="content-wrapper">
