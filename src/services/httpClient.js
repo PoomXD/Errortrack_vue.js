@@ -9,7 +9,7 @@ const headers = {
 };
 
 const httpClient = axios.create({
-  baseURL: process.env.VUE_APP_BASE_API,
+  baseURL: 'www.domain.com',// process.env.VUE_APP_BASE_API,
   headers: headers
 })
 
