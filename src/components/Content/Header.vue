@@ -1,6 +1,6 @@
 <template>
   <div class="header d-flex align-items-center ">
-    <span>Project Management</span>
+    <span>Poom</span>
   </div>
 </template>
 
