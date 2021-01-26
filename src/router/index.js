@@ -60,20 +60,20 @@ const routes = [
               import("../views/ProjectManagement/ListProject.vue"),
           },
           {
-            path: "project",
+            path: "add",
             name: "ProjectAdd",
             component: () =>
               import("../views/ProjectManagement/ProjectAdd.vue"),
           },
           {
-            path: "project",
-            name: "ProjectEdit",
+            path: "detail",
+            name: "ProjectDetail",
             component: () =>
               import("../views/ProjectManagement/ProjectDetail.vue"),
           },
           {
-            path: "project",
-            name: "ProjectDetail",
+            path: "edit",
+            name: "ProjectEdit",
             component: () =>
               import("../views/ProjectManagement/ProjectEdit.vue"),
           }
