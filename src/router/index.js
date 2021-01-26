@@ -54,4 +54,23 @@ const router = new VueRouter({
   routes,
 });
 
+// router.beforeEach(async (to, from, next) => {
+  
+// });
+
+// router.afterEach(async (to, from, next) => {
+ 
+// });
+
+const VueRouterPush = VueRouter.prototype.push;
+VueRouter.prototype.push = function push(to) {
+  return VueRouterPush.call(this, to).catch(err => err);
+};
+
+const VueRouterReplace = VueRouter.prototype.replace;
+VueRouter.prototype.replace = function replace(to) {
+  return VueRouterReplace.call(this, to).catch(err => err);
+};
+
+
 export default router;

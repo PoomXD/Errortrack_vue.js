@@ -1,13 +1,12 @@
 import httpClient from '../httpClient'
 
-// const baseURL = process.env.VUE_APP_BASE_API;
-const END_POINT = 'Account'
+const END_POINT = 'Example'
 
-class TestService{
-  async testGet() {
+class ExampleService{
+  async examGet() {
     const config = {
       method: 'get',
-      url: `${END_POINT}/TestGet`,
+      url: `${END_POINT}/Example`,
       params : {
         aaa:1,
         "bbb": null,
@@ -19,23 +18,12 @@ class TestService{
     return response.data;
   }
 
-  async testGetAuth(){
-    const config = {
-      method: 'get',
-      url: `${END_POINT}/TestGetAuth`
-    }
-
-    const response = await httpClient(config);
-    return response.data;
-  }
-
-  async testKioskMachine22(param){
+  async examPost(param){
     const config = {
       method: 'post',
-      url: `KioskMachine/Nack22`,
+      url: `${END_POINT}/Example`,
       data : param,
       headers:{
-        // 'Content-Type' : 'multipart/form-data'
       }
     }
 
@@ -43,19 +31,32 @@ class TestService{
     return response.data;
   }
 
-  async testKioskMachine11(param){
+  async examPut(param){
     const config = {
-      method: 'post',
-      url: `KioskMachine/Nack11`,
+      method: 'put',
+      url: `${END_POINT}/Example`,
       data : param,
       headers:{
-        // 'Content-Type' : 'multipart/form-data'
       }
     }
 
     const response = await httpClient(config);
     return response.data;
   }
+
+  async examDelete(param){
+    const config = {
+      method: 'post',
+      url: `${END_POINT}/ExampleDelete`,
+      data : param,
+      headers:{
+      }
+    }
+
+    const response = await httpClient(config);
+    return response.data;
+  }
+  
 }
 
 export default new TestService();
