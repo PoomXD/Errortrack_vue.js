@@ -1,6 +1,5 @@
 <template>
-  <div class="background">
-      555
+  <div>
   </div>
 </template>
 
