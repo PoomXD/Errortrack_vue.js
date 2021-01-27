@@ -1,5 +1,6 @@
 <template>
-  <div>
+  <div class="container container-main">
+      55
   </div>
 </template>
 

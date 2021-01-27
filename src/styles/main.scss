@@ -7,10 +7,17 @@
 @import "./_custom_header";
 @import "./_custom_sidebar";
 @import "./custom_button";
+// @import "./custom_login"
 
-.background{
-    background: #F4F9FF;
+.background {
+  background: #f4f9ff;
 }
-.background{
-    background: #F4F9FF;
+.container-main {
+  background: #ffffff;
+  border: 1px;
+  border-style: solid;
+  border-color: #bacfe7;
+  box-sizing: border-box;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
 }
