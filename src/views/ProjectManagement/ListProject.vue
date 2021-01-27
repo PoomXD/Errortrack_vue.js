@@ -25,7 +25,9 @@
                   <h4 class="float-left">Project</h4>
               </div>
               <div class="col-3">
-                  <b-button class="w-100 bt-add">+ Add New Project</b-button>
+                  <router-link :to="{name : 'ProjectAdd' }">
+                      <b-button class="w-100 bt-add">+ Add New Project</b-button>
+                  </router-link>
               </div>
           </div>
           <div class="row margin-btw-content">
