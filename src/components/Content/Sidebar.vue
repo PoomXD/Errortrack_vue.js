@@ -7,7 +7,7 @@
     <div class="mt-5">
     <ul class="nav">
       <li><router-link :to="{name : 'MonitorList' }">Monitor Error</router-link></li>
-      <li><router-link :to="{name : 'ProjectManagement' }">Project Management</router-link></li>
+      <li><router-link :to="{name : 'ListProject' }">Project Management</router-link></li>
       <li><router-link to="/page">Dashboard</router-link></li>
       <li><router-link to="/page">Document API</router-link></li>
     </ul>
