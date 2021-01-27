@@ -34,55 +34,57 @@
               <div class="col-4" 
                 v-for="(project, index) in filteredRows"
                 :key="`project-${index}`">
-                <div class="card-project">
-                    <table class="table-grid">
-                        <tr>
-                            <td class="float-left font-head">
-                                {{project.projectName}}
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="float-left font-body">
-                                Project ID : {{project.projectId}}
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="float-left inline-show">
-                                <div class="row px-2">
-                                    <div v-for="(owner, i) in project.projectOwners"
-                                        :key="`owner-${i}`">
-                                        <b-avatar :id="`popover-${index}-${owner.userId}`" :size="30" class="mr-left avatar-color">{{owner.text}}</b-avatar>
-                                        <b-popover
-                                        :target="`popover-${index}-${owner.userId}`"
-                                        :placement="'bottom'"
-                                        
-                                        triggers="hover focus"
-                                        :content="`${owner.userName} ${owner.userLastName}`"
-                                        ></b-popover>
+                <router-link :to="{name : 'ProjectDetail' }">
+                    <div class="card-project">
+                        <table class="table-grid">
+                            <tr>
+                                <td class="float-left font-head">
+                                    {{project.projectName}}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="float-left font-body">
+                                    Project ID : {{project.projectId}}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="float-left inline-show">
+                                    <div class="row px-2">
+                                        <div v-for="(owner, i) in project.projectOwners"
+                                            :key="`owner-${i}`">
+                                            <b-avatar :id="`popover-${index}-${owner.userId}`" :size="30" class="mr-left avatar-color">{{owner.text}}</b-avatar>
+                                            <b-popover
+                                            :target="`popover-${index}-${owner.userId}`"
+                                            :placement="'bottom'"
+                                            
+                                            triggers="hover focus"
+                                            :content="`${owner.userName} ${owner.userLastName}`"
+                                            ></b-popover>
 
-                                    </div>
-                                    <div v-for="(user, j) in project.userMaintenance"
-                                        :key="`user-${j}`">
-                                        
-                                        <b-avatar :id="`popover2-${index}-${user.userId}`" :size="30" class="mr-left avatar-color">{{user.text}}</b-avatar>
-                                        
-                                        <b-popover
-                                        :target="`popover2-${index}-${user.userId}`"
-                                        :placement="'bottom'"
-                                        
-                                        triggers="hover focus"
-                                        :content="`${user.userName} ${user.userLastName}`"
-                                        ></b-popover>
+                                        </div>
+                                        <div v-for="(user, j) in project.userMaintenance"
+                                            :key="`user-${j}`">
+                                            
+                                            <b-avatar :id="`popover2-${index}-${user.userId}`" :size="30" class="mr-left avatar-color">{{user.text}}</b-avatar>
+                                            
+                                            <b-popover
+                                            :target="`popover2-${index}-${user.userId}`"
+                                            :placement="'bottom'"
+                                            
+                                            triggers="hover focus"
+                                            :content="`${user.userName} ${user.userLastName}`"
+                                            ></b-popover>
 
+                                        </div>
                                     </div>
-                                </div>
-                                
-                            </td>
-                        </tr>
-                    </table>
-                    
-                    <!-- {{project}} -->
-                </div>
+                                    
+                                </td>
+                            </tr>
+                        </table>
+                        
+                        <!-- {{project}} -->
+                    </div>
+                </router-link>
               </div>
                
           </div>
@@ -273,6 +275,7 @@ export default {
     font-weight: 300;
     font-size: 14px;
     line-height: 24px;
+    color: grey;
 }
 .icon-search {
     background-color: #0077FF;
