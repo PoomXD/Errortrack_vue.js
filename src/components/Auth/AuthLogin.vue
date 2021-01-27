@@ -1,5 +1,6 @@
 <template>
-<div id="AuthLogin" class="fixed-navbar d-flex align-items-center">
+
+<div id="AuthLogin" class="">
     <app-header></app-header>
     <router-view></router-view>
 </div>
