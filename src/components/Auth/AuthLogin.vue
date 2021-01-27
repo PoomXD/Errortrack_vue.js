@@ -1,8 +1,9 @@
 <template>
+<div id="AuthLogin " class="AuthMain" >
 
-<div id="AuthLogin" class="">
     <app-header></app-header>
     <router-view></router-view>
+   
 </div>
 </template>
 
@@ -17,5 +18,8 @@ export default {
 </script>
 
 <style lang="scss">
-
+.AuthMain{
+    background-color: #f4f9ff;
+    height: 2000px;
+}
 </style>

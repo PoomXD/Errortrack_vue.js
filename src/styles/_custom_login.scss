@@ -1,8 +1,56 @@
-.header-login{
-    background:$white;
-    height: 60px;
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-    margin-left:0px;
-    text-align:left;
-    padding-left:0px;
+@import url("https://fonts.googleapis.com/css2?family=Prompt&display=swap");
+.header-login {
+  background: $white;
+  height: 85px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.945);
+  margin-left: 0px;
+  text-align: left;
+  padding-left: 0px;
+}
+.header-font {
+  font-family: "Prompt";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 35px;
+  line-height: 53px;
+  color: #3e6896;
+  margin-left: 150px;
+}
+.title-font {
+  font-family: "Prompt";
+  font-style: normal;
+  font-weight: 600;
+  font-size: 60px;
+  line-height: 91px;
+  color: #000000;
+}
+.button-font {
+    font-family: "Prompt";
+    font-style: normal;
+    // font-weight: 600;
+    font-size: 20px;
+    // line-height: 91px;
+    color: #ffffff;
+    margin-top: 72px;
+  }
+.background-container{
+    background-color: white;
+    height: 100%;
+    box-shadow: 1px 4px 30px rgba(0, 0, 0, 0.15);
+}
+.background-button{
+    background-color: #0077FF;
+}
+.forgot-font{
+    font-family: "Prompt";
+    font-style: normal;
+    font-size: 20px;
+    color: #0077FF;
+    
+}
+.table-stlay{
+    width: 100%;
+}
+.image-stlay{
+    align-self: center !important;
 }
