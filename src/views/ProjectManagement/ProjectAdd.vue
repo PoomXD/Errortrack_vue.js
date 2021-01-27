@@ -25,12 +25,26 @@
         <div class="row mb-3">
           <div class="col-3 text-right">Project Owner :</div>
           <div class="col-8">
-            <AdvancedSearch
-              class="shadow-sm"
+            <b-form-input v-model="selected" list="input-list" id="input-with-list" @change="onChange()"></b-form-input>
+            <b-form-datalist
+              id="input-list"
+              :options="options"
+            ></b-form-datalist>
+            <b-form-tags
+              input-id="tags-pills"
+              v-model="value"
+              tag-variant="primary"
+              tag-pills
+              size="lg"
+              separator=" "
+              placeholder="Enter new tags separated by space"
+            ></b-form-tags>
+            <!-- <AdvancedSearch
+              class="shadow test"
               v-model="model"
               :options="options"
-            >
-            </AdvancedSearch>
+            >ffffff
+            </AdvancedSearch> -->
             <!-- <b-form-input
               placeholder="Project Owner"
               type="text"
@@ -58,12 +72,23 @@ export default {
   data() {
     return {
       model: null,
-      options: [
-        { label: "airada stongtawarat", value: "value1" },
-        { label: "kamon fa", value: "value2" },
-      ],
+      selected: '',
+      options: ["airada stongtawarat", "kamon fa"],
+      value: []
     };
   },
+  methods:{
+    onChange(){
+      this.value.push(this.selected)
+    }
+  }
 };
 </script>
-<style src="vue-advanced-search/dist/AdvancedSearch.css"></style>
+<style src="vue-advanced-search/dist/AdvancedSearch.css">
+.test {
+  border: 5px;
+  color: brown;
+  size: 50px;
+  font-size: 50px;
+}
+</style>
