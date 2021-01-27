@@ -25,7 +25,7 @@
         <div class="row mb-3">
           <div class="col-3 text-right">Project Owner :</div>
           <div class="col-8">
-            <b-form-input v-model="selected" list="input-list" id="input-with-list" @change="onChange()"></b-form-input>
+            <!-- <b-form-input v-model="selected" list="input-list" id="input-with-list" @change="onChange()"></b-form-input>
             <b-form-datalist
               id="input-list"
               :options="options"
@@ -38,18 +38,15 @@
               size="lg"
               separator=" "
               placeholder="Enter new tags separated by space"
-            ></b-form-tags>
-            <!-- <AdvancedSearch
-              class="shadow test"
-              v-model="model"
+            ></b-form-tags> -->
+            <multiselect
+              v-model="value"
+              placeholder="Name Lastname"
+              label="name"
+              track-by="id"
               :options="options"
-            >ffffff
-            </AdvancedSearch> -->
-            <!-- <b-form-input
-              placeholder="Project Owner"
-              type="text"
-             
-            ></b-form-input> -->
+              :multiple="true"
+            ></multiselect>
           </div>
         </div>
       </div>
@@ -62,29 +59,34 @@
         </div>
       </div>
     </div>
+    <!-- {{ options }}
+    {{ value }} -->
   </div>
 </template>
 
+
 <script>
-import AdvancedSearch from "vue-advanced-search";
+import Multiselect from "vue-multiselect";
 export default {
-  components: { AdvancedSearch },
+  component: { multiselect: Multiselect },
   data() {
     return {
-      model: null,
-      selected: '',
-      options: ["airada stongtawarat", "kamon fa"],
-      value: []
+      options: [
+        { name: "kamonthip fa", id: "01" },
+        { name: "airada ai", id: "02" },
+        { name: "natawut game", id: "03" },
+      ],
+      value: [],
     };
   },
-  methods:{
-    onChange(){
-      this.value.push(this.selected)
-    }
-  }
+  methods: {
+    
+  },
 };
 </script>
-<style src="vue-advanced-search/dist/AdvancedSearch.css">
+
+<style src="vue-multiselect/dist/vue-multiselect.min.css"></style>
+<style>
 .test {
   border: 5px;
   color: brown;

@@ -4,6 +4,7 @@ import router from "./router";
 import store from "./store";
 import { BootstrapVue, IconsPlugin } from 'bootstrap-vue'
 
+import Multiselect from 'vue-multiselect'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { fas } from '@fortawesome/free-solid-svg-icons'
@@ -23,7 +24,7 @@ Vue.use(IconsPlugin);// Optionally install the BootstrapVue icon components plug
 
 
 Vue.component('font-awesome-icon', FontAwesomeIcon)
-
+Vue.component('multiselect', Multiselect)
 Vue.config.productionTip = false;
 
 new Vue({
