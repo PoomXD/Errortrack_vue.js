@@ -29,7 +29,7 @@
                                 {{project.projectName}}
                             </td>
                             <td class="float-right">
-                                <button class="bt-invisible"><font-awesome-icon :icon="icon2" /></button>
+                                <button class="bt-invisible"><font-awesome-icon :icon="['fas', 'arrow-alt-circle-right']"/></button>
                             </td>
                         </tr>
                     </table>
@@ -44,15 +44,11 @@
 </template>
 
 <script>
-import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-import { faSpinner, faAlignCenter   } from '@fortawesome/free-solid-svg-icons'
 
 export default {
     name: "list-project",
     data () {
         return {
-            icon: faSpinner,
-            icon2: faAlignCenter,
             projects: [
                 {
                     "projectId" : "111-111-111",
@@ -117,9 +113,6 @@ export default {
             ]
         }
     },
-    components: {
-        FontAwesomeIcon
-    }
 }
 </script>
 
