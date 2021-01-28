@@ -1,10 +1,14 @@
 <template>
-    <div class="ProjectDetail col"> 
-        <div class="row">
-            <b-button id="Edit" variant="primary" >
+    <div class="ProjectDetail"> 
+        <div>
+            <router-link :to="{name:'ProjectEdit'}">
+            <b-button class="bt-blue float-right"  >
             <font-awesome-icon :icon="['fas','edit']"/>
              Edit</b-button>
+             </router-link>
         </div>
+
+        <br>
         <br>
          <div id="Detail">
          <br>
@@ -39,11 +43,10 @@
         </div>
         <br>
         <div class="row" id="ServiceTable">
-           <b-table striped hover :items="items" :fields="fields" :keyword="keyword">
-                <template v-slot:cell(detail) = "data">
-              <!-- {{ data }} -->
-                    <b-button v-b-modal.modal-1 variant="outline-primary" @click="showdetail(data.item)">รายละเอียด</b-button>
-                </template>
+           <b-table  striped hover :items="items" :fields="fields" :keyword="keyword">
+                <template v-slot:cell(Service_ID)="data">
+                    <router-link :to="{name:'Monitor'}" style="text-decoration: underline">{{ data.item.Service_ID}}</router-link>
+                 </template>
            </b-table>
         </div>
         
@@ -85,10 +88,6 @@ export default {
 </script>
 
 <style scoped>
-  #Edit{
-      margin-left: 91.5%;
-      width: 120px;
-  }
   #search{
     border: 1px solid rgb(174, 199, 255);
     border-radius: 20px;
@@ -110,7 +109,7 @@ export default {
     border-radius: 10px;
     background: #fff;
     height: 250px;
-    box-shadow: 5px 5px 5px rgb(200, 200, 200);
+    box-shadow: 3px 4px 5px rgb(200, 200, 200);
   }
   #icon{
       border-radius: 100%;
