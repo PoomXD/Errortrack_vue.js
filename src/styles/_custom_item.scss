@@ -1,0 +1,51 @@
+.card-list {
+    background: $white;
+    border: 0.5px solid $borderColor;
+    box-sizing: border-box;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.06);
+    border-radius: 8px;
+    padding: 5%;
+    margin-bottom: 5%;
+}
+.searchBox {
+    background: $white;
+    border: 0.75px solid $borderColor;
+    box-sizing: border-box;
+    box-shadow: 2px 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 32.5px;
+    width: 40%;
+    display: inline-block;
+    padding: 7px;
+}
+.icon-search {
+    background-color: $blue;
+    color: $white;
+    border: none;
+    border-radius: 100%;
+    float: right;
+    &:hover {
+        background-color: $hoverBlue;
+    }
+}
+.input-search {
+    border: none;
+    border-radius: 40px;
+    width: 100%;
+    float: left;
+}
+.avatar-color {
+    background-color: $blue;
+    font-size: 14px;
+}
+.add-icon {
+    color: $green;
+    &:hover {
+        color: $hoverGreen;
+    }
+}
+.del-icon {
+    color: $red;
+    &:hover {
+        color: $hoverRed;
+    }
+}

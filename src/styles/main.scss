@@ -1,13 +1,16 @@
 //Bootstrap
 @import "node_modules/bootstrap/scss/bootstrap";
 @import "node_modules/bootstrap-vue/src/index.scss";
+@import url("https://fonts.googleapis.com/css2?family=Prompt&display=swap");
 
 //Custom
 @import "./variables";
 @import "./_custom_header";
 @import "./_custom_sidebar";
-@import "./custom_button";
-@import "./custom_login";
+@import "./_custom_button";
+@import "./_custom_login";
+@import "./_custom_general";
+@import "./_custom_item";
 
 .background {
   background: #f4f9ff;
