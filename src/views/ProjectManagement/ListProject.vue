@@ -10,7 +10,7 @@
                             <b-form-input 
                             :placeholder="'Project Search ...'"
                             v-model="filter"
-                            class="input-search">
+                            class="input-search font-no-size-color">
                             </b-form-input>
                           </td>
                           <td>
@@ -22,11 +22,11 @@
           </div>
           <div class="row margin-btw-content">
               <div class="col">
-                  <h4 class="float-left">Projects</h4>
+                  <h4 class="float-left font-no-size-color">Projects</h4>
               </div>
               <div class="col-2">
                   <router-link :to="{name : 'ProjectAdd' }">
-                      <b-button class="w-100 bt-blue font-fam-no-size"><font-awesome-icon :icon="['fas', 'plus']"/>  Add New Project</b-button>
+                      <b-button class="w-100 bt-blue font-no-size-color"><font-awesome-icon :icon="['fas', 'plus']"/>  Add New Project</b-button>
                   </router-link>
               </div>
           </div>

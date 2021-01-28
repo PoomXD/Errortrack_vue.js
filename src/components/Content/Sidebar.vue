@@ -1,11 +1,11 @@
 <template>
   <div class="sidebar">
   <div class="text-center">
-    <img src="/img/logo-system.png" style="height:40px;"/>
+    <img src="/img/logo-system.png" style="height:45px;"/>
     </div>
     <!-- <router-link to="/">Main</router-link> -->
-    <div class="mt-5">
-    <ul class="nav">
+    <div class="mt-4">
+    <ul class="nav font-no-size-color">
       <li><router-link :to="{name : 'MonitorList' }"><font-awesome-icon :icon="['fas', 'desktop']"/>  Monitor Error</router-link></li>
       <li><router-link :to="{name : 'ListProject' }"><font-awesome-icon :icon="['far', 'check-square']"/>  Project Management</router-link></li>
       <li><router-link to="/page"><font-awesome-icon :icon="['fas', 'chart-pie']"/>  Dashboard</router-link></li>
