@@ -2,10 +2,8 @@
     <div class="ProjectDetail"> 
         <div>
             <router-link :to="{name:'ProjectEdit'}">
-            <b-button class="bt-blue float-right"  >
-            <font-awesome-icon :icon="['fas','edit']"/>
-             Edit</b-button>
-             </router-link>
+            <b-button class="bt-blue float-right" style="width: 90px" >
+            <font-awesome-icon :icon="['fas','edit']"/> Edit</b-button></router-link>
         </div>
 
         <br>
@@ -13,22 +11,26 @@
          <div id="Detail">
          <br>
         <div class="row">
-            <div class="col-2" style="font-weight: bold" align="right">Project ID  : </div>
-            <div class="col-2" align="left">{{Project_ID}} </div>
-            <div class="col-4" style="font-weight: bold" align="right">Project Name  : </div>
-            <div class="col-2" align="left">{{Project_Name}} </div>
+            <div class="col-2 font-gen" style="font-weight: bold" align="right">Project ID  : </div>
+            <div class="col-2 font-detail" align="left">{{Project_ID}} </div>
+            <div class="col-4 font-gen" style="font-weight: bold" align="right">Project Name  : </div>
+            <div class="col-2 font-detail" align="left">{{Project_Name}} </div>
         </div>
             <br>   
         <div class="row">
-            <div class="col-2" style="font-weight: bold" align="right">Project Details  : </div>
-            <div class="col-2" align="left">{{Project_Detail}} </div>
-            <div class="col-4" style="font-weight: bold" align="right">Project Owner  :</div>
-            <div class="col-2" align="left">{{Project_Owner}} </div>
+            <div class="col-2 font-gen" style="font-weight: bold" align="right">Project Details  : </div>
+            <div class="col-2 font-detail" align="left">{{Project_Detail}} </div>
+            <div class="col-4 font-gen" style="font-weight: bold" align="right">Project Owner  :</div>
+            <div class="col-2 font-detail" align="left">{{Project_Owner}} </div>
         </div>
            <br>
         <div class="row">
-            <div class="col-8" style="font-weight: bold" align="right">Member  :</div>
-            <div class="col-2" align="left">{{Member}}</div>
+            <div class="col-8 font-gen" style="font-weight: bold" align="right">Member  :</div>
+            <div class="col-2 font-detail" align="left">
+            <tr v-for="(Member, index) in Member" :key="`Member-${index}`">
+                <td>{{ Member.name}}</td>
+            </tr>
+            </div>
         </div>
         </div> 
 
@@ -36,14 +38,14 @@
         <div id="search">
             <table>
                 <tr>
-                <td><input id="ServiceSearch" type="text" placeholder="Service Search" v-model="keyword"></td>
+                <td><input id="ServiceSearch" type="text" placeholder=" Service Search" v-model="keyword"></td>
                 <td><b-button variant="primary" id="icon"><font-awesome-icon :icon="['fas', 'search']"/></b-button></td>
                 </tr>
             </table>
         </div>
         <br>
-        <div class="row" id="ServiceTable">
-           <b-table  striped hover :items="items" :fields="fields" :keyword="keyword">
+        <div class="row table-box" id="ServiceTable">
+           <b-table class="table-color" striped hover :items="items" :fields="fields" :keyword="keyword">
                 <template v-slot:cell(Service_ID)="data">
                     <router-link :to="{name:'Monitor'}" style="text-decoration: underline">{{ data.item.Service_ID}}</router-link>
                  </template>
@@ -70,9 +72,9 @@ export default {
                        ],
             Project_ID:"xxx-xxxx-xxxx-xxx",
             Project_Detail:"Detail",
-            Project_Name:"name",
+            Project_Name:"Covid 19 Airports Project",
             Project_Owner:"firstname lastname",
-            Member:["name_lastname","name_lastname","name_lastname","name_lastname"],  
+            Member:[{name : 'name_lastname'},{name : 'name_lastname'},{name : 'name_lastname'},{name : 'name_lastname'}],  
         }
     },
     computed: {
@@ -100,9 +102,6 @@ export default {
     width: 350px;
     border-radius: 20px;
     background: #fff;
-  }
-  #ServiceTable{
-    background-color: #fff;
   }
   #Detail{
     border: 1px solid rgb(174, 199, 255);
