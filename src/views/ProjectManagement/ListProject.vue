@@ -89,10 +89,6 @@
           </div>
       </div>
       
-        <!-- <div class="table-box">
-            <b-table class="table-color" :items="items"></b-table>
-        </div> -->
-
   </div>
 </template>
 
@@ -102,6 +98,7 @@ export default {
     name: "list-project",
     data () {
         return {
+            Id: null,
             projects: [
                 {
                     "projectId" : "111-111-111",
@@ -251,13 +248,6 @@ export default {
                 }
             ],
             filter: '',
-            items: [
-                {"Name" : "test", "lastname" : "test"},
-                {"Name" : "test", "lastname" : "test"},
-                {"Name" : "test", "lastname" : "test"},
-                {"Name" : "test", "lastname" : "test"},
-                {"Name" : "test", "lastname" : "test"}
-            ]
         }
     },
     beforeMount() {
@@ -283,7 +273,12 @@ export default {
             return projectName.includes(searchTerm) ||
                 projectId.includes(searchTerm);
             });
-        }
+        },
+        headers2() {
+            return [
+            { text: '', fixed: true, width: '100px', sortable: false }
+            ].concat(this.headers)
+        },
     },
 }
 </script>
