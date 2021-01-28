@@ -61,7 +61,11 @@ export default {
     data(){
         return{
             keyword: '',
-            fields: ['No', 'Service_ID', 'Service_Name','Create_Date'],
+            fields: [{key:'No',thStyle: {width: '5%'}},
+                     {key:'Service_ID',thStyle: {width: '20%'}},
+                     {key:'Service_Name',thStyle: {width: '30%'}},
+                     {key:' ',thStyle: {width: '35%'}},
+                     {key:'Create_Date',thStyle: {width: '10%',}}],
             dataArray: [
                         {No: 1, Service_ID: '123-456-789', Service_Name: 'Name Servicename1',Create_Date: '11-12-2563'},
                         {No: 2, Service_ID: '987-654-321', Service_Name: 'Name Servicename2',Create_Date: '11-12-2563'},
@@ -95,7 +99,7 @@ export default {
     border-radius: 20px;
     background: #fff; 
     width: 400px;
-    box-shadow: 3px 3px 5px rgb(200, 200, 200);
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
     }
   #ServiceSearch{
     border: 1px solid rgb(255, 255, 255);
@@ -108,10 +112,13 @@ export default {
     border-radius: 10px;
     background: #fff;
     height: 250px;
-    box-shadow: 3px 4px 5px rgb(200, 200, 200);
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
   }
   #icon{
+      margin: 1px;
       border-radius: 100%;
   }
+
+
 
 </style>
