@@ -32,13 +32,13 @@
         <div id="search">
             <table>
                 <tr>
-                <td><input class="form-control" id="ServiceSearch" type="text" placeholder="Service Search"></td>
+                <td><input id="ServiceSearch" type="text" placeholder="Service Search" v-model="keyword"></td>
                 <td><b-button variant="primary" id="icon"><font-awesome-icon :icon="['fas', 'search']"/></b-button></td>
                 </tr>
             </table>
         </div>
         <div class="row" id="ServiceTable">
-            <b-table striped hover :items="items" :fields="fields"></b-table>
+           <b-table striped hover :items="items" :fields="fields" :keyword="keyword"></b-table>
         </div>
         
     </div>
@@ -49,18 +49,30 @@ export default {
     name:"ProjectDetail",
     data(){
         return{
-            fields:['No','Serivce_ID','Service_Name','Create_Date'],
-            items: [{No: 1, Serivce_ID: '123-456-789', Service_Name: 'Name Servicename',Create_Date: '11-12-2563'},
-                    {No: 2, Serivce_ID: '987-654-321', Service_Name: 'Name Servicename',Create_Date: '11-12-2563'},
-                    {No: 3, Serivce_ID: '123-456-789', Service_Name: 'Name Servicename',Create_Date: '11-12-2563'},
-                    {No: 4, Serivce_ID: '987-654-321', Service_Name: 'Name Servicename',Create_Date: '11-12-2563'},],
+            keyword: '',
+            fields: ['No', 'Service_ID', 'Service_Name','Create_Date'],
+            dataArray: [
+                        {No: 1, Service_ID: '123-456-789', Service_Name: 'Name Servicename',Create_Date: '11-12-2563'},
+                        {No: 2, Service_ID: '987-654-321', Service_Name: 'Name Servicename',Create_Date: '11-12-2563'},
+                        {No: 3, Service_ID: '123-456-789', Service_Name: 'Name Servicename',Create_Date: '11-12-2563'},
+                        {No: 4, Service_ID: '987-654-321', Service_Name: 'Name Servicename',Create_Date: '11-12-2563'}
+                       ],
             Project_ID:"xxx-xxxx-xxxx-xxx",
             Project_Detail:"Detail",
             Project_Name:"name",
             Project_Owner:"name lastname",
-            Member:["name_lastname","name_lastname","name_lastname","name_lastname"]            
+            Member:["name_lastname","name_lastname","name_lastname","name_lastname"] ,  
         }
+    },
+    computed: {
+		items () {
+			return this.keyword
+                ? this.dataArray.filter(item => 
+                item.Service_ID.includes(this.keyword)||
+                item.Service_Name.includes(this.keyword))
+				: this.dataArray
     }
+}
 }
 </script>
 
