@@ -1,5 +1,5 @@
 <template>
-  <div class="container-main">
+  <div class="container-main font-no-size-color">
     <div class="row">
       <div class="col">
         <div class="row mb-3">
@@ -47,65 +47,53 @@
     </div>
     <div class="row m-3">
       <div class="col text-left">
-        User maintenance :
-        <table>
-          <tr>
-            <th>No</th>
-            <th>First - Last Name</th>
-            <th></th>
-          </tr>
-          <tr>
-            <td></td>
-            <td>
-              <multiselect
-                v-model="value"
-                :options="listUserMaintenance"
-                placeholder="Select one"
-                label="name"
-                track-by="name"
-              ></multiselect>
-              <!-- <b-form-input list="input-list" v-model.lazy="value"></b-form-input>
-              <b-form-datalist
-                id="input-list"
-                text-field="id"
-                value-field="name"
-                :options="listUserMaintenance"
-              ></b-form-datalist> -->
-
-              <!-- <b-form-datalist id="input-list">
-                <obtion v-for="value in items" :key="value.value" :value="value.value" >{{ value.text }}</obtion>
-              </b-form-datalist> -->
-            </td>
-            <td>
-              <font-awesome-icon
-                :icon="['fas', 'plus-circle']"
-                @click="addUserMaintenance()"
-              />
-            </td>
-          </tr>
-          <tr v-for="(item, index) in valueMaintenance" :key="`item-${index}`">
-            <td>{{ index+1 }}</td>
-            <td>{{ item.name }}</td>
-            <td>
-              <font-awesome-icon
-                :icon="['fas', 'trash-alt']"
-                @click="delUserMaintenance(item)"
-              />
-            </td>
-          </tr>
-        </table>
+        <div class="py-3">User maintenance :</div>
+        <div class="table-box">
+          <table class="table-color-alt w-100 text-center">
+            <tr >
+              <th class="py-2">No</th>
+              <th class="py-2">First - Last Name</th>
+              <th class="py-2"></th>
+            </tr>
+            <tr>
+              <td></td>
+              <td class="py-2">
+                <multiselect
+                  v-model="value"
+                  :options="listUserMaintenance"
+                  placeholder="Name Lastname"
+                  label="name"
+                  track-by="name"
+                  style="width: 60%;"
+                ></multiselect>
+              </td>
+              <td>
+                <font-awesome-icon
+                  class="add-icon"
+                  :icon="['fas', 'plus-circle']"
+                  @click="addUserMaintenance()"
+                />
+              </td>
+            </tr>
+            <tr
+              v-for="(item, index) in valueMaintenance"
+              :key="`item-${index}`"
+              class="font-detail"
+            >
+              <td class="py-2">{{ index + 1 }}</td>
+              <td class="float-left py-2">{{ item.name }}</td>
+              <td class="py-2">
+                <font-awesome-icon
+                  class="del-icon"
+                  :icon="['fas', 'trash-alt']"
+                  @click="delUserMaintenance(item)"
+                />
+              </td>
+            </tr>
+          </table>
+        </div>
       </div>
     </div>
-    <!-- listUserOwner {{ listUserOwner.length }} <br />
-    {{ listUserOwner }} <br />
-    valueOwner {{ valueOwner.length }} <br />
-    {{ valueOwner }} <br />
-    valueMaintenance {{ valueMaintenance.length }} <br />
-    {{ valueMaintenance }} <br />-->
-    <!-- listUserMaintenance {{ listUserMaintenance.length }} <br />
-    {{ listUserMaintenance }} <br>  -->
-    <!-- value
-    {{ value }} -->
   </div>
 </template>
 
@@ -158,13 +146,13 @@ export default {
       this.listUserMaintenance = res;
       this.value = null;
     },
-    delUserMaintenance(data){
+    delUserMaintenance(data) {
       // console.log(data)
-      this.listUserMaintenance.push(data)
-      let res = this.valueMaintenance
-      res = res.filter(val => val.id != data.id)
+      this.listUserMaintenance.push(data);
+      let res = this.valueMaintenance;
+      res = res.filter((val) => val.id != data.id);
       // console.log(res)
-      this.valueMaintenance = res
+      this.valueMaintenance = res;
     },
     nameWithLang({ name, id }) {
       return `${name} — [${id}]`;
@@ -187,10 +175,5 @@ export default {
 
 <style src="vue-multiselect/dist/vue-multiselect.min.css"></style>
 <style>
-.test {
-  border: 5px;
-  color: brown;
-  size: 50px;
-  font-size: 50px;
-}
+
 </style>

@@ -24,7 +24,7 @@
               <div class="col">
                   <h4 class="float-left font-no-size-color">Projects</h4>
               </div>
-              <div class="col-2">
+              <div class="col-3">
                   <router-link :to="{name : 'ProjectAdd' }">
                       <b-button class="w-100 bt-blue font-no-size-color"><font-awesome-icon :icon="['fas', 'plus']"/>  Add New Project</b-button>
                   </router-link>

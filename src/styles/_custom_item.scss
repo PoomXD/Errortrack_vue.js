@@ -38,12 +38,14 @@
     font-size: 14px;
 }
 .add-icon {
+    font-size: 60pxs;
     color: $green;
     &:hover {
         color: $hoverGreen;
     }
 }
 .del-icon {
+    font-size: 60pxs;
     color: $red;
     &:hover {
         color: $hoverRed;
@@ -68,4 +70,18 @@
         color:#212529;
         background-color:rgba(0,0,0,.075)
     } 
+}
+.table-color-alt {
+    margin: 0px;
+    border-radius: 8px;
+    tr:nth-of-type(even){
+        background-color:#F8FBFF;
+    }
+    tr:hover{
+        color:#212529;
+        background-color:rgba(0,0,0,.075)
+    } 
+}
+.show-selete{
+    overflow: unset;
 }
