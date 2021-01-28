@@ -87,13 +87,12 @@
                 </router-link>
               </div>
           </div>
-          <div class="table-box">
-                    <b-table class="table-color" :items="items">
-
-                    </b-table>
-                </div>
       </div>
       
+        <div class="table-box">
+            <b-table class="table-color" :items="items"></b-table>
+        </div>
+
   </div>
 </template>
 
@@ -217,10 +216,43 @@ export default {
                             "userLastName" : "Wanyen"
                         }
                     ]
+                },
+                {
+                    "projectId" : "622-542-285",
+                    "projectName" : "Test Project",
+                    "projectOwners" : [{
+                            "userId" : "109698745",
+                            "userName" : "Aristeaz",
+                            "userLastName" : "Fa"
+                        },
+                        {
+                            "userId" : "152463258",
+                            "userName" : "Game",
+                            "userLastName" : "Baka"
+                        },
+                        {
+                            "userId" : "784666115",
+                            "userName" : "Ai",
+                            "userLastName" : "Kotoba"
+                        },
+                        {
+                            "userId" : "125488563",
+                            "userName" : "Poom",
+                            "userLastName" : "Khabbbb"
+                        },
+                    ],
+                    "userMaintenance" : [
+                        {
+                            "userId" : "564852369",
+                            "userName" : "Pin",
+                            "userLastName" : "Wanyen"
+                        }
+                    ]
                 }
             ],
             filter: '',
             items: [
+                {"Name" : "test", "lastname" : "test"},
                 {"Name" : "test", "lastname" : "test"},
                 {"Name" : "test", "lastname" : "test"},
                 {"Name" : "test", "lastname" : "test"},
