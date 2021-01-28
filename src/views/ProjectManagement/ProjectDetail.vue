@@ -10,21 +10,21 @@
          <br>
         <div class="row">
             <div class="col-2" style="font-weight: bold" align="right">Project ID  : </div>
-            <div class="col-2" style="font-weight: bold" align="left">{{Project_ID}} </div>
+            <div class="col-2" align="left">{{Project_ID}} </div>
             <div class="col-4" style="font-weight: bold" align="right">Project Name  : </div>
-            <div class="col-2" style="font-weight: bold" align="left">{{Project_Name}} </div>
+            <div class="col-2" align="left">{{Project_Name}} </div>
         </div>
             <br>   
         <div class="row">
             <div class="col-2" style="font-weight: bold" align="right">Project Details  : </div>
-            <div class="col-2" style="font-weight: bold" align="left">{{Project_Detail}} </div>
+            <div class="col-2" align="left">{{Project_Detail}} </div>
             <div class="col-4" style="font-weight: bold" align="right">Project Owner  :</div>
-            <div class="col-2" style="font-weight: bold" align="left">{{Project_Owner}} </div>
+            <div class="col-2" align="left">{{Project_Owner}} </div>
         </div>
            <br>
         <div class="row">
             <div class="col-8" style="font-weight: bold" align="right">Member  :</div>
-            <div class="col-2" style="font-weight: bold" align="left">{{Member}}</div>
+            <div class="col-2" align="left">{{Member}}</div>
         </div>
         </div> 
 
@@ -37,8 +37,14 @@
                 </tr>
             </table>
         </div>
+        <br>
         <div class="row" id="ServiceTable">
-           <b-table striped hover :items="items" :fields="fields" :keyword="keyword"></b-table>
+           <b-table striped hover :items="items" :fields="fields" :keyword="keyword">
+                <template v-slot:cell(detail) = "data">
+              <!-- {{ data }} -->
+                    <b-button v-b-modal.modal-1 variant="outline-primary" @click="showdetail(data.item)">รายละเอียด</b-button>
+                </template>
+           </b-table>
         </div>
         
     </div>
@@ -52,16 +58,18 @@ export default {
             keyword: '',
             fields: ['No', 'Service_ID', 'Service_Name','Create_Date'],
             dataArray: [
-                        {No: 1, Service_ID: '123-456-789', Service_Name: 'Name Servicename',Create_Date: '11-12-2563'},
-                        {No: 2, Service_ID: '987-654-321', Service_Name: 'Name Servicename',Create_Date: '11-12-2563'},
-                        {No: 3, Service_ID: '123-456-789', Service_Name: 'Name Servicename',Create_Date: '11-12-2563'},
-                        {No: 4, Service_ID: '987-654-321', Service_Name: 'Name Servicename',Create_Date: '11-12-2563'}
+                        {No: 1, Service_ID: '123-456-789', Service_Name: 'Name Servicename1',Create_Date: '11-12-2563'},
+                        {No: 2, Service_ID: '987-654-321', Service_Name: 'Name Servicename2',Create_Date: '11-12-2563'},
+                        {No: 3, Service_ID: '123-456-789', Service_Name: 'Name Servicename3',Create_Date: '11-12-2563'},
+                        {No: 4, Service_ID: '123-456-789', Service_Name: 'Name Servicename4',Create_Date: '11-12-2563'},
+                        {No: 5, Service_ID: '987-654-321', Service_Name: 'Name Servicename5',Create_Date: '11-12-2563'},
+                        {No: 6, Service_ID: '987-654-321', Service_Name: 'Name Servicename6',Create_Date: '11-12-2563'},
                        ],
             Project_ID:"xxx-xxxx-xxxx-xxx",
             Project_Detail:"Detail",
             Project_Name:"name",
-            Project_Owner:"name lastname",
-            Member:["name_lastname","name_lastname","name_lastname","name_lastname"] ,  
+            Project_Owner:"firstname lastname",
+            Member:["name_lastname","name_lastname","name_lastname","name_lastname"],  
         }
     },
     computed: {
@@ -95,9 +103,7 @@ export default {
     background: #fff;
   }
   #ServiceTable{
-    margin-top: 1%;
     background-color: #fff;
-    
   }
   #Detail{
     border: 1px solid rgb(174, 199, 255);
@@ -107,12 +113,7 @@ export default {
     box-shadow: 5px 5px 5px rgb(200, 200, 200);
   }
   #icon{
-      border: 1px solid rgb(255, 255, 255);
       border-radius: 100%;
-      margin: 1px;
   }
-  .td{
-      font-weight: bold;
-  }
-  
+
 </style>
