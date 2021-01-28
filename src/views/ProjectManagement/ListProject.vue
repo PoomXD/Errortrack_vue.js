@@ -87,6 +87,11 @@
                 </router-link>
               </div>
           </div>
+          <div class="table-box">
+                    <b-table class="table-color" :items="items">
+
+                    </b-table>
+                </div>
       </div>
       
   </div>
@@ -215,6 +220,12 @@ export default {
                 }
             ],
             filter: '',
+            items: [
+                {"Name" : "test", "lastname" : "test"},
+                {"Name" : "test", "lastname" : "test"},
+                {"Name" : "test", "lastname" : "test"},
+                {"Name" : "test", "lastname" : "test"}
+            ]
         }
     },
     beforeMount() {
