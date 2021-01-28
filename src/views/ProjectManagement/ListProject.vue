@@ -22,11 +22,11 @@
           </div>
           <div class="row margin-btw-content">
               <div class="col">
-                  <h4 class="float-left">Project</h4>
+                  <h4 class="float-left">Projects</h4>
               </div>
-              <div class="col-3">
+              <div class="col-2">
                   <router-link :to="{name : 'ProjectAdd' }">
-                      <b-button class="w-100 bt-add">+ Add New Project</b-button>
+                      <b-button class="w-100 bt-blue font-fam-no-size"><font-awesome-icon :icon="['fas', 'plus']"/>  Add New Project</b-button>
                   </router-link>
               </div>
           </div>
@@ -35,20 +35,20 @@
                 v-for="(project, index) in filteredRows"
                 :key="`project-${index}`">
                 <router-link :to="{name : 'ProjectDetail' }">
-                    <div class="card-project">
+                    <div class="card-list">
                         <table class="table-grid">
                             <tr>
-                                <td class="float-left font-head">
+                                <td class="float-left font-topic">
                                     {{project.projectName}}
                                 </td>
                             </tr>
                             <tr>
-                                <td class="float-left font-body">
+                                <td class="float-left font-detail">
                                     Project ID : {{project.projectId}}
                                 </td>
                             </tr>
                             <tr>
-                                <td class="float-left inline-show">
+                                <td class="float-left">
                                     <div class="row px-2">
                                         <div v-for="(owner, i) in project.projectOwners"
                                             :key="`owner-${i}`">
@@ -86,9 +86,9 @@
                     </div>
                 </router-link>
               </div>
-               
           </div>
       </div>
+      
   </div>
 </template>
 
@@ -180,6 +180,38 @@ export default {
                             "userLastName" : "Wanyen"
                         }
                     ]
+                },
+                {
+                    "projectId" : "622-542-285",
+                    "projectName" : "Test Project",
+                    "projectOwners" : [{
+                            "userId" : "109698745",
+                            "userName" : "Aristeaz",
+                            "userLastName" : "Fa"
+                        },
+                        {
+                            "userId" : "152463258",
+                            "userName" : "Game",
+                            "userLastName" : "Baka"
+                        },
+                        {
+                            "userId" : "784666115",
+                            "userName" : "Ai",
+                            "userLastName" : "Kotoba"
+                        },
+                        {
+                            "userId" : "125488563",
+                            "userName" : "Poom",
+                            "userLastName" : "Khabbbb"
+                        },
+                    ],
+                    "userMaintenance" : [
+                        {
+                            "userId" : "564852369",
+                            "userName" : "Pin",
+                            "userLastName" : "Wanyen"
+                        }
+                    ]
                 }
             ],
             filter: '',
@@ -214,89 +246,18 @@ export default {
 </script>
 
 <style>
-.searchBox {
-    background: #FFFFFF;
-    border: 0.75px solid #BACFE7;
-    box-sizing: border-box;
-    box-shadow: 2px 4px 8px rgba(0, 0, 0, 0.1);
-    border-radius: 32.5px;
-    width: 40%;
-    display: inline-block;
-    padding: 7px;
-}
-.contentCenter {
-    justify-content: center;
-}
-.margin-btw-content{
-    margin-top: 2%;
-}
-.float-left {
-    /* float: left; */
-    justify-content: left;
-}
-.float-right {
-    /* float: left; */
-    justify-content: right;
-}
-.card-project {
-    background: #FFFFFF;
-    border: 0.5px solid #BACFE7;
-    box-sizing: border-box;
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.06);
-    border-radius: 8px;
-    padding: 5%;
-}
-.content-page {
-    padding: 5%;
-}
 
-.bt-add {
-    background: #0077FF;
-    border-radius: 6px;
-}
-.font-head {
-    /* font-family: Prompt; */
-    font-style: normal;
-    font-weight: 500;
-    font-size: 20px;
-    line-height: 30px;
 
-    color: #000000;
-}
 .table-grid {
     width: 100%;
 }
-.bt-invisible {
-    background-color: transparent;
-    color: #000000;
-    border: none;
-}
-.font-body {
+.font-detail {
+    font-family: "Prompt";
+    font-style: normal;
     font-weight: 300;
     font-size: 14px;
     line-height: 24px;
     color: grey;
 }
-.icon-search {
-    background-color: #0077FF;
-    color: white;
-    border: none;
-    border-radius: 50%;
-    float: right;
-}
-.input-search {
-    border: none;
-    border-radius: 40px;
-    width: 100%;
-    float: left;
-}
-.inline-show {
-    display: inline-block;
-}
-.mr-left {
-    margin-left: 5px;
-}
-.avatar-color {
-    background-color: #0077FF;
-}
+
 </style>
