@@ -1,0 +1,50 @@
+.bt-blue {
+    background: $blue;
+    border-radius: 6px;
+    color: $white;
+    &:hover {
+        background: $hoverBlue;
+    }
+}
+.bt-green {
+    background: $green;
+    border: 1px solid $green;
+    border-radius: 6px;
+    color: $white;
+    &:hover {
+        background: $hoverGreen;
+        border: 1px solid $hoverGreen;
+    }
+}
+.bt-red {
+    background: $red;
+    border: 1px solid $red;
+    border-radius: 6px;
+    color: $white;
+    &:hover {
+        background: $hoverRed;
+        border: 1px solid $hoverRed;
+    }
+}
+.bt-cancel-grey {
+    background: $white;
+    border: 1px solid $btBorderColorGrey;
+    border-radius: 6px;
+    color: $btBorderColorGrey;
+    &:hover {
+        background: $btBorderColorGrey;
+        color: white;
+        border: 1px solid $btBorderColorGrey;
+    }
+}
+.bt-cancel-blue {
+    background: $white;
+    border: 1px solid $blue;
+    border-radius: 6px;
+    color: $blue;
+    &:hover {
+        background: $blue;
+        color: white;
+        border: 1px solid $blue;
+    }
+}
