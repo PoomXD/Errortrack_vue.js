@@ -25,26 +25,12 @@
         <div class="row mb-3">
           <div class="col-3 text-right">Project Owner :</div>
           <div class="col-8">
-            <!-- <b-form-input v-model="selected" list="input-list" id="input-with-list" @change="onChange()"></b-form-input>
-            <b-form-datalist
-              id="input-list"
-              :options="options"
-            ></b-form-datalist>
-            <b-form-tags
-              input-id="tags-pills"
-              v-model="value"
-              tag-variant="primary"
-              tag-pills
-              size="lg"
-              separator=" "
-              placeholder="Enter new tags separated by space"
-            ></b-form-tags> -->
             <multiselect
-              v-model="value"
+              v-model="valueOwner"
               placeholder="Name Lastname"
               label="name"
               track-by="id"
-              :options="options"
+              :options="listUserOwner"
               :multiple="true"
             ></multiselect>
           </div>
@@ -59,7 +45,66 @@
         </div>
       </div>
     </div>
-    <!-- {{ options }}
+    <div class="row m-3">
+      <div class="col text-left">
+        User maintenance :
+        <table>
+          <tr>
+            <th>No</th>
+            <th>First - Last Name</th>
+            <th></th>
+          </tr>
+          <tr>
+            <td></td>
+            <td>
+              <multiselect
+                v-model="value"
+                :options="listUserMaintenance"
+                placeholder="Select one"
+                label="name"
+                track-by="name"
+              ></multiselect>
+              <!-- <b-form-input list="input-list" v-model.lazy="value"></b-form-input>
+              <b-form-datalist
+                id="input-list"
+                text-field="id"
+                value-field="name"
+                :options="listUserMaintenance"
+              ></b-form-datalist> -->
+
+              <!-- <b-form-datalist id="input-list">
+                <obtion v-for="value in items" :key="value.value" :value="value.value" >{{ value.text }}</obtion>
+              </b-form-datalist> -->
+            </td>
+            <td>
+              <font-awesome-icon
+                :icon="['fas', 'plus-circle']"
+                @click="addUserMaintenance()"
+              />
+            </td>
+          </tr>
+          <tr v-for="(item, index) in valueMaintenance" :key="`item-${index}`">
+            <td>{{ index+1 }}</td>
+            <td>{{ item.name }}</td>
+            <td>
+              <font-awesome-icon
+                :icon="['fas', 'trash-alt']"
+                @click="delUserMaintenance(item)"
+              />
+            </td>
+          </tr>
+        </table>
+      </div>
+    </div>
+    <!-- listUserOwner {{ listUserOwner.length }} <br />
+    {{ listUserOwner }} <br />
+    valueOwner {{ valueOwner.length }} <br />
+    {{ valueOwner }} <br />
+    valueMaintenance {{ valueMaintenance.length }} <br />
+    {{ valueMaintenance }} <br />-->
+    <!-- listUserMaintenance {{ listUserMaintenance.length }} <br />
+    {{ listUserMaintenance }} <br>  -->
+    <!-- value
     {{ value }} -->
   </div>
 </template>
@@ -71,16 +116,71 @@ export default {
   component: { multiselect: Multiselect },
   data() {
     return {
-      options: [
-        { name: "kamonthip fa", id: "01" },
-        { name: "airada ai", id: "02" },
-        { name: "natawut game", id: "03" },
+      value: null,
+      listUserMaintenance: [],
+      listUserOwner: [
+        { name: "kamonthip fa", id: 1 },
+        { name: "airada ai", id: 2 },
+        { name: "natawut game", id: 3 },
+        { id: 40, name: "Dickerson Macdonald" },
+        { id: 21, name: "Larsen Shaw" },
+        { id: 89, name: "Geneva Wilson" },
+        { id: 38, name: "Jami Carney" },
       ],
-      value: [],
+      valueMaintenance: [],
+      valueOwner: [],
+      fields: [
+        {
+          key: "no",
+          sortable: true,
+        },
+        {
+          key: "name",
+          label: "First - Last Name",
+          sortable: true,
+        },
+        {
+          key: "button",
+          label: " ",
+          sortable: true,
+          // variant: "danger",
+        },
+      ],
     };
   },
   methods: {
-    
+    addUserMaintenance() {
+      this.valueMaintenance.push({ name: this.value.name, id: this.value.id });
+      let res = this.listUserMaintenance;
+      this.valueMaintenance.forEach((e) => {
+        res = res.filter((data) => data.id !== e.id);
+      });
+      this.listUserMaintenance = res;
+      this.value = null;
+    },
+    delUserMaintenance(data){
+      // console.log(data)
+      this.listUserMaintenance.push(data)
+      let res = this.valueMaintenance
+      res = res.filter(val => val.id != data.id)
+      // console.log(res)
+      this.valueMaintenance = res
+    },
+    nameWithLang({ name, id }) {
+      return `${name} — [${id}]`;
+    },
+  },
+  watch: {
+    valueOwner: {
+      handler: function (val, oldVal) {
+        let res = this.listUserOwner;
+        val.forEach((e) => {
+          res = res.filter((data) => data.id !== e.id);
+        });
+        this.listUserMaintenance = res;
+      },
+      deep: true,
+    },
   },
 };
 </script>
