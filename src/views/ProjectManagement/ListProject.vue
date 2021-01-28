@@ -89,9 +89,9 @@
           </div>
       </div>
       
-        <div class="table-box">
+        <!-- <div class="table-box">
             <b-table class="table-color" :items="items"></b-table>
-        </div>
+        </div> -->
 
   </div>
 </template>
