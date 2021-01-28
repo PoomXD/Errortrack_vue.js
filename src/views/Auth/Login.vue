@@ -3,7 +3,7 @@
     <div class="container background-container rounded " style="heigth: 100%">
       <div class="row ">
         <div class="col image-stlay">
-          <img src="/img/image1.png" style="height:400px;"/>
+          <img src="/img/image1.png" style="height:400px;" />
         </div>
         <div class="col pr-5">
           <h1 class="title-font mt-5 mb-5">Sing In</h1>
@@ -31,7 +31,11 @@
             <table class="table-stlay">
               <tr>
                 <td class="pl-5">Log In</td>
-                <td class="float-right">-></td>
+                <td class="float-right">
+                  <font-awesome-icon
+                    :icon="['fas', 'arrow-right']"
+                  />
+                </td>
               </tr>
             </table>
           </b-button>
