@@ -61,19 +61,4 @@
 .content-page {
     padding: 5%;
 }
-.table-box {
-    background-color: $white;
-    border: 0.75px solid #BACFE7;
-    box-sizing: border-box;
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-    border-radius: 8px;
-}
-.table-color {
-    tbody tr:nth-of-type(odd){
-        background-color:#F8FBFF;
-    }
-    &:hover tr:hover{
-        color:#212529;
-        background-color:rgba(0,0,0,.075)
-    } 
-}
+

@@ -5,12 +5,27 @@ import { account } from "./account.module";
 Vue.use(Vuex);
 
 const store = new Vuex.Store({
-  state: {},
+  state: {
+    allLinkHeader: [
+      {
+        name: "Monitor Error",
+        url: "#",
+      },
+      { 
+        name: "Service Error",
+        url: "#",
+      },
+      { 
+        name: "Tasks",
+        url: "#",
+      },
+    ],
+  },
   actions: {},
   mutations: {},
   modules: {
-    account
-  }
+    account,
+  },
 });
 
 export default store;
