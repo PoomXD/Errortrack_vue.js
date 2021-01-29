@@ -62,7 +62,7 @@ export default {
         let listlink = [
         {
           name: "Project Managemant",
-          url: "project/list",
+          url: "../project/list",
         },
         {
             name: "Project Detail",
