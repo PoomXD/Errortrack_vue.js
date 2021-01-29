@@ -134,7 +134,7 @@ export default {
             {
               userId: "152463258",
               userName: "Game",
-              userLastName: "Baka",
+              userLastName: "Kanna",
             },
           ],
         },
@@ -157,7 +157,7 @@ export default {
             {
               userId: "152463258",
               userName: "Game",
-              userLastName: "Baka",
+              userLastName: "Kanna",
             },
             {
               userId: "789558512",
@@ -178,7 +178,7 @@ export default {
             {
               userId: "152463258",
               userName: "Game",
-              userLastName: "Baka",
+              userLastName: "Kanna",
             },
             {
               userId: "784666115",
@@ -211,7 +211,7 @@ export default {
             {
               userId: "152463258",
               userName: "Game",
-              userLastName: "Baka",
+              userLastName: "Kanna",
             },
             {
               userId: "784666115",
@@ -244,7 +244,7 @@ export default {
             {
               userId: "152463258",
               userName: "Game",
-              userLastName: "Baka",
+              userLastName: "Kanna",
             },
             {
               userId: "784666115",
