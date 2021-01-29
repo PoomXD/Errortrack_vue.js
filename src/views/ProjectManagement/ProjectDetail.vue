@@ -38,8 +38,8 @@
         <div id="search">
             <table>
                 <tr>
-                <td><input id="ServiceSearch" type="text" placeholder=" Service Search" v-model="keyword"></td>
-                <td><b-button variant="primary" id="icon"><font-awesome-icon :icon="['fas', 'search']"/></b-button></td>
+                    <td><input id="ServiceSearch" type="text" placeholder=" Service Search" v-model="keyword"></td>
+                    <td><b-button variant="primary" id="icon"><font-awesome-icon :icon="['fas', 'search']"/></b-button></td>
                 </tr>
             </table>
         </div>
