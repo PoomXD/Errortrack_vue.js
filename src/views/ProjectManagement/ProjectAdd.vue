@@ -141,6 +141,17 @@ export default {
   },
   mounted(){
     this.listUserMaintenance = this.listUserOwner
+    let listlink = [
+        {
+          name: "Project Managemant",
+          url: "../project/list",
+        },
+        {
+          name: "Project Add",
+          url: "#",
+        },
+      ];
+    this.$store.dispatch("setAllLinkHeader", listlink);
   },
   methods: {
     addUserMaintenance() {
