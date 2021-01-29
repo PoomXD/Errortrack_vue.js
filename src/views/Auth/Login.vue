@@ -1,9 +1,9 @@
 <template>
   <div id="login" class="background p-5 ">
-    <div class="container background-container rounded " style="heigth: 100%">
+    <div class="container background-container rounded ">
       <div class="row ">
         <div class="col image-stlay">
-          <img src="/img/image1.png" style="height:400px;" />
+          <img src="/img/image1.png" style="height: 100%; width: 100%;"/>
         </div>
         <div class="col pr-5">
           <h1 class="title-font mt-5 mb-5">Sing In</h1>
@@ -27,7 +27,7 @@
           >
             Keep me signed in
           </b-form-checkbox>
-          <b-button class="rounded-pill button-font" block variant="primary">
+          <b-button class="rounded-pill button-font" block variant="primary" @click="clickLogin()">
             <table class="table-stlay">
               <tr>
                 <td class="pl-5">Log In</td>
@@ -49,6 +49,12 @@
 <script>
 export default {
   name: "login",
+  methods:{
+    clickLogin(){
+      this.$router.push("../monitor/all");
+      //this.$store.dispatch("setAllLinkHeader", listlink);
+    }
+  },
 };
 </script>
 

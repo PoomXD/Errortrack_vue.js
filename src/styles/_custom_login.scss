@@ -27,15 +27,12 @@
 .button-font {
     font-family: "Prompt";
     font-style: normal;
-    // font-weight: 600;
     font-size: 20px;
-    // line-height: 91px;
     color: #ffffff;
     margin-top: 72px;
   }
 .background-container{
     background-color: white;
-    height: 100%;
     box-shadow: 1px 4px 30px rgba(0, 0, 0, 0.15);
 }
 .background-button{
@@ -52,5 +49,6 @@
     width: 100%;
 }
 .image-stlay{
+    height: 100%;
     align-self: center !important;
 }

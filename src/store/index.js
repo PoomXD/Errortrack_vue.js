@@ -6,27 +6,18 @@ Vue.use(Vuex);
 
 const store = new Vuex.Store({
   state: {
-    allLinkHeader: [
-      {
-        name: "Monitor Error",
-        url: "login",
-      },
-      { 
-        name: "Service Error",
-        url: "#",
-      },
-      { 
-        name: "Tasks",
-        url: "#",
-      },
-    ],
+    allLinkHeader: [],
   },
   actions: {
-    setAllLinkHeader(list){
-      allLinkHeader = list
+    setAllLinkHeader( {commit},list){
+      commit("setlist",list)
     },
   },
-  mutations: {},
+  mutations: {
+    setlist(state,list){
+      state.allLinkHeader = list
+    }
+  },
   modules: {
     account,
   },
