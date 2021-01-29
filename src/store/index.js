@@ -10,7 +10,6 @@ const store = new Vuex.Store({
   },
   actions: {
     setAllLinkHeader( {commit},list){
-
       commit("setlist",list)
     },
   },

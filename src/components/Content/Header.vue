@@ -16,7 +16,7 @@
                   />
                   <font-awesome-icon
                     v-if="val.name == 'Project Managemant'"
-                    :icon="['fas', 'check-square']"
+                    :icon="['far', 'check-square']"
                   />
                   <font-awesome-icon
                     v-if="val.name == 'Dashboard'"
