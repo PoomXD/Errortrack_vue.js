@@ -136,23 +136,7 @@ export default {
       ],
       valueMaintenance: [],
       valueOwner: [],
-      fields: [
-        {
-          key: "no",
-          sortable: true,
-        },
-        {
-          key: "name",
-          label: "First - Last Name",
-          sortable: true,
-        },
-        {
-          key: "button",
-          label: " ",
-          sortable: true,
-          // variant: "danger",
-        },
-      ],
+      
     };
   },
   mounted(){
