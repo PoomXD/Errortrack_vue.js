@@ -1,5 +1,6 @@
 <template>
-  <div class="container-main font-no-size-color">
+  <div class="container-test font-no-size-color d-flex align-content-between flex-wrap">
+    <div class="w-100">
     <div class="row">
       <div class="col">
         <div class="row mb-3">
@@ -49,8 +50,8 @@
       <div class="col text-left">
         <div class="py-3">User maintenance :</div>
         <div class="table-box">
-          <table class="table-color-alt w-100 text-center">
-            <tr >
+          <table class="table-color-alt w-100 text-center ">
+            <tr>
               <th class="py-2">No</th>
               <th class="py-2">First - Last Name</th>
               <th class="py-2"></th>
@@ -64,7 +65,7 @@
                   placeholder="Name Lastname"
                   label="name"
                   track-by="name"
-                  style="width: 60%;"
+                  style="width: 60%"
                 ></multiselect>
               </td>
               <td>
@@ -93,6 +94,24 @@
           </table>
         </div>
       </div>
+    </div>
+    </div>
+
+    <div class="row w-100">
+      <!-- <div class="col"></div> -->
+      <div class="col text-right mr-4">
+        <router-link :to="{ name: 'ListProject' }">
+          <b-button class="bt-cancel-blue font-no-size-color w-25"
+            >Cancel</b-button
+          >
+        </router-link>
+      </div>
+      <div class="col text-left ml-4">
+        <router-link :to="{ name: 'ListProject' }">
+          <b-button class=" bt-blue font-no-size-color w-25">Save</b-button>
+        </router-link>
+      </div>
+      <!-- <div class="col"></div> -->
     </div>
   </div>
 </template>
@@ -136,18 +155,25 @@ export default {
       ],
     };
   },
+  mounted(){
+    this.listUserMaintenance = this.listUserOwner
+  },
   methods: {
     addUserMaintenance() {
       this.valueMaintenance.push({ name: this.value.name, id: this.value.id });
-      let res = this.listUserMaintenance;
+      let lm = this.listUserMaintenance;
+      let lo = this.listUserOwner;
       this.valueMaintenance.forEach((e) => {
-        res = res.filter((data) => data.id !== e.id);
+        lm = lm.filter((data) => data.id !== e.id);
+        lo = lo.filter((data) => data.id !== e.id);
       });
-      this.listUserMaintenance = res;
+      this.listUserMaintenance = lm;
+      this.listUserOwner = lo;
       this.value = null;
     },
     delUserMaintenance(data) {
       // console.log(data)
+      this.listUserOwner.push(data);
       this.listUserMaintenance.push(data);
       let res = this.valueMaintenance;
       res = res.filter((val) => val.id != data.id);
@@ -175,5 +201,19 @@ export default {
 
 <style src="vue-multiselect/dist/vue-multiselect.min.css"></style>
 <style>
-
+.container-test {
+    background: #ffffff;
+    border: 1px;
+    border-style: solid;
+    border-color: #BACFE7;
+    box-sizing: border-box;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    padding: 15px;
+    /* height: 600px; */
+    min-height: 600px;
+}
+.h-200{
+  height: 200px;
+}
 </style>
