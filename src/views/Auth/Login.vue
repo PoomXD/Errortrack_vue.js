@@ -27,7 +27,7 @@
           >
             Keep me signed in
           </b-form-checkbox>
-          <b-button class="rounded-pill button-font" block variant="primary">
+          <b-button class="rounded-pill button-font" block variant="primary" @click="clickLogin()">
             <table class="table-stlay">
               <tr>
                 <td class="pl-5">Log In</td>
@@ -49,6 +49,12 @@
 <script>
 export default {
   name: "login",
+  methods:{
+    clickLogin(){
+      this.$router.push("../monitor/all");
+      //this.$store.dispatch("setAllLinkHeader", listlink);
+    }
+  },
 };
 </script>
 
