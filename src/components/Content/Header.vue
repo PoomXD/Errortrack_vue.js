@@ -29,13 +29,13 @@
 
                   <a
                     v-if="$store.state.allLinkHeader.length == 1"
-                    class="font-weight-bold header-font2 ml-2"
+                    class="font-weight-bold header-cursor header-font2 ml-2"
                   >
                     {{ val.name }}
                   </a>
                   <a
                     v-if="$store.state.allLinkHeader.length > 1 && index != $store.state.allLinkHeader.length - 1"
-                    class="font-weight-bold ml-2"
+                    class="font-weight-bold header-cursor ml-2"
                     @click="goto(val.url)"
                   >
                     {{ val.name }}
@@ -49,7 +49,7 @@
                     index == $store.state.allLinkHeader.length - 1 && index != 0
                   "
                 >
-                  <a class="font-weight-bold header-font2 ml-2">
+                  <a class="font-weight-bold header-cursor header-font2 ml-2">
                     {{ val.name }}
                   </a>
                 </div>
