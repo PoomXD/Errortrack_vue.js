@@ -9,7 +9,7 @@ const store = new Vuex.Store({
     allLinkHeader: [
       {
         name: "Monitor Error",
-        url: "#",
+        url: "login",
       },
       { 
         name: "Service Error",
@@ -21,7 +21,11 @@ const store = new Vuex.Store({
       },
     ],
   },
-  actions: {},
+  actions: {
+    setAllLinkHeader(list){
+      allLinkHeader = list
+    },
+  },
   mutations: {},
   modules: {
     account,

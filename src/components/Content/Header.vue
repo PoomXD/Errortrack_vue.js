@@ -1,6 +1,6 @@
 <template>
   <div class="header-main">
-    <table class="header-table" >
+    <table class="header-table">
       <tr>
         <td style="width: 80%; padding-left: 20px;">
           <table>
@@ -8,24 +8,43 @@
               <td
                 v-for="(val, index) in $store.state.allLinkHeader"
                 :key="index"
-              > 
+              >
                 <div v-if="index == 0">
-
-                  <font-awesome-icon v-if="val.name == 'Monitor Error'" :icon="['fas', 'desktop']" />
-                  <font-awesome-icon v-if="val.name == 'Project Management'" :icon="['fas', 'check-square']" />
-                  <font-awesome-icon v-if="val.name == 'Dashboard'" :icon="['fas', 'chart-pie']" />
-                  <font-awesome-icon v-if="val.name == 'Document API'" :icon="['fas', 'code']" />
-                  <a class="font-weight-bold" href="#">
+                  <font-awesome-icon
+                    v-if="val.name == 'Monitor Error'"
+                    :icon="['fas', 'desktop']"
+                  />
+                  <font-awesome-icon
+                    v-if="val.name == 'Project Management'"
+                    :icon="['fas', 'check-square']"
+                  />
+                  <font-awesome-icon
+                    v-if="val.name == 'Dashboard'"
+                    :icon="['fas', 'chart-pie']"
+                  />
+                  <font-awesome-icon
+                    v-if="val.name == 'Document API'"
+                    :icon="['fas', 'code']"
+                  />
+                  <a class="font-weight-bold ml-2" @click="goto(val.url)">
                     {{ val.name }}
                   </a>
-                  <a class="font-weight-bold"> ></a>
+                  <a class="font-weight-bold ml-2"> ></a>
                 </div>
-                <div v-if="index != $store.state.allLinkHeader.length - 1 && index != 0">
-                  <a class="font-weight-bold" href="#"> {{ val.name }} </a>
-                  <a class="font-weight-bold"> > </a>
+                <div
+                  v-if="
+                    index != $store.state.allLinkHeader.length - 1 && index != 0
+                  "
+                >
+                  <a class="font-weight-bold ml-2" @click="goto(val.url)">
+                    {{ val.name }}
+                  </a>
+                  <a class="font-weight-bold ml-2"> > </a>
                 </div>
                 <div v-if="index == $store.state.allLinkHeader.length - 1">
-                  <a class="font-weight-bold header-font2"> {{ val.name }} </a>
+                  <a class="font-weight-bold header-font2 ml-2">
+                    {{ val.name }}
+                  </a>
                 </div>
               </td>
             </tr>
@@ -35,7 +54,7 @@
           <table class="header-table">
             <tr>
               <td style="width:40%;">
-                
+                <font-awesome-icon :icon="['fas', 'bell']" />
               </td>
               <td>
                 <b-avatar
@@ -76,6 +95,11 @@
 <script>
 export default {
   name: "component-header",
-  beforeUpdate: {},
+  
+  methods: {
+    goto(url) {
+      this.$router.push(url);
+    },
+  },
 };
 </script>
