@@ -76,8 +76,8 @@ export default {
             keyword: '',
             fields: [{key:'No',thStyle: {width: '5%'}},
                      {key:'Service_ID',thStyle: {width: '20%'}},
-                     {key:'Service_Name',thStyle: {width: '30%'}},
-                     {key:' ',thStyle: {width: '35%'}},
+                     {key:'Service_Name',thStyle: {width: '65%' , align:'left'}},
+                    //  {key:' ',thStyle: {width: '35%'}},
                      {key:'Create_Date',thStyle: {width: '10%',}}],
             dataArray: [
                         {No: 1, Service_ID: '123-456-789', Service_Name: 'Name Servicename1',Create_Date: '11-12-2563'},
@@ -119,6 +119,7 @@ export default {
     width: 350px;
     border-radius: 20px;
     background: #fff;
+    outline: -webkit-focus-ring-color auto 0px;
   }
   #Detail{
     border: 1px solid rgb(174, 199, 255);
