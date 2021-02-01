@@ -7,12 +7,12 @@
           <table class="table-grid">
             <tr>
               <td>
-                <b-form-input
+                <input
                   :placeholder="'Project Search ...'"
                   v-model="filter"
-                  class="input-search font-no-size-color"
+                  class="input-search font-no-size-color px-1"
                 >
-                </b-form-input>
+                <!-- </b-form-input> -->
               </td>
               <td>
                 <b-button class="icon-search"
@@ -58,40 +58,58 @@
                 <tr>
                   <td class="float-left">
                     <div class="row px-2">
+                      <!-- <div v-if="users[index].size > 3">
+                        <div v-for="(user, j) in users[index]" :key="`userMoreThan3-${j}-${index}`">
+                          
+                        </div>
+                      </div> -->
                       <div
-                        v-for="(owner, i) in project.projectOwners"
-                        :key="`owner-${i}`"
+                        v-for="(user, i) in users[index]"
+                        :key="`user-${index}-${i}`"
                       >
-                        <b-avatar
-                          :id="`popover-${index}-${owner.userId}`"
-                          :size="30"
-                          class="mr-left avatar-color"
-                          >{{ owner.text }}</b-avatar
-                        >
-                        <b-popover
-                          :target="`popover-${index}-${owner.userId}`"
-                          :placement="'bottom'"
-                          triggers="hover focus"
-                          :content="`${owner.userName} ${owner.userLastName}`"
-                        ></b-popover>
-                      </div>
-                      <div
-                        v-for="(user, j) in project.userMaintenance"
-                        :key="`user-${j}`"
-                      >
-                        <b-avatar
-                          :id="`popover2-${index}-${user.userId}`"
-                          :size="30"
-                          class="mr-left avatar-color"
-                          >{{ user.text }}</b-avatar
-                        >
+                        <div v-if="i < 3">
+                          <div v-if="user.role === 'owner'">
+                            <b-avatar
+                            :id="`popover2-${index}-${user.userId}`"
+                            :size="30"
+                            class="mr-left avatar-owner"
+                            >{{ user.text }}</b-avatar>
 
-                        <b-popover
-                          :target="`popover2-${index}-${user.userId}`"
-                          :placement="'bottom'"
-                          triggers="hover focus"
-                          :content="`${user.userName} ${user.userLastName}`"
-                        ></b-popover>
+                          <b-popover
+                            :target="`popover2-${index}-${user.userId}`"
+                            :placement="'bottom'"
+                            triggers="hover focus"
+                            :content="`${user.userName} ${user.userLastName}`"
+                          ></b-popover>
+                          </div>
+                          <div v-else>
+                            <b-avatar
+                            :id="`popover2-${index}-${user.userId}`"
+                            :size="30"
+                            class="mr-left avatar-user"
+                            >{{ user.text }}</b-avatar>
+
+                          <b-popover
+                            :target="`popover2-${index}-${user.userId}`"
+                            :placement="'bottom'"
+                            triggers="hover focus"
+                            :content="`${user.userName} ${user.userLastName}`"
+                          ></b-popover>
+                          </div>
+                        </div>
+                        <div v-if="i==3">
+                          <b-avatar
+                            :id="`popover2-${index}-else`"
+                            :size="30"
+                            class="mr-left avatar-more"
+                            ><font-awesome-icon :icon="['fas', 'ellipsis-h']"/></b-avatar>
+                            <!-- <b-popover
+                            :target="`popover2-${index}-else`"
+                            :placement="'bottom'"
+                            triggers="hover focus"
+                            :content="`${owner.userName} ${owner.userLastName}`"
+                          ></b-popover> -->
+                        </div>
                       </div>
                     </div>
                   </td>
@@ -267,6 +285,8 @@ export default {
         },
       ],
       filter: "",
+      users: [],
+      userMoreThan3: '',
     };
   },
   mounted(){
@@ -280,16 +300,40 @@ export default {
   },
   beforeMount() {
     this.projects.forEach((project) => {
+      let userEachProject = [];
+      // console.log('test');
       project.projectOwners.forEach((owner) => {
         let text = `${owner.userName[0]}${owner.userLastName[0]}`;
-        owner["text"] = text;
+        // owner["text"] = text;
+        let us = {
+          "userId" : owner.userId,
+          "userName" : owner.userName,
+          "userLastName" : owner.userLastName,
+          "role" : "owner",
+          "text" : text
+        }
+        // console.log(us);
+        userEachProject.push(us);
+        // console.log('user for each',userEachProject);
+        // console.log('project: ',project.projectName);
       });
       project.userMaintenance.forEach((user) => {
         let text = `${user.userName[0]}${user.userLastName[0]}`;
-        user["text"] = text;
+        
+        let us = {
+          "userId" : user.userId,
+          "userName" : user.userName,
+          "userLastName" : user.userLastName,
+          "role" : "user",
+          "text" : text
+        }
+
+        userEachProject.push(us);
       });
+      this.users.push(userEachProject);
+      // console.log('users in loop: ',this.users);
     });
-    console.log(this.projects);
+    // console.log('users: ',this.users);
   },
   
   computed: {
@@ -303,11 +347,6 @@ export default {
           projectName.includes(searchTerm) || projectId.includes(searchTerm)
         );
       });
-    },
-    headers2() {
-      return [
-        { text: "", fixed: true, width: "100px", sortable: false },
-      ].concat(this.headers);
     },
   },
 };
