@@ -5,7 +5,8 @@ import { interceptorResponse, interceptorResponseError } from './interceptors/re
 
 const headers = {
   // 'Access-Control-Allow-Origin': '*',
-  "api-version": null
+  "api-version": null,
+  "header-version" : '1.0.0'
 };
 
 const httpClient = axios.create({
