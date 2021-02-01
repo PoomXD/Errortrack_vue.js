@@ -8,30 +8,39 @@
 
         <br>
         <br>
-         <div id="Detail">
-         <br>
-        <div class="row">
-            <div class="col-2 font-gen" style="font-weight: bold" align="right">Project ID  : </div>
-            <div class="col-2 font-detail" align="left">{{Project_ID}} </div>
-            <div class="col-4 font-gen" style="font-weight: bold" align="right">Project Name  : </div>
-            <div class="col-2 font-detail" align="left">{{Project_Name}} </div>
-        </div>
-            <br>   
-        <div class="row">
-            <div class="col-2 font-gen" style="font-weight: bold" align="right">Project Details  : </div>
-            <div class="col-2 font-detail" align="left">{{Project_Detail}} </div>
-            <div class="col-4 font-gen" style="font-weight: bold" align="right">Project Owner  :</div>
-            <div class="col-2 font-detail" align="left">{{Project_Owner}} </div>
-        </div>
-           <br>
-        <div class="row">
-            <div class="col-8 font-gen" style="font-weight: bold" align="right">Member  :</div>
-            <div class="col-2 font-detail" align="left">
-            <tr v-for="(Member, index) in Member" :key="`Member-${index}`">
-                <td>{{ Member.name}}</td>
-            </tr>
-            </div>
-        </div>
+         <div class="card-list row">
+             <div class="col-6" style="margin-top:-2%">
+                <div class="row">
+                    <div class="col-4 font-gen" style="font-weight: bold" align="right">Project ID  : </div>
+                    <div class="col-6 font-detail" align="left">{{Project_ID}} </div>
+                </div>
+                <div class="row" style="margin-top:2%">
+                    <div class="col-4 font-gen" style="font-weight: bold" align="right">Project Details  : </div>
+                    <div class="col-6 font-detail" align="left">{{Project_Detail}} </div>
+                </div>
+             </div>
+             <div class="col-6" style="margin-top:-2%">
+                <div class="row">
+                    <div class="col-4 font-gen" style="font-weight: bold" align="right">Project Name  : </div>
+                    <div class="col-5 font-detail" align="left">{{Project_Name}} </div>
+                </div>
+                <div class="row" style="margin-top:2%">
+                    <div class="col-4 font-gen" style="font-weight: bold" align="right">Project Owner  : </div>
+                    <div class="col-8 font-detail" align="left">
+                    <tr v-for="(Project_Owner, index) in Project_Owner" :key="`Project_Owner-${index}`">
+                    <td>{{ [Project_Owner].sort().join(',') }}</td>
+                    </tr>
+                    </div>
+                </div>
+                <div class="row" style="margin-top:2%">
+                    <div class="col-4 font-gen" style="font-weight: bold" align="right">Member  :</div>
+                    <div class="col-5 font-detail" align="left"> 
+                    <tr v-for="(Member, index) in Member" :key="`Member-${index}`">
+                    <td>{{Member.name}}</td>
+                    </tr>
+                    </div>
+                </div>
+             </div>
         </div> 
 
         <br>
@@ -90,7 +99,7 @@ export default {
             Project_ID:"xxx-xxxx-xxxx-xxx",
             Project_Detail:"Detail",
             Project_Name:"Covid 19 Airports Project",
-            Project_Owner:"firstname lastname",
+            Project_Owner:{Owner : ['firstname lastname','firstname lastname']},
             Member:[{name : 'name_lastname'},{name : 'name_lastname'},{name : 'name_lastname'},{name : 'name_lastname'}],  
         }
     },
@@ -120,13 +129,6 @@ export default {
     border-radius: 20px;
     background: #fff;
     outline: -webkit-focus-ring-color auto 0px;
-  }
-  #Detail{
-    border: 1px solid rgb(174, 199, 255);
-    border-radius: 10px;
-    background: #fff;
-    height: 250px;
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
   }
   #icon{
       margin: 1px;
