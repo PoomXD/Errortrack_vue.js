@@ -1,25 +1,23 @@
 import Vue from "vue";
 import Vuex from "vuex";
 import { account } from "./account.module";
+import {header} from "./header.module";
 
 Vue.use(Vuex);
 
 const store = new Vuex.Store({
   state: {
-    allLinkHeader: [],
+
   },
   actions: {
-    setAllLinkHeader( {commit},list){
-      commit("setlist",list)
-    },
+  
   },
   mutations: {
-    setlist(state,list){
-      state.allLinkHeader = list
-    }
+    
   },
   modules: {
     account,
+    header,
   },
 });
 

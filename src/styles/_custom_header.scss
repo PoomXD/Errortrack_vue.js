@@ -9,6 +9,7 @@
 
 .align-items-lg-center {
     align-items: center !important;
+    margin: 0px;
 }
 
 .header-td{
@@ -25,4 +26,8 @@
 }
 .header-cursor{
     cursor: pointer;
+}
+.link-style{
+    pointer-events:none; 
+    display: inline;
 }

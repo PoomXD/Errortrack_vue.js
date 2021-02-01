@@ -276,7 +276,7 @@ export default {
           url: "#",
         },
       ];
-    this.$store.dispatch("setAllLinkHeader", listlink);
+    this.$store.dispatch("header/setAllLinkHeader", listlink);
   },
   beforeMount() {
     this.projects.forEach((project) => {
