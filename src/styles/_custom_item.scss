@@ -32,9 +32,22 @@
     border-radius: 40px;
     width: 100%;
     float: left;
+    outline: none;
+    &:focus {
+        outline: none;
+    }
 }
-.avatar-color {
-    background-color: $blue;
+.avatar-owner {
+    background-color: #0077b6;
+    font-size: 14px;
+}
+.avatar-user {
+    background-color: #48cae4;
+    font-size: 14px;
+}
+.avatar-more {
+    color: black;
+    background-color: #b8c6c9;
     font-size: 14px;
 }
 .add-icon {
