@@ -42,7 +42,7 @@
           v-for="(project, index) in filteredRows"
           :key="`project-${index}`"
         >
-          <router-link :to="{ name: 'ProjectDetail' }">
+          <router-link :to="{ name: 'ServiceError' }">
             <div class="card-list">
               <table class="table-grid">
                 <tr>
@@ -127,7 +127,7 @@
 
 <script>
 export default {
-  name: "list-project",
+  name: "list-monitor",
 
   data() {
     return {
@@ -292,7 +292,7 @@ export default {
   mounted(){
     let listlink = [
         {
-          name: "Project Managemant",
+          name: "Monitor Error",
           url: "#",
         },
       ];

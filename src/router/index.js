@@ -45,6 +45,18 @@ const routes = [
             name: "MonitorAdd",
             component: () =>
               import("../views/MonitorError/AddList.vue"),
+          },
+          {
+            path: "detail",
+            name: "ServiceError",
+            component: () =>
+              import("../views/MonitorError/ServiceError.vue"),
+          },
+          {
+            path: "task",
+            name: "TaskError",
+            component: () =>
+              import("../views/MonitorError/ServiceError.vue"),
           }
         ]
       },
