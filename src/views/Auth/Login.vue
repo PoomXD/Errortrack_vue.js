@@ -51,7 +51,7 @@ export default {
   name: "login",
   methods:{
     clickLogin(){
-      this.$router.push("../monitor/all");
+      this.$router.push({name : 'ListProject'});
       //this.$store.dispatch("setAllLinkHeader", listlink);
     }
   },
