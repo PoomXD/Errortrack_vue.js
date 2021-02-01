@@ -35,7 +35,7 @@ const routes = [
         component: EmptyParentComponent,
         children : [
           {
-            path: "all",
+            path: "list",
             name: "MonitorList",
             component: () =>
               import("../views/MonitorError/ListError.vue"),
