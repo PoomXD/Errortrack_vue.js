@@ -67,6 +67,9 @@
 <script>
 export default {
     name:"ProjectDetail",
+    created(){
+        console.log('this.$route',this.$route);
+    },
     mounted(){
         let listlink = [
         {

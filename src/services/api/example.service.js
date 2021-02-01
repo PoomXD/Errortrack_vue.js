@@ -57,7 +57,19 @@ class ExampleService{
     return response.data;
   }
   
+  async examDelete2(param){
+    const config = {
+      method: 'delete',
+      url: `${END_POINT}/Example`,
+      data : param,  
+      headers:{
+      }
+    }
+
+    const response = await httpClient(config);
+    return response.data;
+  }
 }
 
-export default new TestService();
+export default new ExampleService();
 
