@@ -1,100 +1,102 @@
 <template>
-  <div class="container-main font-no-size-color d-flex align-content-between flex-wrap">
+  <div
+    class="container-main font-no-size-color d-flex align-content-between flex-wrap"
+  >
     <div class="w-100">
-    <div class="row">
-      <div class="col">
-        <div class="row mb-3">
-          <div class="col-3 text-right font-gen">Project ID :</div>
-          <div class="col-8 font-detail">
-            <b-form-input
-              placeholder="xxxx"
-              type="text"
-              class="shadow-sm"
-            ></b-form-input>
+      <div class="row">
+        <div class="col">
+          <div class="row mb-3">
+            <div class="col-3 text-right font-gen">Project ID :</div>
+            <div class="col-8 font-detail">
+              <b-form-input
+                placeholder="xxxx"
+                type="text"
+                class="shadow-sm"
+              ></b-form-input>
+            </div>
+          </div>
+          <div class="row mb-3">
+            <div class="col-3 text-right font-gen">Project Name :</div>
+            <div class="col-8 font-detail">
+              <b-form-input
+                placeholder="Project Name"
+                type="text"
+                class="shadow-sm"
+              ></b-form-input>
+            </div>
+          </div>
+          <div class="row mb-3">
+            <div class="col-3 text-right font-gen">Project Owner :</div>
+            <div class="col-8 font-detail">
+              <multiselect
+                v-model="valueOwner"
+                placeholder="Name Lastname"
+                label="name"
+                track-by="id"
+                :options="listUserOwner"
+                :multiple="true"
+              ></multiselect>
+            </div>
           </div>
         </div>
-        <div class="row mb-3">
-          <div class="col-3 text-right font-gen">Project Name :</div>
-          <div class="col-8 font-detail">
-            <b-form-input
-              placeholder="Project Name"
-              type="text"
-              class="shadow-sm"
-            ></b-form-input>
-          </div>
-        </div>
-        <div class="row mb-3">
-          <div class="col-3 text-right font-gen">Project Owner :</div>
-          <div class="col-8 font-detail">
-            <multiselect
-              v-model="valueOwner"
-              placeholder="Name Lastname"
-              label="name"
-              track-by="id"
-              :options="listUserOwner"
-              :multiple="true"
-            ></multiselect>
+        <div class="col">
+          <div class="row">
+            <div class="col-3 text-right font-gen">Project Details :</div>
+            <div class="col-8 font-detail">
+              <b-form-textarea type="text" class="shadow-sm"></b-form-textarea>
+            </div>
           </div>
         </div>
       </div>
-      <div class="col">
-        <div class="row">
-          <div class="col-3 text-right font-gen">Project Details :</div>
-          <div class="col-8 font-detail">
-            <b-form-textarea type="text" class="shadow-sm"></b-form-textarea>
+      <div class="row m-3">
+        <div class="col text-left">
+          <div class="py-3 font-gen">User maintenance :</div>
+          <div class="table-box">
+            <table class="table-color-alt w-100 text-center">
+              <tr class="font-gen">
+                <th class="py-2">No</th>
+                <th class="py-2">First - Last Name</th>
+                <th class="py-2"></th>
+              </tr>
+              <tr class="font-detail">
+                <td></td>
+                <td class="py-2">
+                  <multiselect
+                    v-model="value"
+                    :options="listUserMaintenance"
+                    placeholder="Name Lastname"
+                    label="name"
+                    track-by="name"
+                    style="width: 60%"
+                  ></multiselect>
+                </td>
+                <td>
+                  <font-awesome-icon
+                    class="add-icon"
+                    :icon="['fas', 'plus-circle']"
+                    @click="addUserMaintenance()"
+                  />
+                </td>
+              </tr>
+              <tr
+                v-for="(item, index) in valueMaintenance"
+                :key="`item-${index}`"
+                class="font-detail"
+              >
+                <td class="py-2">{{ index + 1 }}</td>
+                <td class="float-left py-2">{{ item.name }}</td>
+                <td class="py-2">
+                  <font-awesome-icon
+                    class="del-icon"
+                    :icon="['fas', 'trash-alt']"
+                    @click="delUserMaintenance(item)"
+                  />
+                </td>
+              </tr>
+            </table>
           </div>
         </div>
       </div>
-    </div>
-    <div class="row m-3">
-      <div class="col text-left">
-        <div class="py-3 font-gen">User maintenance :</div>
-        <div class="table-box">
-          <table class="table-color-alt w-100 text-center ">
-            <tr class="font-gen">
-              <th class="py-2">No</th>
-              <th class="py-2">First - Last Name</th>
-              <th class="py-2"></th>
-            </tr>
-            <tr class="font-detail">
-              <td></td>
-              <td class="py-2">
-                <multiselect
-                  v-model="value"
-                  :options="listUserMaintenance"
-                  placeholder="Name Lastname"
-                  label="name"
-                  track-by="name"
-                  style="width: 60%"
-                ></multiselect>
-              </td>
-              <td>
-                <font-awesome-icon
-                  class="add-icon"
-                  :icon="['fas', 'plus-circle']"
-                  @click="addUserMaintenance()"
-                />
-              </td>
-            </tr>
-            <tr
-              v-for="(item, index) in valueMaintenance"
-              :key="`item-${index}`"
-              class="font-detail"
-            >
-              <td class="py-2">{{ index + 1 }}</td>
-              <td class="float-left py-2">{{ item.name }}</td>
-              <td class="py-2">
-                <font-awesome-icon
-                  class="del-icon"
-                  :icon="['fas', 'trash-alt']"
-                  @click="delUserMaintenance(item)"
-                />
-              </td>
-            </tr>
-          </table>
-        </div>
-      </div>
-    </div>
     </div>
 
     <div class="row w-100">
@@ -107,7 +109,10 @@
         </router-link>
       </div>
       <div class="col text-left ml-4">
-        <router-link :to="{ name: 'ListProject' }" class="btn bt-blue font-no-size-color w-25">
+        <router-link
+          :to="{ name: 'ListProject' }"
+          class="btn bt-blue font-no-size-color w-25"
+        >
           Save
         </router-link>
       </div>
@@ -119,8 +124,18 @@
 
 <script>
 import Multiselect from "vue-multiselect";
+// import { getFullName } from "@/store/project.module.js";
+import { mapGetters } from "vuex";
+
 export default {
-  component: { multiselect: Multiselect },
+  computed: {
+    ...mapGetters({
+      getFullName: "@/store/project.module/getFullName",
+    }),
+  },
+  component: {
+    multiselect: Multiselect,
+  },
   data() {
     return {
       value: null,
@@ -136,28 +151,36 @@ export default {
       ],
       valueMaintenance: [],
       valueOwner: [],
-      
     };
   },
-  mounted(){
-    this.listUserMaintenance = this.listUserOwner
+  mounted() {
+    console.log(1);
+    this.addName();
+    console.log(2);
+    this.listUserMaintenance = this.listUserOwner;
     let listlink = [
-        {
-          name: "Project Managemant",
-          url: "../project/list",
-        },
-        {
-          name: "Project Detail",
-          url: "../project/detail",
-        },
-        {
-          name: "Edit",
-          url: "#",
-        },
-      ];
+      {
+        name: "Project Managemant",
+        url: "../project/list",
+      },
+      {
+        name: "Project Detail",
+        url: "../project/detail",
+      },
+      {
+        name: "Edit",
+        url: "#",
+      },
+    ];
     this.$store.dispatch("setAllLinkHeader", listlink);
   },
   methods: {
+    addName() {
+      console.log(this.getFullName);
+      this.getFullName.then((res) => {
+        console.log(res);
+      });
+    },
     addUserMaintenance() {
       this.valueMaintenance.push({ name: this.value.name, id: this.value.id });
       let lm = this.listUserMaintenance;
@@ -200,5 +223,4 @@ export default {
 
 <style src="vue-multiselect/dist/vue-multiselect.min.css"></style>
 <style>
-
 </style>
