@@ -3,60 +3,51 @@
     <table class="header-table">
       <tr>
         <td style="width: 80%; padding-left: 20px;">
-          <table>
-            <tr>
-              <td
-                v-for="(val, index) in $store.state.allLinkHeader"
-                :key="index"
-              >
-                <div>
+          <div >
+            <ul class="align-items-lg-center float-left">
+              <li class="link-style" v-for="(val, index) in header" :key="index">
+               
                   <font-awesome-icon
-                    v-if="val.name == 'Monitor Error'"
+                    v-if="val.name == 'Monitor Error' && index == 0"
                     :icon="['fas', 'desktop']"
                   />
                   <font-awesome-icon
-                    v-if="val.name == 'Project Managemant'"
+                    v-if="val.name == 'Project Managemant' && index == 0"
                     :icon="['far', 'check-square']"
                   />
                   <font-awesome-icon
-                    v-if="val.name == 'Dashboard'"
+                    v-if="val.name == 'Dashboard'  && index == 0"
                     :icon="['fas', 'chart-pie']"
                   />
                   <font-awesome-icon
-                    v-if="val.name == 'Document API'"
+                    v-if="val.name == 'Document API'  && index == 0"
                     :icon="['fas', 'code']"
                   />
 
                   <a
-                    v-if="$store.state.allLinkHeader.length == 1"
+                    v-if="header.length == 1"
                     class="font-weight-bold header-cursor header-font2 ml-2"
                   >
                     {{ val.name }}
                   </a>
                   <a
-                    v-if="$store.state.allLinkHeader.length > 1 && index != $store.state.allLinkHeader.length - 1"
+                    v-if="header.length > 1 && index != header.length - 1"
                     class="font-weight-bold header-cursor ml-2"
                     @click="goto(val.url)"
                   >
                     {{ val.name }}
                   </a>
-                  <a v-if="index != $store.state.allLinkHeader.length - 1" class="font-weight-bold header-font2 ml-2">
+                  <a v-if="index != header.length - 1" class="font-weight-bold header-font2 ml-2">
                     >
                   </a>
-                </div>
-                <div
-                  v-if="
-                    index == $store.state.allLinkHeader.length - 1 && index != 0
-                  "
-                >
-                  <a class="font-weight-bold header-cursor header-font2 ml-2">
+                  <a v-if="
+                    index == header.length - 1 && index != 0
+                  " class="font-weight-bold header-cursor header-font2 ml-2">
                     {{ val.name }}
-                  </a>
-                </div>
-                
-              </td>
-            </tr>
-          </table>
+                  </a>      
+              </li>
+            </ul>
+          </div>
         </td>
         <td>
           <table class="header-table">
@@ -101,9 +92,15 @@
 </template>
 
 <script>
+import {mapState} from 'vuex'
 export default {
+  
   name: "component-header",
-
+  computed:{
+    ...mapState({
+      header: state => state.header.allLinkHeader
+    })
+  },
   methods: {
     goto(url) {
       this.$router.push(url);
