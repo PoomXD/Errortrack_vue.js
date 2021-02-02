@@ -42,7 +42,7 @@
           v-for="(project, index) in filteredRows"
           :key="`project-${index}`"
         >
-          <router-link :to="{ name: 'ServiceError' }">
+          <router-link :to="{ name: 'ServiceError', params: { projectId: project.projectId }}">
             <div class="card-list">
               <table class="table-grid">
                 <tr>
