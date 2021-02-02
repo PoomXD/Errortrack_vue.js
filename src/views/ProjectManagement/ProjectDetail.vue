@@ -9,32 +9,32 @@
         <br>
         <br>
          <div class="card-list row">
-             <div class="col-6" style="margin-top:-2%">
+             <div class="col-xl-6 col-md-12" style="margin-top:-2%">
                 <div class="row">
-                    <div class="col-4 font-gen" style="font-weight: bold" align="right">Project ID  : </div>
-                    <div class="col-6 font-detail" align="left">{{Project_ID}} </div>
-                </div>
-                <div class="row" style="margin-top:2%">
-                    <div class="col-4 font-gen" style="font-weight: bold" align="right">Project Details  : </div>
-                    <div class="col-6 font-detail" align="left">{{Project_Detail}} </div>
+                    <div class="col-xl-4 col-md-3 font-gen" style="font-weight: bold" align="right">Project ID  : </div>
+                    <div class="col-xl-6 col-md-5 font-detail" align="left">{{Project_ID}} </div>
+                </div> 
+                <div class="row" style="margin-top:1%">
+                    <div class="col-xl-4 col-md-3 font-gen" style="font-weight: bold; margin-bottom:3%" align="right">Project Details  : </div>
+                    <div class="col-xl-6 col-md-5 font-detail" align="left" style="margin-bottom:3%">{{Project_Detail}} </div>
                 </div>
              </div>
-             <div class="col-6" style="margin-top:-2%">
+             <div class="col-6 col-md-6" style="margin-top:-2%">
                 <div class="row">
-                    <div class="col-4 font-gen" style="font-weight: bold" align="right">Project Name  : </div>
-                    <div class="col-5 font-detail" align="left">{{Project_Name}} </div>
+                    <div class="col-xl-4 col-md-6 font-gen" style="font-weight: bold" align="right">Project Name  : </div>
+                    <div class="col-xl-5 col-md-6 font-detail" align="left">{{Project_Name}} </div>
                 </div>
                 <div class="row" style="margin-top:2%">
-                    <div class="col-4 font-gen" style="font-weight: bold" align="right">Project Owner  : </div>
-                    <div class="col-8 font-detail" align="left">
+                    <div class="col-xl-4 col-md-6 font-gen" style="font-weight: bold" align="right">Project Owner  : </div>
+                    <div class="col-xl-8 col-md-6 font-detail" align="left">
                     <tr v-for="(Project_Owner, index) in Project_Owner" :key="`Project_Owner-${index}`">
                     <td>{{ [Project_Owner].sort().join(',') }}</td>
                     </tr>
                     </div>
                 </div>
                 <div class="row" style="margin-top:2%">
-                    <div class="col-4 font-gen" style="font-weight: bold" align="right">Member  :</div>
-                    <div class="col-5 font-detail" align="left"> 
+                    <div class="col-xl-4 col-md-6 font-gen" style="font-weight: bold" align="right">Member  :</div>
+                    <div class="col-xl-5 col-md-4 font-detail" align="left"> 
                     <tr v-for="(Member, index) in Member" :key="`Member-${index}`">
                     <td>{{Member.name}}</td>
                     </tr>
