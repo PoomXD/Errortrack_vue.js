@@ -73,6 +73,7 @@ const routes = [
             path: "task",
             name: "TaskError",
             component: () =>
+<<<<<<< HEAD
               import("../views/MonitorError/ServiceError.vue"),
           },
           {
@@ -80,6 +81,9 @@ const routes = [
             name: "ModalTest",
             component: () =>
               import("../views/MonitorError/ModalForTask.vue"),
+=======
+              import("../views/MonitorError/Task.vue"),
+>>>>>>> feature/ai-airada
           }
         ]
       },

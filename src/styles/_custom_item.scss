@@ -1,100 +1,127 @@
 .card-list {
-    background: $white;
-    border: 0.5px solid $borderColor;
-    box-sizing: border-box;
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.06);
-    border-radius: 8px;
-    padding: 5%;
-    margin-bottom: 5%;
+  background: $white;
+  border: 0.5px solid $borderColor;
+  box-sizing: border-box;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.06);
+  border-radius: 8px;
+  padding: 5%;
+  margin-bottom: 5%;
 }
 .searchBox {
-    background: $white;
-    border: 0.75px solid $borderColor;
-    box-sizing: border-box;
-    box-shadow: 2px 4px 8px rgba(0, 0, 0, 0.1);
-    border-radius: 32.5px;
-    width: 40%;
-    display: inline-block;
-    padding: 7px;
+  background: $white;
+  border: 0.75px solid $borderColor;
+  box-sizing: border-box;
+  box-shadow: 2px 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 32.5px;
+  width: 40%;
+  display: inline-block;
+  padding: 7px;
 }
 .icon-search {
-    background-color: $blue;
-    color: $white;
-    border: none;
-    border-radius: 100%;
-    float: right;
-    &:hover {
-        background-color: $hoverBlue;
-    }
+  background-color: $blue;
+  color: $white;
+  border: none;
+  border-radius: 100%;
+  float: right;
+  &:hover {
+    background-color: $hoverBlue;
+  }
 }
 .input-search {
-    border: none;
-    border-radius: 40px;
-    width: 100%;
-    float: left;
+  border: none;
+  border-radius: 40px;
+  width: 100%;
+  float: left;
+  outline: none;
+  &:focus {
     outline: none;
-    &:focus {
-        outline: none;
-    }
+  }
+}
+.input-invalid {
+  border: 1px solid $red !important;
+  outline: none !important;
+  &:focus {
+    outline: none !important;
+    box-shadow: none !important;
+  }
+}
+.multiselect {
+  font-size: 1rem !important;
+  font-weight: 400 !important;
+  line-height: 1.5 !important;
+  color: #495057 !important;
+  background-color: #fff !important;
+  border: 1px solid #ced4da !important;
+  border-radius: 0.25rem !important;
+  box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075) !important;
+  font-family: "Prompt" !important;
+  font-style: normal !important;
+  font-weight: 300 !important;
+  font-size: 14px !important;
+  line-height: 24px !important;
+}
+.multiselect-invalid {
+  border: 1px solid $red !important;
+  outline: none !important;
 }
 .avatar-owner {
-    background-color: #0077b6;
-    font-size: 14px;
+  background-color: #0077b6;
+  font-size: 14px;
 }
 .avatar-user {
-    background-color: #48cae4;
-    font-size: 14px;
+  background-color: #48cae4;
+  font-size: 14px;
 }
 .avatar-more {
-    color: black;
-    background-color: #b8c6c9;
-    font-size: 14px;
+  color: black;
+  background-color: #b8c6c9;
+  font-size: 14px;
 }
 .add-icon {
-    font-size: 60pxs;
-    color: $green;
-    &:hover {
-        color: $hoverGreen;
-    }
+  font-size: 60pxs;
+  color: $green;
+  &:hover {
+    color: $hoverGreen;
+  }
 }
 .del-icon {
-    font-size: 60pxs;
-    color: $red;
-    &:hover {
-        color: $hoverRed;
-    }
+  font-size: 60pxs;
+  color: $red;
+  &:hover {
+    color: $hoverRed;
+  }
 }
 .table-box {
-    background-color: $white;
-    border: 0.75px solid #BACFE7;
-    box-sizing: border-box;
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-    border-radius: 8px;
-    padding: 0%;
+  background-color: $white;
+  border: 0.75px solid #bacfe7;
+  box-sizing: border-box;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  padding: 0%;
 }
 .table-color {
-    margin: 0px;
-    border-radius: 8px;
-    overflow: hidden;
-    tbody tr:nth-of-type(odd){
-        background-color:#F8FBFF;
-    }
-    &:hover tr:hover{
-        color:#212529;
-        background-color:rgba(0,0,0,.075)
-    } 
+  margin: 0px;
+  border-radius: 8px;
+  overflow: hidden;
+  tbody tr:nth-of-type(odd) {
+    background-color: #f8fbff;
+  }
+  &:hover tr:hover {
+    color: #212529;
+    background-color: rgba(0, 0, 0, 0.075);
+  }
 }
 .table-color-alt {
-    margin: 0px;
-    border-radius: 8px;
-    tr:nth-of-type(even){
-        background-color:#F8FBFF;
-    }
-    tr:hover{
-        color:#212529;
-        background-color:rgba(0,0,0,.075)
-    } 
+  margin: 0px;
+  border-radius: 8px;
+  tr:nth-of-type(even) {
+    background-color: #f8fbff;
+  }
+  tr:hover {
+    color: #212529;
+    background-color: rgba(0, 0, 0, 0.075);
+  }
 }
-.show-selete{
-    overflow: unset;
+.show-selete {
+  overflow: unset;
 }
