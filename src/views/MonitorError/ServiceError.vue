@@ -66,7 +66,7 @@ export default {
       ];
     this.$store.dispatch("setAllLinkHeader", listlink);
     },
-    data(){
+    data(){ 
         return{
             keyword: '',
             fields: [{key:'No',thStyle: {width: '5%'}},
@@ -91,7 +91,7 @@ export default {
     },
     computed: {
 		items () {
-			return this.keyword
+	    	return this.keyword
                 ? this.dataArray.filter(item => 
                 item.Service_ID.includes(this.keyword)||
                 item.Service_Name.includes(this.keyword))
