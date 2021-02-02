@@ -1,17 +1,69 @@
 const state = {
-  allLinkHeader: [
+  listHeader: [
     {
-      name: "Project Managemant",
-      url: "#",
-    },{
-        name: "Project Managemant",
-        url: "#",
-      },
+      name: "ListProject",
+      data: [
+        {
+          name: "Project Managemant",
+          url: "#",
+        },
+      ],
+    },
+    {
+      name: "ProjectAdd",
+      data: [
+        {
+          name: "Project Managemant",
+          url: { name: "ListProject" },
+        },
+      
+        {
+          name: "Add",
+          url: "#",
+        },
+      ],
+    },
+    {
+      name: "ProjectEdit",
+      data: [
+        {
+          name: "Project Managemant",
+          url: { name: "ListProject" },
+        },
+        {
+          name: "Project Detail",
+          url: { name: "ProjectDetail" },
+        },
+        {
+          name: "Edit",
+          url: "#",
+        },
+      ],
+    },
+    {
+      name: "ProjectDetail",
+      data: [
+        {
+          name: "Project Managemant",
+          url: { name: "ProjectDetail" },
+        },
+        {
+          name: "Project Detail",
+          url: "#",
+        },
+      ],
+    },
   ],
+  allLinkHeader: [],
 };
 const actions = {
-  setAllLinkHeader({ commit }, list) {
-    commit("setlist", list);
+  setAllLinkHeader({ commit,state }, list) {
+    console.log(list)
+    state.listHeader.find(f =>{
+      if(f.name === list){
+        commit("setlist",f.data)
+      }
+    })
   },
 };
 const mutations = {

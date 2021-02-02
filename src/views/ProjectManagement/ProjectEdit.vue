@@ -126,6 +126,7 @@
 <script>
 import Multiselect from "vue-multiselect";
 export default {
+  name:"ProjectEdit",
   component: { multiselect: Multiselect },
   data() {
     return {
@@ -144,23 +145,9 @@ export default {
       valueOwner: [],
     };
   },
-  mounted() {
-    this.listUserMaintenance = this.listUserOwner;
-    let listlink = [
-      {
-        name: "Project Managemant",
-        url: "../project/list",
-      },
-      {
-        name: "Project Detail",
-        url: "../project/detail",
-      },
-      {
-        name: "Edit",
-        url: "#",
-      },
-    ];
-    this.$store.dispatch("setAllLinkHeader", listlink);
+  mounted(){
+    this.listUserMaintenance = this.listUserOwner
+    this.$store.dispatch("header/setAllLinkHeader", "ProjectEdit");
   },
   methods: {
     addUserMaintenance() {

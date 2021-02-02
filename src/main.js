@@ -1,4 +1,5 @@
 import Vue from "vue";
+import Vuelidate from 'vuelidate'
 import App from "./App.vue";
 import router from "./router";
 import store from "./store";
@@ -18,6 +19,7 @@ library.add(far)
 /**
 * plugin
 **/
+Vue.use(Vuelidate)
 Vue.use(ComponentPlugin);
 Vue.use(BootstrapVue);// Install BootstrapVue
 Vue.use(IconsPlugin);// Optionally install the BootstrapVue icon components plugin

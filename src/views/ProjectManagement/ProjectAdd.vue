@@ -16,15 +16,23 @@
               ></b-form-input>
             </div>
           </div> -->
-          <div class="row mb-3">
-            <div class="col-3 text-right font-gen">Project Name :</div>
+          <div
+            class="row mb-3 form-group"
+            :class="{ 'form-group--error': $v.projectName.$error }"
+          >
+            <div class="col-3 text-right font-gen ">
+              <label class="form__label">Project Name :</label>
+            </div>
             <div class="col-8 font-detail">
               <b-form-input
+                v-model.trim="$v.projectName.$model"
                 placeholder="Project Name"
                 type="text"
-                class="shadow-sm"
+                class="shadow-sm form__input"
                 v-model="projectName"
               ></b-form-input>
+              <div class="error" v-if="!$v.projectName.required">Project Name is required</div>
+              <div class="error" v-if="!$v.projectName.minLength">Project Name must have at least {{$v.projectName.$params.minLength.min}} letters.</div>
               <span ref="name"></span>
             </div>
           </div>
@@ -131,11 +139,12 @@
 
 <script>
 import Multiselect from "vue-multiselect";
-import { addProject } from "@/services/api/project.service";
-// import { getFullName } from "@/store/project.module.js";
+// import { addProject } from "@/services/api/project.service";
+import { required, minLength } from "vuelidate/lib/validators";
 import { mapGetters, mapState } from "vuex";
 
 export default {
+  name: "ProjectAdd",
   computed: {
     // ...mapState({
     //   nameTest: state => state.project.name
@@ -146,6 +155,12 @@ export default {
   },
   component: {
     multiselect: Multiselect,
+  },
+  validations: {
+    projectName: {
+      required,
+      minLength: minLength(4),
+    },
   },
   data() {
     return {
@@ -167,28 +182,15 @@ export default {
     };
   },
   mounted() {
-    // console.log(this.nameTest)
+    this.$store.dispatch("header/setAllLinkHeader", "ProjectAdd");
+    console.log(1);
     this.addName();
     this.listUserMaintenance = this.listUserOwner;
-    let listlink = [
-      {
-        name: "Project Managemant",
-        url: "../project/list",
-      },
-      {
-        name: "Project Detail",
-        url: "../project/detail",
-      },
-      {
-        name: "Edit",
-        url: "#",
-      },
-    ];
-    this.$store.dispatch("setAllLinkHeader", listlink);
+
+    
   },
   methods: {
     addName() {
-
       // console.log( this.$store.dispatch("/project.module/getFullName") );
       console.log(this.getFullName);
       // this.getFullName.then((res) => {
@@ -220,25 +222,25 @@ export default {
       this.valueMaintenance = res;
     },
     addProject() {
-      if(this.projectName != ""){
-      let ownerId = [];
-      this.valueOwner.forEach((data) => {
-        ownerId.push({ userId: data.id });
-      });
-      let maintenanceId = [];
-      this.valueMaintenance.forEach((data) => {
-        maintenanceId.push({ userId: data.id });
-      });
-      let param = {
-        projectName: this.projectName,
-        projectDetail: this.ProjectDetail,
-        userOwner: ownerId,
-        userMaintenance: maintenanceId,
-      };
-      console.log(param);
-      this.addProject(param)
-      this.$router.push({ name: 'ListProject' });
-      }else{
+      if (this.projectName != "") {
+        let ownerId = [];
+        this.valueOwner.forEach((data) => {
+          ownerId.push({ userId: data.id });
+        });
+        let maintenanceId = [];
+        this.valueMaintenance.forEach((data) => {
+          maintenanceId.push({ userId: data.id });
+        });
+        let param = {
+          projectName: this.projectName,
+          projectDetail: this.ProjectDetail,
+          userOwner: ownerId,
+          userMaintenance: maintenanceId,
+        };
+        console.log(param);
+        this.addProject(param);
+        this.$router.push({ name: "ListProject" });
+      } else {
         this.$refs["name"].innerHTML = "name null";
       }
     },
@@ -264,7 +266,7 @@ export default {
 
 <style src="vue-multiselect/dist/vue-multiselect.min.css"></style>
 <style>
-.test{
+.test {
   min-width: 25%;
   font-size: 1em;
 }
