@@ -73,7 +73,7 @@ const routes = [
             path: "task",
             name: "TaskError",
             component: () =>
-              import("../views/MonitorError/ServiceError.vue"),
+              import("../views/MonitorError/Task.vue"),
           }
         ]
       },
