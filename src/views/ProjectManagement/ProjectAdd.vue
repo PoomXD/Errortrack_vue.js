@@ -128,6 +128,7 @@ import Multiselect from "vue-multiselect";
 import { mapGetters } from "vuex";
 
 export default {
+  name: "ProjectAdd",
   computed: {
     ...mapGetters({
       getFullName: "@/store/project.module/getFullName",
@@ -154,25 +155,13 @@ export default {
     };
   },
   mounted() {
+    this.$store.dispatch("header/setAllLinkHeader", "ProjectAdd");
     console.log(1);
     this.addName();
     console.log(2);
     this.listUserMaintenance = this.listUserOwner;
-    let listlink = [
-      {
-        name: "Project Managemant",
-        url: "../project/list",
-      },
-      {
-        name: "Project Detail",
-        url: "../project/detail",
-      },
-      {
-        name: "Edit",
-        url: "#",
-      },
-    ];
-    this.$store.dispatch("setAllLinkHeader", listlink);
+
+    
   },
   methods: {
     addName() {

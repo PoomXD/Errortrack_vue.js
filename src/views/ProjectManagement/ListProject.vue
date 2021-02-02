@@ -127,7 +127,7 @@
 
 <script>
 export default {
-  name: "list-project",
+  name: "ListProject",
 
   data() {
     return {
@@ -290,13 +290,9 @@ export default {
     };
   },
   mounted(){
-    let listlink = [
-        {
-          name: "Project Managemant",
-          url: "#",
-        },
-      ];
-    this.$store.dispatch("header/setAllLinkHeader", listlink);
+
+    this.$store.dispatch("header/setAllLinkHeader", "ListProject");
+    
   },
   beforeMount() {
     this.projects.forEach((project) => {

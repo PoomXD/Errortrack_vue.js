@@ -59,17 +59,8 @@
 export default {
     name:"ProjectDetail",
     mounted(){
-        let listlink = [
-        {
-          name: "Project Managemant",
-          url: "../project/list",
-        },
-        {
-            name: "Project Detail",
-            url:"#"
-        },
-      ];
-    this.$store.dispatch("setAllLinkHeader", listlink);
+
+    this.$store.dispatch("header/setAllLinkHeader", "ProjectDetail");
     },
     data(){
         return{

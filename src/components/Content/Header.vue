@@ -24,24 +24,20 @@
                     :icon="['fas', 'code']"
                   />
 
-                  <a
-                    v-if="header.length == 1"
-                    class="font-weight-bold header-cursor header-font2 ml-2"
-                  >
-                    {{ val.name }}
-                  </a>
-                  <a
+                  <router-link
                     v-if="header.length > 1 && index != header.length - 1"
                     class="font-weight-bold header-cursor ml-2"
-                    @click="goto(val.url)"
+                    :to="val.url"
                   >
                     {{ val.name }}
-                  </a>
+                  </router-link>
+
                   <a v-if="index != header.length - 1" class="font-weight-bold header-font2 ml-2">
                     >
                   </a>
+
                   <a v-if="
-                    index == header.length - 1 && index != 0
+                    index == header.length - 1
                   " class="font-weight-bold header-cursor header-font2 ml-2">
                     {{ val.name }}
                   </a>      
@@ -58,7 +54,6 @@
               <td>
                 <b-avatar
                   button
-                  @click="onClick"
                   variant="primary"
                   text="FF"
                   class="align-baseline"
@@ -96,9 +91,13 @@ import {mapState} from 'vuex'
 export default {
   
   name: "component-header",
+  mounted(){
+    console.log({name: 'ListProject'})
+  },
   computed:{
     ...mapState({
       header: state => state.header.allLinkHeader
+      
     })
   },
   methods: {
