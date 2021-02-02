@@ -1,8 +1,10 @@
 .bt-blue {
     background: $blue;
+    border: none;
     border-radius: 6px;
     color: $white;
     &:hover {
+        border: none;
         background: $hoverBlue;
     }
 }
