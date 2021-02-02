@@ -24,6 +24,14 @@
                     :icon="['fas', 'code']"
                   />
 
+                  <!-- <a
+                    v-if="header.length > 1 && index != header.length - 1"
+                    class="font-weight-bold header-cursor ml-2"
+                    v-on:click.native="goto(val.url)"
+                  >
+                    {{ val.name }}
+                  </a> -->
+
                   <router-link
                     v-if="header.length > 1 && index != header.length - 1"
                     class="font-weight-bold header-cursor ml-2"
@@ -53,7 +61,7 @@
               </td>
               <td>
                 <b-avatar
-                  button
+                  
                   variant="primary"
                   text="FF"
                   class="align-baseline"
@@ -102,6 +110,7 @@ export default {
   },
   methods: {
     goto(url) {
+      console.log('url',url);
       this.$router.push(url);
     },
   },
