@@ -1,8 +1,9 @@
 import httpClient from '../httpClient'
-const END_POINT = 'http://localhost:5000/Project'
+const END_POINT = '/Project'
 
 class ProjectService{
     async addProject(param){
+        console.log("in api")
         const config = {
           method: 'post',
           url: `${END_POINT}/addProject`,

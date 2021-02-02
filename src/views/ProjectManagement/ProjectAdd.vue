@@ -5,16 +5,17 @@
     <div class="w-100">
       <div class="row">
         <div class="col">
-          <div class="row mb-3">
+          <!-- <div class="row mb-3"> 
             <div class="col-3 text-right font-gen">Project ID :</div>
-            <div class="col-8 font-detail">
+            <div class=" font-detail col-8">
               <b-form-input
+                :disabled="true"
                 placeholder="xxxx"
                 type="text"
                 class="shadow-sm"
               ></b-form-input>
             </div>
-          </div>
+          </div> -->
           <div class="row mb-3">
             <div class="col-3 text-right font-gen">Project Name :</div>
             <div class="col-8 font-detail">
@@ -22,7 +23,9 @@
                 placeholder="Project Name"
                 type="text"
                 class="shadow-sm"
+                v-model="projectName"
               ></b-form-input>
+              <span ref="name"></span>
             </div>
           </div>
           <div class="row mb-3">
@@ -43,7 +46,11 @@
           <div class="row">
             <div class="col-3 text-right font-gen">Project Details :</div>
             <div class="col-8 font-detail">
-              <b-form-textarea type="text" class="shadow-sm"></b-form-textarea>
+              <b-form-textarea
+                type="text"
+                class="shadow-sm"
+                v-model="ProjectDetail"
+              ></b-form-textarea>
             </div>
           </div>
         </div>
@@ -102,19 +109,19 @@
     <div class="row w-100">
       <!-- <div class="col"></div> -->
       <div class="col text-right mr-4">
-        <router-link :to="{ name: 'ListProject' }">
-          <b-button class="bt-cancel-blue font-no-size-color w-25"
-            >Cancel</b-button
-          >
+        <router-link
+          :to="{ name: 'ListProject' }"
+          class="btn bt-cancel-blue font-no-size-color w-25"
+        >
+          Cancel
         </router-link>
       </div>
       <div class="col text-left ml-4">
-        <router-link
-          :to="{ name: 'ListProject' }"
-          class="btn bt-blue font-no-size-color w-25"
-        >
+        <!-- <router-link :to="{ name: 'ListProject' }"> -->
+        <b-button class="bt-blue font-no-size-color w-25" @click="addProject()">
           Save
-        </router-link>
+        </b-button>
+        <!-- </router-link> -->
       </div>
       <!-- <div class="col"></div> -->
     </div>
@@ -124,13 +131,17 @@
 
 <script>
 import Multiselect from "vue-multiselect";
+import { addProject } from "@/services/api/project.service";
 // import { getFullName } from "@/store/project.module.js";
-import { mapGetters } from "vuex";
+import { mapGetters, mapState } from "vuex";
 
 export default {
   computed: {
+    // ...mapState({
+    //   nameTest: state => state.project.name
+    // }),
     ...mapGetters({
-      getFullName: "@/store/project.module/getFullName",
+      getFullName: "project/getFullName",
     }),
   },
   component: {
@@ -138,6 +149,8 @@ export default {
   },
   data() {
     return {
+      projectName: "",
+      ProjectDetail: "",
       value: null,
       listUserMaintenance: [],
       listUserOwner: [
@@ -154,9 +167,8 @@ export default {
     };
   },
   mounted() {
-    console.log(1);
+    // console.log(this.nameTest)
     this.addName();
-    console.log(2);
     this.listUserMaintenance = this.listUserOwner;
     let listlink = [
       {
@@ -176,10 +188,15 @@ export default {
   },
   methods: {
     addName() {
+
+      // console.log( this.$store.dispatch("/project.module/getFullName") );
       console.log(this.getFullName);
-      this.getFullName.then((res) => {
-        console.log(res);
-      });
+      // this.getFullName.then((res) => {
+      //   console.log(res);
+      // });
+    },
+    onDelete(index) {
+      this.array.splice(index, 1);
     },
     addUserMaintenance() {
       this.valueMaintenance.push({ name: this.value.name, id: this.value.id });
@@ -202,6 +219,29 @@ export default {
       // console.log(res)
       this.valueMaintenance = res;
     },
+    addProject() {
+      if(this.projectName != ""){
+      let ownerId = [];
+      this.valueOwner.forEach((data) => {
+        ownerId.push({ userId: data.id });
+      });
+      let maintenanceId = [];
+      this.valueMaintenance.forEach((data) => {
+        maintenanceId.push({ userId: data.id });
+      });
+      let param = {
+        projectName: this.projectName,
+        projectDetail: this.ProjectDetail,
+        userOwner: ownerId,
+        userMaintenance: maintenanceId,
+      };
+      console.log(param);
+      this.addProject(param)
+      this.$router.push({ name: 'ListProject' });
+      }else{
+        this.$refs["name"].innerHTML = "name null";
+      }
+    },
     nameWithLang({ name, id }) {
       return `${name} — [${id}]`;
     },
@@ -209,6 +249,7 @@ export default {
   watch: {
     valueOwner: {
       handler: function (val, oldVal) {
+        this.value = null;
         let res = this.listUserOwner;
         val.forEach((e) => {
           res = res.filter((data) => data.id !== e.id);
@@ -223,4 +264,8 @@ export default {
 
 <style src="vue-multiselect/dist/vue-multiselect.min.css"></style>
 <style>
+.test{
+  min-width: 25%;
+  font-size: 1em;
+}
 </style>

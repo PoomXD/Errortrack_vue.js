@@ -1,5 +1,7 @@
 // import ProjectService from "@/services/api/project.service";
-
+const state = {
+    name: "something"
+  };
 const getters = {
     getFullName() {
         console.log("something")
@@ -9,7 +11,8 @@ const getters = {
       },
 };
 
-export const project = {
+export default {
     namespaced: true,
     getters,
+    state,
   };
