@@ -45,7 +45,7 @@ const state = {
       data: [
         {
           name: "Project Managemant",
-          url: { name: "ProjectDetail" },
+          url: { name: "ListProject" },
         },
         {
           name: "Project Detail",

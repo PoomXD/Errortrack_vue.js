@@ -1,29 +1,35 @@
 <template>
-  <div class="header-main">
-    <table class="header-table">
-      <tr>
-        <td style="width: 80%; padding-left: 20px;">
-          <div >
-            <ul class="align-items-lg-center float-left">
-              <li class="link-style" v-for="(val, index) in header" :key="index">
-               
-                  <font-awesome-icon
-                    v-if="val.name == 'Monitor Error' && index == 0"
-                    :icon="['fas', 'desktop']"
-                  />
-                  <font-awesome-icon
-                    v-if="val.name == 'Project Managemant' && index == 0"
-                    :icon="['far', 'check-square']"
-                  />
-                  <font-awesome-icon
-                    v-if="val.name == 'Dashboard'  && index == 0"
-                    :icon="['fas', 'chart-pie']"
-                  />
-                  <font-awesome-icon
-                    v-if="val.name == 'Document API'  && index == 0"
-                    :icon="['fas', 'code']"
-                  />
+  <div class="header-space">
+    <b-row align-v="center">
+      <b-col class="col-xl col-lg"
+        ><div class="d-flex justify-content-start">
+          <div class="p-2 " v-for="(val, index) in header" :key="index">
+            <font-awesome-icon
+              v-if="val.name == 'Monitor Error' && index == 0"
+              :icon="['fas', 'desktop']"
+            />
+            <font-awesome-icon
+              v-if="val.name == 'Project Managemant' && index == 0"
+              :icon="['far', 'check-square']"
+            />
+            <font-awesome-icon
+              v-if="val.name == 'Dashboard' && index == 0"
+              :icon="['fas', 'chart-pie']"
+            />
+            <font-awesome-icon
+              v-if="val.name == 'Document API' && index == 0"
+              :icon="['fas', 'code']"
+            />
+            <router-link
+              v-if="header.length > 1 && index != header.length - 1"
+              :to="val.url"
+            >
+              {{ val.name }}
+            </router-link>
 
+            <a v-if="index != header.length - 1" class="ml-2">
+              >
+            </a>
                   <!-- <a
                     v-if="header.length > 1 && index != header.length - 1"
                     class="font-weight-bold header-cursor ml-2"
@@ -40,73 +46,70 @@
                     {{ val.name }}
                   </router-link>
 
-                  <a v-if="index != header.length - 1" class="font-weight-bold header-font2 ml-2">
-                    >
-                  </a>
-
-                  <a v-if="
-                    index == header.length - 1
-                  " class="font-weight-bold header-cursor header-font2 ml-2">
-                    {{ val.name }}
-                  </a>      
-              </li>
-            </ul>
+            <a v-if="index == header.length - 1">
+              {{ val.name }}
+            </a>
           </div>
-        </td>
-        <td>
-          <table class="header-table">
-            <tr>
-              <td style="width:40%;">
-                <font-awesome-icon :icon="['fas', 'bell']" />
-              </td>
-              <td>
-                <b-avatar
-                  
+        </div></b-col
+      >
+      <b-col class=" col-xl-4 col-lg-2 col-md-2 col-sm-2">
+        <div class="d-flex justify-content-end">
+          <div class="p-2 align-middle ">
+            <font-awesome-icon :icon="['fas', 'bell']" />
+          </div>
+          <div class="p-2 align-middle display">
+            <b-avatar
+              button
+              variant="primary"
+              text="FF"
+              class="align-baseline"
+            ></b-avatar>
+          </div>
+          <div class="p-2 align-middle display white-space">User name</div>
+          <div class="p-2 align-middle ">
+            <b-dropdown
+              right
+              size="lg"
+              variant="link"
+              toggle-class="text-decoration-none"
+              no-caret
+            >
+              <template #button-content>
+                <font-awesome-icon :icon="['fas', 'angle-down']" />
+              </template>
+              <b-dropdown-item class="display-dropdow" href="#"
+                > <div class="d-flex justify-content-center"><b-avatar
+                  button
                   variant="primary"
                   text="FF"
-                  class="align-baseline"
-                ></b-avatar>
-              </td>
-              <td>User Name</td>
-              <td class="header-td">
-                <b-dropdown
-                  right
-                  size="lg"
-                  variant="link"
-                  toggle-class="text-decoration-none"
-                  no-caret
-                >
-                  <template #button-content>
-                    <font-awesome-icon :icon="['fas', 'angle-down']" />
-                  </template>
-                  <b-dropdown-item href="#">Action</b-dropdown-item>
-                  <b-dropdown-item href="#">Another action</b-dropdown-item>
-                  <b-dropdown-item href="#"
-                    >Something else here...</b-dropdown-item
-                  >
-                </b-dropdown>
-              </td>
-            </tr>
-          </table>
-        </td>
-      </tr>
-    </table>
+                  class="align-baseline display-dropdow"
+                ></b-avatar
+              ></div>
+                </b-dropdown-item>
+                <hr class="display-dropdow">
+              <b-dropdown-item class="display-dropdow" href="#"
+                >User name</b-dropdown-item
+              >
+              <b-dropdown-item ><router-link :to="{name: 'Login'}"><div class="h-100 w-100">Login</div> </router-link></b-dropdown-item>
+            </b-dropdown>
+          </div>
+        </div>
+      </b-col>
+    </b-row>
   </div>
 </template>
 
 <script>
-import {mapState} from 'vuex'
+import { mapState } from "vuex";
 export default {
-  
   name: "component-header",
-  mounted(){
-    console.log({name: 'ListProject'})
+  mounted() {
+    
   },
-  computed:{
+  computed: {
     ...mapState({
-      header: state => state.header.allLinkHeader
-      
-    })
+      header: (state) => state.header.allLinkHeader,
+    }),
   },
   methods: {
     goto(url) {
