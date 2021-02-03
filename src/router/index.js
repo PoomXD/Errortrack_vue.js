@@ -80,6 +80,12 @@ const routes = [
             name: "ModalTest",
             component: () =>
               import("../views/MonitorError/ModalForTask.vue"),
+          },
+          {
+            path: "fileUpload",
+            name: "fileUploadTest",
+            component: () =>
+              import("../views/MonitorError/FileUpload.vue"),
           }
         ]
       },

@@ -187,6 +187,7 @@ export default {
   data() {
     return {
       save: false,
+      projectId: 0,
       projectName: "",
       ProjectDetail: "",
       value: null,
@@ -205,6 +206,7 @@ export default {
     };
   },
   mounted() {
+    //รับค่า projectId
     // this.$store.dispatch("header/setAllLinkHeader", "ProjectAdd");
     // console.log(this.$v.projectName.required)
     this.listUserMaintenance = this.listUserOwner;
@@ -260,12 +262,13 @@ export default {
           maintenanceId.push({ userId: data.id });
         });
         let param = {
+          projectId: this.projectId,
           projectName: this.projectName,
           projectDetail: this.ProjectDetail,
           userOwner: ownerId,
           userMaintenance: maintenanceId,
         };
-        console.log("param : ");
+        console.log("param edit : ");
         console.log(param);
         // this.addProject(param);
         this.$router.push({ name: "ListProject" });
