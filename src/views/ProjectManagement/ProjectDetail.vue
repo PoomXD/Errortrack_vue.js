@@ -1,6 +1,6 @@
 <template>
     <div class="ProjectDetail"> 
-        <div>
+        <div id="Edit_Button">
             <router-link :to="{name:'ProjectEdit'}">
             <b-button class="bt-blue float-right" style="width: 90px" >
             <font-awesome-icon :icon="['fas','edit']"/> Edit</b-button></router-link>
@@ -8,7 +8,7 @@
 
         <br>
         <br>
-         <div class="card-list row">
+         <div class="card-list row" id="cardlist">
              <div class="col-xl-6 col-md-12" style="margin-top:-2%">
                 <div class="row">
                     <div class="col-xl-4 col-md-3 font-gen" style="font-weight: bold" align="right">Project ID  : </div>
@@ -68,11 +68,18 @@
 export default {
     name:"ProjectDetail",
     created(){
-        console.log('this.$route',this.$route);
+        if(this.$route.meta.showEdit == false){
+            this.Member = this.User_Maintenance
+        }
+        
     },
     mounted(){
-
     this.$store.dispatch("header/setAllLinkHeader", "ProjectDetail");
+    if(this.$route.meta.showEdit == false){
+            document.getElementById("search").style.marginTop = "0%";
+            document.getElementById("Edit_Button").style.display = "none";
+            document.getElementById("cardlist").style.marginTop = "-3%";
+    }
     },
     data(){
         return{
@@ -94,7 +101,8 @@ export default {
             Project_Detail:"Detail",
             Project_Name:"Covid 19 Airports Project",
             Project_Owner:{Owner : ['firstname lastname','firstname lastname']},
-            Member:[{name : 'name_lastname'},{name : 'name_lastname'},{name : 'name_lastname'},{name : 'name_lastname'}],  
+            Member:[{name : 'name_lastname'},{name : 'name_lastname'},{name : 'name_lastname'},{name : 'name_lastname'}],
+            User_Maintenance:[{name : "xxx-xxxx-xxxx-xxx"}], 
         }
     },
     computed: {
@@ -104,7 +112,9 @@ export default {
                 item.Service_ID.includes(this.keyword)||
                 item.Service_Name.includes(this.keyword))
 				: this.dataArray
-    }
+    },
+    
+
 }
 }
 </script>
@@ -116,6 +126,7 @@ export default {
     background: #fff; 
     width: 400px;
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    margin-top: -4%;
     }
   #ServiceSearch{
     border: 1px solid rgb(255, 255, 255);

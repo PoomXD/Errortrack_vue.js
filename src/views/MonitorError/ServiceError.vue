@@ -26,7 +26,7 @@
                 </div>
                 </div>
                 <div class="row" style="margin-top:2%">
-                    <div class="col-xl-4 col-md-6 font-gen" style="font-weight: bold" align="right">Member  :</div>
+                    <div class="col-xl-4 col-md-6 font-gen" style="font-weight: bold" align="right">User Maintenance :</div>
                     <div class="col-xl-5 col-md-4 font-detail" align="left">{{User_Maintenance}}</div>
                 </div>
              </div>
@@ -50,9 +50,10 @@
     </div>
 </template>
 
-<script>
+<script> 
+
 export default {
-    name:"ProjectDetail",
+    name:"ServiceError",
     mounted(){
         let listlink = [
         {
@@ -64,6 +65,7 @@ export default {
             url:"#"
         },
       ];
+   
     this.$store.dispatch("setAllLinkHeader", listlink);
     },
     data(){ 
@@ -98,7 +100,8 @@ export default {
                 item.Service_ID.includes(this.keyword)||
                 item.Service_Name.includes(this.keyword))
 				: this.dataArray
-    }
+    },
+   
 }
 }
 </script>
