@@ -98,3 +98,39 @@
 .show-selete{
     overflow: unset;
 }
+@mixin status{
+   // width: 50%;
+    padding-top: 6px;
+    padding-bottom: 6px;
+    padding-left: 15px;
+    padding-right: 15px;
+    
+}
+.status{
+  &-waiting{
+    @include status;
+    background-color: #FFF6DF;
+    color: #FFA841;
+  }
+  &-todo{
+    @include status;
+    background-color: #E9F3FF;
+    color: #3383DF;
+  }
+  &-doing{
+    @include status;
+    background-color: #FFDBD0;
+    color: #FC6A3C;
+  }
+  &-testing{
+    @include status;
+    background-color: #FFE3ED;
+    color: #FF2171;
+  }
+  &-done{
+    @include status;
+    background-color: #E2F9E9;
+    color: #3BC261;
+    ;
+}
+}

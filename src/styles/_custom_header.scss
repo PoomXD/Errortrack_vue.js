@@ -1,33 +1,27 @@
 @import url("https://fonts.googleapis.com/css2?family=Prompt&display=swap");
-.header-main{
+.header-space{
     background:$white;
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
     margin-left:250px;
-    padding-top: 10px;
-    padding-bottom: 10px;
+    padding: 10px;
 }
-
-.align-items-lg-center {
-    align-items: center !important;
-    margin: 0px;
+.align-middle{
+    align-self: center !important;
 }
-
-.header-td{
-    padding-left: 1px;
-    padding-right: 10px;
+.display {
+    display: block;
+  }
+.display-dropdow{
+    display: none;
 }
-
-.header-table{
-    width: 100%;
+@media (max-width: 1024px) {
+    .display {
+      display: none;
+    }
+    .display-dropdow{
+        display: block;
+    }
 }
-.header-font2{
-    font-family: "Prompt";
-    color: black;
-}
-.header-cursor{
-    cursor: pointer;
-}
-.link-style{
-    pointer-events:none; 
-    display: inline;
+.white-space{
+    white-space: nowrap;
 }
