@@ -54,26 +54,38 @@ const routes = [
             component: () =>
               import("../views/MonitorError/AddList.vue"),
           },
-          {
-            path: "detail",
-            name: "ServiceError",
-            component: () =>
-              import("../views/MonitorError/ServiceError.vue"),
-          },
           // {
           //   path: "detail",
           //   name: "ServiceError",
-          //   meta :{
-          //     showEdit : false
-          //   },
           //   component: () =>
-          //     import("../views/ProjectManagement/ProjectDetail.vue"),
+          //     import("../views/MonitorError/ServiceError.vue"),
           // },
+          {
+            path: "detail",
+            name: "ServiceError",
+            meta :{
+              showEdit : false
+            },
+            component: () =>
+              import("../views/ProjectManagement/ProjectDetail.vue"),
+          },
           {
             path: "task",
             name: "TaskError",
             component: () =>
               import("../views/MonitorError/Task.vue"),
+          },
+          {
+            path: "modal",
+            name: "ModalTest",
+            component: () =>
+              import("../views/MonitorError/ModalForTask.vue"),
+          },
+          {
+            path: "fileUpload",
+            name: "fileUploadTest",
+            component: () =>
+              import("../views/MonitorError/FileUpload.vue"),
           }
         ]
       },

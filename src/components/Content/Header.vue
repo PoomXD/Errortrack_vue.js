@@ -30,6 +30,21 @@
             <a v-if="index != header.length - 1" class="ml-2">
               >
             </a>
+                  <!-- <a
+                    v-if="header.length > 1 && index != header.length - 1"
+                    class="font-weight-bold header-cursor ml-2"
+                    v-on:click.native="goto(val.url)"
+                  >
+                    {{ val.name }}
+                  </a> -->
+
+                  <router-link
+                    v-if="header.length > 1 && index != header.length - 1"
+                    class="font-weight-bold header-cursor ml-2"
+                    :to="val.url"
+                  >
+                    {{ val.name }}
+                  </router-link>
 
             <a v-if="index == header.length - 1">
               {{ val.name }}
@@ -98,6 +113,7 @@ export default {
   },
   methods: {
     goto(url) {
+      console.log('url',url);
       this.$router.push(url);
     },
   },

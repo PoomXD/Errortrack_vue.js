@@ -2,32 +2,32 @@
     <div class="ProjectDetail"> 
         <br>
          <div class="card-list row" style="margin-top:-2%">
-             <div class="col-6" style="margin-top:-2%">
+             <div class="col-xl-6 col-md-12" style="margin-top:-2%">
                 <div class="row">
-                    <div class="col-4 font-gen" style="font-weight: bold" align="right">Project ID  : </div>
-                    <div class="col-6 font-detail" align="left">{{Project_ID}} </div>
+                    <div class="col-xl-4 col-md-3 font-gen" style="font-weight: bold" align="right">Project ID  : </div>
+                    <div class="col-xl-6 col-md-5 font-detail" align="left">{{Project_ID}} </div>
                 </div>
                 <div class="row" style="margin-top:2%">
-                    <div class="col-4 font-gen" style="font-weight: bold" align="right">Project Details  : </div>
-                    <div class="col-6 font-detail" align="left">{{Project_Detail}} </div>
+                    <div class="col-xl-4 col-md-3 font-gen" style="font-weight: bold; margin-bottom: 3%" align="right">Project Details  : </div>
+                    <div class="col-xl-6 col-md-6 font-detail" align="left" style="margin-bottom:3%">{{Project_Detail}} </div>
                 </div>
              </div>
-             <div class="col-6" style="margin-top:-2%">
+             <div class="col-xl-6 col-md-6" style="margin-top:-2%">
                 <div class="row">
-                    <div class="col-4 font-gen" style="font-weight: bold" align="right">Project Name  : </div>
-                    <div class="col-5 font-detail" align="left">{{Project_Name}} </div>
+                    <div class="col-xl-4 col-md-6 font-gen" style="font-weight: bold" align="right">Project Name  : </div>
+                    <div class="col-xl-5 col-md-6 font-detail" align="left">{{Project_Name}} </div>
                 </div>
                 <div class="row" style="margin-top:2%">
-                    <div class="col-4 font-gen" style="font-weight: bold" align="right">Project Owner  : </div>
-                    <div class="col-8 font-detail" align="left">
+                    <div class="col-xl-4 col-md-6 font-gen" style="font-weight: bold" align="right">Project Owner  : </div>
+                    <div class="col-xl-8 col-md-6 font-detail" align="left">
                     <tr v-for="(Project_Owner, index) in Project_Owner" :key="`Project_Owner-${index}`">
                     <td>{{ [Project_Owner].sort().join(',') }}</td>
                     </tr>
                 </div>
                 </div>
                 <div class="row" style="margin-top:2%">
-                    <div class="col-4 font-gen" style="font-weight: bold" align="right">Member  :</div>
-                    <div class="col-5 font-detail" align="left">{{User_Maintenance}}</div>
+                    <div class="col-xl-4 col-md-6 font-gen" style="font-weight: bold" align="right">User Maintenance :</div>
+                    <div class="col-xl-5 col-md-4 font-detail" align="left">{{User_Maintenance}}</div>
                 </div>
              </div>
         </div> 
@@ -50,9 +50,10 @@
     </div>
 </template>
 
-<script>
+<script> 
+
 export default {
-    name:"ProjectDetail",
+    name:"ServiceError",
     mounted(){
         let listlink = [
         {
@@ -64,6 +65,7 @@ export default {
             url:"#"
         },
       ];
+   
     this.$store.dispatch("setAllLinkHeader", listlink);
     },
     data(){ 
@@ -74,6 +76,7 @@ export default {
                      {key:'Service_Name',thStyle: {width: '30%'}},
                      {key:' ',thStyle: {width: '35%'}},
                      {key:'Create_Date',thStyle: {width: '10%',}}],
+
             dataArray: [
                         {No: 1, Service_ID: '123-456-789', Service_Name: 'Name Servicename1',Create_Date: '11-12-2563'},
                         {No: 2, Service_ID: '987-654-321', Service_Name: 'Name Servicename2',Create_Date: '11-12-2563'},
@@ -82,8 +85,9 @@ export default {
                         {No: 5, Service_ID: '987-654-321', Service_Name: 'Name Servicename5',Create_Date: '11-12-2563'},
                         {No: 6, Service_ID: '987-654-321', Service_Name: 'Name Servicename6',Create_Date: '11-12-2563'},
                        ],
+
             Project_ID:"xxx-xxxx-xxxx-xxx",
-            Project_Detail:"Detail Detail Detail Detail Detail Detail Detail Detail Detail Detail Detail Detail",
+            Project_Detail:"Detail Detail Detail Detail Detail Detail Detail",
             Project_Name:"Covid 19 Airports Project",
             Project_Owner:{Owner : ['firstname lastname','firstname lastname']},
             User_Maintenance:"xxx-xxxx-xxxx-xxx",  
@@ -96,7 +100,8 @@ export default {
                 item.Service_ID.includes(this.keyword)||
                 item.Service_Name.includes(this.keyword))
 				: this.dataArray
-    }
+    },
+   
 }
 }
 </script>

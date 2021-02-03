@@ -41,6 +41,14 @@
     line-height: 24px;
     color: grey;
 }
+.font-invalid {
+    font-family: "Prompt";
+    font-style: normal;
+    font-weight: 300;
+    font-size: 14px;
+    line-height: 24px;
+    color: $red;
+}
 .float-left {
     /* float: left; */
     justify-content: left;
