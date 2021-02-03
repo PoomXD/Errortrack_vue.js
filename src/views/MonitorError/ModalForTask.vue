@@ -30,7 +30,13 @@
                                 v-for="(user, index) in errorDetail.userAssignment"
                                 :key="`user-${index}`"
                                 :text="getTextAvatar(user.userAssignId)"
-                                class="mr-1"
+                                class="mr-1 avatar-owner"
+                            >
+                            </b-avatar>
+                            <b-avatar
+                                text="+"
+                                class="mr-1 avartar-more"
+                                @click="pick()"
                             >
                             </b-avatar>
                         </div>
@@ -83,29 +89,56 @@ export default {
                 {
                     userId: 1,
                     userName: "Kamonthip",
-                    userLastName: "Thethong"
+                    userLastName: "Thethong",
+                    role: "owner"
                 },
                 {
                     userId: 2,
                     userName: "Airada",
-                    userLastName: "Stong"
+                    userLastName: "Stong",
+                    role: "mainten"
                 },
                 {
                     userId: 3,
                     userName: "Natthawut",
-                    userLastName: "Chiphimon"
+                    userLastName: "Chiphimon",
+                    role: "mainten"
+                },
+                {
+                    userId: 4,
+                    userName: "User",
+                    userLastName: "Test",
+                    role: "mainten"
+                },
+                {
+                    userId: 5,
+                    userName: "User",
+                    userLastName: "Test",
+                    role: "mainten"
                 }
-            ]
+            ],
+            pickUser: []
         }
     },
     methods: {
         getTextAvatar(id){
+            let text = "";
             this.users.forEach(user => {
                 if(user.userId === id){
-                    console.log(`Test filter name: ${user.userName}`)
+                    if(user.userName != "" && user.userLastName != ""){
+                        text = `${user.userName[0]}${user.userLastName[0]}`;
+                    }else if(user.userName != "" && user.userLastName == ""){
+                        text = `${user.userName[0]}`;
+                    }else{
+                        console.log(`null`)
+                        text = `Un`
+                    }
                 }
             });
-            return "T";
+            return text;
+        },
+        pick(){
+            
         }
     }
 }
