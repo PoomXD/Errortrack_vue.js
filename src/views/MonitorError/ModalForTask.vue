@@ -33,12 +33,12 @@
                                 class="mr-1 avatar-owner"
                             >
                             </b-avatar>
-                            <b-avatar
-                                text="+"
-                                class="mr-1 avartar-more"
+                            <b-button
+                                class="mr-1 b-avatar add-user-bt"
                                 @click="pick()"
                             >
-                            </b-avatar>
+                            <font-awesome-icon :icon="['fas', 'plus']"/>
+                            </b-button>
                         </div>
                     </div>
                 </div>
@@ -138,7 +138,7 @@ export default {
             return text;
         },
         pick(){
-            
+            console.log('test');
         }
     }
 }
