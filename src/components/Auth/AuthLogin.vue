@@ -1,9 +1,7 @@
 <template>
-<div id="AuthLogin " class="AuthMain" >
-
+<div id="AuthLogin " class="AuthMain h-100" >
     <app-header></app-header>
     <router-view></router-view>
-   
 </div>
 </template>
 
@@ -20,6 +18,7 @@ export default {
 <style lang="scss">
 .AuthMain{
     background-color: #f4f9ff;
-    height: 2000px;
+
 }
+
 </style>

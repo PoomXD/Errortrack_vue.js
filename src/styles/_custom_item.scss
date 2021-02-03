@@ -124,16 +124,52 @@
   }
 }
 .table-color-alt {
-  margin: 0px;
-  border-radius: 8px;
-  tr:nth-of-type(even) {
-    background-color: #f8fbff;
-  }
-  tr:hover {
-    color: #212529;
-    background-color: rgba(0, 0, 0, 0.075);
-  }
+    margin: 0px;
+    border-radius: 8px;
+    tr:nth-of-type(even){
+        background-color:#F8FBFF;
+    }
+    tr:hover{
+        color:#212529;
+        background-color:rgba(0,0,0,.075)
+    } 
 }
-.show-selete {
-  overflow: unset;
+.show-selete{
+    overflow: unset;
+}
+@mixin status{
+   // width: 50%;
+    padding-top: 6px;
+    padding-bottom: 6px;
+    padding-left: 15px;
+    padding-right: 15px;
+    
+}
+.status{
+  &-waiting{
+    @include status;
+    background-color: #FFF6DF;
+    color: #FFA841;
+  }
+  &-todo{
+    @include status;
+    background-color: #E9F3FF;
+    color: #3383DF;
+  }
+  &-doing{
+    @include status;
+    background-color: #FFDBD0;
+    color: #FC6A3C;
+  }
+  &-testing{
+    @include status;
+    background-color: #FFE3ED;
+    color: #FF2171;
+  }
+  &-done{
+    @include status;
+    background-color: #E2F9E9;
+    color: #3BC261;
+    ;
+}
 }
