@@ -1,4 +1,15 @@
+.bt-blue-no-size {
+    background: $blue;
+    border: none;
+    border-radius: 6px;
+    color: $white;
+    &:hover {
+        border: none;
+        background: $hoverBlue;
+    }
+}
 .bt-blue {
+    width: 150px;
     background: $blue;
     border: none;
     border-radius: 6px;
@@ -9,6 +20,7 @@
     }
 }
 .bt-green {
+    width: 150px;
     background: $green;
     border: 1px solid $green;
     border-radius: 6px;
@@ -19,6 +31,7 @@
     }
 }
 .bt-red {
+    width: 150px;
     background: $red;
     border: 1px solid $red;
     border-radius: 6px;
@@ -29,6 +42,7 @@
     }
 }
 .bt-cancel-grey {
+    width: 150px;
     background: $white;
     border: 1px solid $btBorderColorGrey;
     border-radius: 6px;
@@ -40,6 +54,7 @@
     }
 }
 .bt-cancel-blue {
+    width: 150px;
     background: $white;
     border: 1px solid $blue;
     border-radius: 6px;

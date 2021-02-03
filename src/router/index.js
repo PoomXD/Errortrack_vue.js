@@ -73,7 +73,19 @@ const routes = [
             path: "task",
             name: "TaskError",
             component: () =>
-              import("../views/MonitorError/ServiceError.vue"),
+              import("../views/MonitorError/Task.vue"),
+          },
+          {
+            path: "modal",
+            name: "ModalTest",
+            component: () =>
+              import("../views/MonitorError/ModalForTask.vue"),
+          },
+          {
+            path: "fileUpload",
+            name: "fileUploadTest",
+            component: () =>
+              import("../views/MonitorError/FileUpload.vue"),
           }
         ]
       },
