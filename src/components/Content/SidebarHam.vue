@@ -1,5 +1,6 @@
 <template>
-  <div class="sidebar">
+  <div class="sidebarHam">
+  <br>
   <div class="text-center">
     <img src="/img/logo-system.png" style="height:45px;"/>
     </div>
@@ -26,14 +27,9 @@
 </template>
 
 <script>
-export default {
-  name: "app-sidebar",
-  methods:{
-    gotoMonitorList(){
-      //MonitorList
-    }
-  }
-};
+export default {};
 </script>
 
-<style></style>
+<style>
+
+</style>
