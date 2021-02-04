@@ -141,6 +141,8 @@
 
 <script>
 import { mapState } from 'vuex';
+import Swal from 'sweetalert2'
+
 export default {
     name: 'modal-task',
     data() {
@@ -350,6 +352,12 @@ export default {
                     //=================== call service ===================
                 }
             });
+            Swal.fire({
+                title: 'Success!',
+                text: 'Add new book successfully',
+                icon: 'success',
+                confirmButtonText: 'OK'
+            })
         },
         show(){
             this.showDropdown = true;
