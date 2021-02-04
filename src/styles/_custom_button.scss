@@ -13,7 +13,7 @@
     background: $blue;
     border: none;
     border-radius: 6px;
-    color: $white;
+    color: $white !important;
     &:hover {
         border: none;
         background: $hoverBlue;
@@ -24,7 +24,7 @@
     background: $green;
     border: 1px solid $green;
     border-radius: 6px;
-    color: $white;
+    color: $white !important;
     &:hover {
         background: $hoverGreen;
         border: 1px solid $hoverGreen;
@@ -35,7 +35,7 @@
     background: $red;
     border: 1px solid $red;
     border-radius: 6px;
-    color: $white;
+    color: $white !important;
     &:hover {
         background: $hoverRed;
         border: 1px solid $hoverRed;
@@ -46,10 +46,10 @@
     background: $white;
     border: 1px solid $btBorderColorGrey;
     border-radius: 6px;
-    color: $btBorderColorGrey;
+    color: $btBorderColorGrey !important;
     &:hover {
         background: $btBorderColorGrey;
-        color: white;
+        color: white !important;
         border: 1px solid $btBorderColorGrey;
     }
 }
@@ -58,10 +58,10 @@
     background: $white;
     border: 1px solid $blue;
     border-radius: 6px;
-    color: $blue;
+    color: $blue !important;
     &:hover {
         background: $blue;
-        color: white;
+        color: white !important;
         border: 1px solid $blue;
     }
 }

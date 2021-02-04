@@ -134,7 +134,7 @@
 
         <div class="row w-100">
           <!-- <div class="col"></div> -->
-          <div class="col text-right mr-4">
+          <div class="col text-right pr-4">
             <router-link
               :to="{ name: 'ListProject' }"
               class="btn bt-cancel-blue font-no-size-color"
@@ -142,7 +142,7 @@
               Cancel
             </router-link>
           </div>
-          <div class="col text-left ml-4">
+          <div class="col text-left pl-4">
             <!-- <router-link :to="{ name: 'ListProject' }"> -->
             <b-button type="submit" class="bt-blue font-no-size-color">
               Save
