@@ -3,8 +3,8 @@
         <b-button v-b-modal.modalPopover>Show Modal</b-button>
 
         <b-modal id="modalPopover" title="Modal with Popover" size="xl">
-            <div class="row px-2">
-                <div class="col-xl-8">
+            <div class="row px-1">
+                <div class="col-xl-7 col-lg-12">
                     <div class="row">
                         <div class="col-4 font-gen text-right">
                             Error ID : 
@@ -77,7 +77,7 @@
                                                 Add User Assign
                                             </div>
                                             <div class="col text-right">
-                                                <b-button class="hide-bt" @click="closeDropDown()">
+                                                <b-button class="no-color" @click="closeDropDown()">
                                                     x
                                                 </b-button>
                                             </div>
@@ -122,14 +122,18 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-xl-4">
+                <div class="col-xl-5 col-lg-12">
                     <div class="row">
-                        <div class="col-3">
+                        <div class="col-xl-4 col-lg-12 font-gen">
                             Error Status : 
                         </div>
-                        <div class="col-9">
+                        <div class="col-xl-8 col-lg-12 font-detail">
 
-                            <b-form-select v-model="selected" :options="options"></b-form-select>
+                            <b-form-select 
+                            v-model="selected" 
+                            :options="options"
+                            @change="confirmChange()"
+                            ></b-form-select>
 
                         </div>
                     </div>
@@ -352,12 +356,6 @@ export default {
                     //=================== call service ===================
                 }
             });
-            Swal.fire({
-                title: 'Success!',
-                text: 'Add new book successfully',
-                icon: 'success',
-                confirmButtonText: 'OK'
-            })
         },
         show(){
             this.showDropdown = true;
@@ -366,6 +364,24 @@ export default {
         closeDropDown(){
             this.showDropdown = false;
             console.log(`${this.showDropdown} : close`);
+        },
+        confirmChange(){
+            console.log('change');
+
+            Swal.fire({
+                title: 'Edit Status',
+                text: 'Do you want to change this error status?',
+                icon: 'warning',
+                confirmButtonText: 'OK',
+                showCancelButton: true
+            })
+            .then((result) => {
+                if(result.isConfirmed){
+                    this.errorDetail.errorStatusId = this.selected;
+                }else{
+                    this.selected = this.errorDetail.errorStatusId;
+                }
+            })
         }
     },
     computed: {
@@ -433,15 +449,18 @@ export default {
     background-color:#bdbaba;
 }
 .no-color{
+    color: grey;
     padding-left: 2px;
     border: none;
     background-color: inherit;
 }
 .no-color:hover{
+    color: grey;
     border: none;
     background-color: inherit;
 }
 .no-color:active{
+    color: grey;
     border: none;
     background-color: inherit;
 }
