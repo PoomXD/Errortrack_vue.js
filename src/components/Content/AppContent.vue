@@ -16,7 +16,7 @@
          <font-awesome-icon :icon="['fas', 'bars']"/>
         </div>
       <main  class="content-wrapper" :class="{'open2':showNav}">
-        <router-view style="margin-left: -17%;"></router-view>
+        <router-view style="margin-left: -18rem"></router-view>
       </main>
       </div>
     </div>
@@ -55,8 +55,9 @@ export default {
 <style lang="scss" scroped>
 main{
     min-height: calc(100vh - 60px);
-    margin-left: 15%;
-    padding: 2rem;
+    margin-left: 20rem;
+    padding-right: 1%;
+    margin-top: 1.5rem;
   }
   #navigation-icon {
   padding: 10px 40px 0px 10px;
