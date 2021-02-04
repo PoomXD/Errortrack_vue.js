@@ -1,7 +1,7 @@
 <template>
   <div class="app-content background">
     
-    <div class="content" :class="{'open':showNav}"> 
+    <div class="content" :class="{'open':showNav,'close1':!showNav}"> 
       <div v-if="!mobileView">
         <app-sidebar/>
         <app-header/>
@@ -11,12 +11,12 @@
       </div>
       <div v-else>
         <app-sidebar style=" margin-left: -250px;"/>
-        <app-header style="margin-left: 0px; "/>
+        <app-header style="margin-left: -13rem; "/>
         <div id="navigation-icon" @click="showNav = !showNav">
-         <font-awesome-icon :icon="['fas', 'bars']"/>
+          <font-awesome-icon :icon="['fas', 'bars']"/>
         </div>
-      <main  class="content-wrapper" :class="{'open2':showNav}">
-        <router-view style="margin-left: -18rem"></router-view>
+      <main  class="content-wrapper">
+        <router-view style="margin-left: -17rem"></router-view>
       </main>
       </div>
     </div>
@@ -55,16 +55,16 @@ export default {
 <style lang="scss" scroped>
 main{
     min-height: calc(100vh - 60px);
-    margin-left: 20rem;
+    margin-left: 18rem;
     padding-right: 1%;
     margin-top: 1.5rem;
   }
   #navigation-icon {
-  padding: 10px 40px 0px 10px;
-  margin-right: 90%;
-  margin-top: -90px;
+  padding: 10px 10px 0px 20px;
+  margin-top: -75px;
   cursor: pointer;
-  font-size: 50px;
+  font-size: 30px;
+  color:#0077FF;
   }
   .router-view {
   position: absolute;
@@ -80,9 +80,8 @@ main{
     transform: translateX(250px);
     transition: 1s transform cubic-bezier(0,.12,.14,1);
   }
-  .open2 {
-    transform: translateX(-10px);
+  .close1 {
+    transform: translateX(0px);
     transition: 1s transform cubic-bezier(0,.12,.14,1);
   }
-
 </style>
