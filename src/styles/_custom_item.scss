@@ -198,5 +198,13 @@
     background-color: #E2F9E9;
     color: #3BC261;
     ;
+  }
 }
+.cut-text{
+  display: -webkit-box;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  -webkit-line-clamp: 3;
+  height: 70px;
+  -webkit-box-orient: vertical;
 }
