@@ -8,7 +8,13 @@ Vue.use(Vuex);
 
 const store = new Vuex.Store({
   state: {
-
+    errorStatus: [
+      { value : 1, text : "Waiting"},
+      { value : 2, text : "To Do"},
+      { value : 3, text : "Doing"},
+      { value : 4, text : "Testing"},
+      { value : 5, text : "Done"}
+    ]
   },
   actions: {
   
