@@ -31,4 +31,9 @@ html,
 body {
   height: 100%;
 }
+@font-face{
+    font-family: "Prompt";
+    src: local("Prompt"),
+    url(./fonts/Prompt-Medium.woff) format("truetype") 
+}
 </style>
