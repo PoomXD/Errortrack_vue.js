@@ -36,7 +36,7 @@
                                     :text="getTextAvatar(user.userAssignId)"
                                 >
                                 </b-avatar>
-                                    <span class="wrap-span" @click="pick(user.userAssignId)">
+                                    <span class="wrap-span" @click="delUser(user.userAssignId)">
                                         <font-awesome-icon :icon="['fas', 'times']"/>
                                     </span>
                             </div>
@@ -63,13 +63,13 @@
                                 variant="link"
                                 toggle-class="text-decoration-none"
                                 no-caret
-                                class="add-user-bt dropdown-bt"
+                                class="hide-bt"
                                 :menu-class="{'prevent-close' : showDropdown == true, 'show-dropdown' : showDropdown == false}"
                                 id="dropdown-member"
                                 
                                 >
                                 <template #button-content>
-                                    <button class="hide-bt" @click="show()"><font-awesome-icon :icon="['fas', 'plus']"/></button>
+                                    <button class="no-color" @click="show()"><font-awesome-icon :icon="['fas', 'plus']"/></button>
                                 </template>
                                     <b-dropdown-header href="#">
                                         <div class="row">
@@ -123,7 +123,16 @@
                     </div>
                 </div>
                 <div class="col-xl-4">
-                    test
+                    <div class="row">
+                        <div class="col-3">
+                            Error Status : 
+                        </div>
+                        <div class="col-9">
+
+                            <b-form-select v-model="selected" :options="options"></b-form-select>
+
+                        </div>
+                    </div>
                 </div>
             </div>
         </b-modal>
@@ -131,10 +140,12 @@
 </template>
 
 <script>
+import { mapState } from 'vuex';
 export default {
     name: 'modal-task',
     data() {
         return {
+            selected: '',
             errorDetail: {
                 errorId: 123456789,
                 errorDetail: "this is detail of xxx error example Some quick example text to build on the card title and make up the bulk of the card's content",
@@ -245,6 +256,10 @@ export default {
         }
     },
     mounted() {
+
+        //call service get error by id
+        this.selected = this.errorDetail.errorStatusId;
+
         this.users.forEach(us => {
             let text = ''
             if(us.userName != "" && us.userLastName != ""){
@@ -305,13 +320,34 @@ export default {
 
                         this.errorDetail.userAssignment = res;
                         console.log(this.errorDetail.userAssignment);
+
+                        //=================== call service ===================
                     }else{
                         p.selected = true;
                         let addUser = {
                             userAssignId: p.userId
                         }
                         this.errorDetail.userAssignment.push(addUser);
+
+                        //=================== call service ===================
                     }
+                }
+            });
+        },
+        delUser(id){
+            this.pickUsers.forEach(p => {
+                if(p.userId === id){
+                    p.selected = false;
+
+                    //============== delete user =================
+                    let res = this.errorDetail.userAssignment;
+
+                    res = res.filter((data) => data.userAssignId !== id)
+
+                    this.errorDetail.userAssignment = res;
+                    console.log(this.errorDetail.userAssignment);
+                    
+                    //=================== call service ===================
                 }
             });
         },
@@ -326,16 +362,19 @@ export default {
     },
     computed: {
         filteredUsers() {
-        return this.pickUsers.filter((row) => {
-            const userName = row.userName.toLowerCase();
-            const searchTerm = this.filterText.toLowerCase();
+            return this.pickUsers.filter((row) => {
+                const userName = row.userName.toLowerCase();
+                const searchTerm = this.filterText.toLowerCase();
 
-            return (
-            userName.includes(searchTerm)
-            );
-        });
-    },
-  }
+                return (
+                userName.includes(searchTerm)
+                );
+            })
+        },
+        ...mapState({
+            options: (state) => state.errorStatus,
+        })
+    }
 }
 </script>
 
@@ -353,29 +392,50 @@ export default {
     display: block !important;
 }
 .hide-bt {
-    color: #96A1AE;
-    background-color: inherit;
-    border: none;
-    border-radius: 100%;
+    /* display: inline-block; */
+    height: 45px;
+    width: 45px;
+    border-radius: 22.5px;
+    color:  #96A1AE;
+    background-color: #E3E3E3;
 }
 
 .hide-bt:focus{
-    color: #96A1AE;
-    background-color: inherit;
-    border: none;
-    border-radius: 100%;
+    /* display: inline-block; */
+    height: 45px;
+    width: 45px;
+    border-radius: 22.5px;
+    color:  #96A1AE;
+    background-color: #bdbaba;
 }
 .hide-bt:hover{
-    color: #96A1AE;
-    background-color: inherit;
-    border: none;
-    border-radius: 100%;
+    /* display: inline-block; */
+    height: 45px;
+    width: 45px;
+    border-radius: 22.5px;
+    color:  #96A1AE;
+    background-color:#bdbaba;
 }
 .hide-bt:active{
-    color: #96A1AE;
-    background-color: inherit;
+    /* display: inline-block; */
+    height: 45px;
+    width: 45px;
+    border-radius: 22.5px;
+    color:  #96A1AE;
+    background-color:#bdbaba;
+}
+.no-color{
+    padding-left: 2px;
     border: none;
-    border-radius: 100%;
+    background-color: inherit;
+}
+.no-color:hover{
+    border: none;
+    background-color: inherit;
+}
+.no-color:active{
+    border: none;
+    background-color: inherit;
 }
 .dropdown-bt{
     color: #96A1AE;
