@@ -57,7 +57,6 @@
           <div class="d-flex justify-content-end">
             <b-form-group v-slot="{ ariaDescribedby }" class="display-task">
               <b-form-checkbox-group
-                
                 size="lg"
                 id="checkbox-group-1"
                 v-model="selected"
@@ -101,52 +100,78 @@
               {{ task.detail }}
             </b-card-text>
             <div class="d-flex justify-content-end">
-              <div class="status-waiting rounded-pill" v-if="task.status == 'waiting'">
+              <div
+                class="status-waiting rounded-pill"
+                v-if="task.status == 'waiting'"
+              >
                 <p class="fw-bold m-0 text-center white-space">
                   Waiting
-                  <font-awesome-icon class="font-status"
+                  <font-awesome-icon
+                    class="font-status"
                     :icon="['fas', 'tag']"
                   />
                 </p>
               </div>
-              <div class="status-todo rounded-pill" v-if="task.status == 'todo'">
+              <div
+                class="status-todo rounded-pill"
+                v-if="task.status == 'todo'"
+              >
                 <p class="fw-bold m-0 text-center white-space">
                   To do
-                  <font-awesome-icon class="font-status" :icon="['fas', 'tag']" />
+                  <font-awesome-icon
+                    class="font-status"
+                    :icon="['fas', 'tag']"
+                  />
                 </p>
               </div>
-              <div class="status-doing rounded-pill" v-if="task.status == 'doing'">
+              <div
+                class="status-doing rounded-pill"
+                v-if="task.status == 'doing'"
+              >
                 <p class="fw-bold m-0 text-center white-space">
                   Doing
-                  <font-awesome-icon class="font-status" :icon="['fas', 'tag']" />
+                  <font-awesome-icon
+                    class="font-status"
+                    :icon="['fas', 'tag']"
+                  />
                 </p>
               </div>
-              <div class="status-testing rounded-pill" v-if="task.status == 'testing'">
+              <div
+                class="status-testing rounded-pill"
+                v-if="task.status == 'testing'"
+              >
                 <p class="fw-bold m-0 text-center white-space">
                   Testing
-                  <font-awesome-icon class="font-status" :icon="['fas', 'tag']" />
+                  <font-awesome-icon
+                    class="font-status"
+                    :icon="['fas', 'tag']"
+                  />
                 </p>
               </div>
-              <div class="status-done rounded-pill" v-if="task.status == 'done'">
+              <div
+                class="status-done rounded-pill"
+                v-if="task.status == 'done'"
+              >
                 <p class="fw-bold m-0 text-center white-space">
                   Done
-                  <font-awesome-icon class="font-status" :icon="['fas', 'tag']" />
+                  <font-awesome-icon
+                    class="font-status"
+                    :icon="['fas', 'tag']"
+                  />
                 </p>
               </div>
             </div>
           </b-card>
         </div>
-      </div>
+      </div>      
     </div>
   </div>
 </template>
 
 <script>
-import { filter } from 'vue/types/umd';
 export default {
   name: "TaskError",
-  methods:{
-    
+  mounted() {
   },
   data() {
     return {

@@ -30,21 +30,6 @@
             <a v-if="index != header.length - 1" class="ml-2">
               >
             </a>
-                  <!-- <a
-                    v-if="header.length > 1 && index != header.length - 1"
-                    class="font-weight-bold header-cursor ml-2"
-                    v-on:click.native="goto(val.url)"
-                  >
-                    {{ val.name }}
-                  </a> -->
-
-                  <router-link
-                    v-if="header.length > 1 && index != header.length - 1"
-                    class="font-weight-bold header-cursor ml-2"
-                    :to="val.url"
-                  >
-                    {{ val.name }}
-                  </router-link>
 
             <a v-if="index == header.length - 1">
               {{ val.name }}
@@ -77,20 +62,25 @@
               <template #button-content>
                 <font-awesome-icon :icon="['fas', 'angle-down']" />
               </template>
-              <b-dropdown-item class="display-dropdow" href="#"
-                > <div class="d-flex justify-content-center"><b-avatar
-                  button
-                  variant="primary"
-                  text="FF"
-                  class="align-baseline display-dropdow"
-                ></b-avatar
-              ></div>
-                </b-dropdown-item>
-                <hr class="display-dropdow">
+              <b-dropdown-item class="display-dropdow" href="#">
+                <div class="d-flex justify-content-center">
+                  <b-avatar
+                    button
+                    variant="primary"
+                    text="FF"
+                    class="align-baseline display-dropdow"
+                  ></b-avatar>
+                </div>
+              </b-dropdown-item>
+              <hr class="display-dropdow" />
               <b-dropdown-item class="display-dropdow" href="#"
                 >User name</b-dropdown-item
               >
-              <b-dropdown-item ><router-link :to="{name: 'Login'}"><div class="h-100 w-100">Login</div> </router-link></b-dropdown-item>
+              <b-dropdown-item
+                ><router-link :to="{ name: 'Login' }"
+                  ><div class="h-100 w-100">Login</div>
+                </router-link></b-dropdown-item
+              >
             </b-dropdown>
           </div>
         </div>
@@ -103,9 +93,7 @@
 import { mapState } from "vuex";
 export default {
   name: "component-header",
-  mounted() {
-    
-  },
+  mounted() {},
   computed: {
     ...mapState({
       header: (state) => state.header.allLinkHeader,
@@ -113,7 +101,7 @@ export default {
   },
   methods: {
     goto(url) {
-      console.log('url',url);
+      console.log("url", url);
       this.$router.push(url);
     },
   },

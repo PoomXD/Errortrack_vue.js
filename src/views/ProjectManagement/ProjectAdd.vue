@@ -208,7 +208,7 @@ export default {
     };
   },
   mounted() {
-    // this.$store.dispatch("header/setAllLinkHeader", "ProjectAdd");
+    this.$store.dispatch("header/setAllLinkHeader", "ProjectAdd");
     // console.log(this.$v.projectName.required)
     this.listUserMaintenance = this.listUserOwner;
     // this.$v.projectName.$error = false
