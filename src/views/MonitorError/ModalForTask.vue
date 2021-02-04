@@ -32,6 +32,7 @@
                                 :text="getTextAvatar(user.userAssignId)"
                                 class="mr-1 avatar-owner mt-1"
                             >
+                                <!-- <b-button class="b-avatar-badge">x</b-button> -->
                             </b-avatar>
                             
                             <b-dropdown
