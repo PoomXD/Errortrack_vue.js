@@ -91,12 +91,12 @@
       <div class="row">
         <div
           class="col-xl-3 col-lg-6"
-          v-for="(task, index) in listTasks"
+          v-for="(task, index) in filteredRows"
           :key="index"
         >
           <b-card class="card-list">
             <b-card-title>{{ task.name }}</b-card-title>
-            <b-card-text>
+            <b-card-text class="cut-text font-weight-light">
               {{ task.detail }}
             </b-card-text>
             <div class="d-flex justify-content-end">
@@ -163,7 +163,7 @@
             </div>
           </b-card>
         </div>
-      </div>      
+      </div>
     </div>
   </div>
 </template>
@@ -171,11 +171,19 @@
 <script>
 export default {
   name: "TaskError",
-  mounted() {
+  computed: {
+    filteredRows() {
+      return this.listTasks.filter((row) => {
+        row;
+        return this.selected.includes(row.status);
+      });
+    },
   },
+  methods: {},
+  updated() {},
   data() {
     return {
-      selected: [], // Must be an array reference!
+      selected: ["doing", "todo", "waiting", "done", "testing"], // Must be an array reference!
       options: [
         { text: "Waiting", value: "waiting" },
         { text: "To do", value: "todo" },
@@ -186,7 +194,8 @@ export default {
       listTasks: [
         {
           name: "ERROR1",
-          detail: "Detail Error 1 Connect not sucess",
+          detail:
+            "Detail Error 1 Connect not sucess Detail Error 1 Connect not sucess Detail Error 1Connect not sucess Detail Error 1Connect not sucess Detail Error 1Connect not sucess Detail Error 1",
           status: "waiting",
         },
         {
@@ -201,7 +210,8 @@ export default {
         },
         {
           name: "ERROR1",
-          detail: "Detail Error 1 Connect not sucess",
+          detail:
+            "Render groups of checkboxes with the look of a button-group by setting the prop buttons on <b-form-checkbox-group>. Change the button variant by setting the button-variant prop to one of the standard Bootstrap button variants (see <b-button> for supported variants). The default button-variant is secondary.",
           status: "done",
         },
         {
@@ -240,4 +250,5 @@ export default {
     display: block;
   }
 }
+
 </style>
