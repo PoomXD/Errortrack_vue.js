@@ -26,14 +26,37 @@
                             User Assign : 
                         </div>
                         <div class="col-8 font-detail text-left">
-                            <b-avatar
+                            
+                            <div class="wrap"
                                 v-for="(user, index) in errorDetail.userAssignment"
                                 :key="`user-${index}`"
-                                :text="getTextAvatar(user.userAssignId)"
-                                class="mr-1 avatar-owner mt-1"
                             >
-                                <!-- <b-button class="b-avatar-badge">x</b-button> -->
-                            </b-avatar>
+                                <b-avatar
+                                class="avatar-owner"
+                                    :text="getTextAvatar(user.userAssignId)"
+                                >
+                                </b-avatar>
+                                    <span class="wrap-span" @click="pick(user.userAssignId)">
+                                        <font-awesome-icon :icon="['fas', 'times']"/>
+                                    </span>
+                            </div>
+                            
+
+                            <!-- <div
+                                v-for="(user, index) in errorDetail.userAssignment"
+                                :key="`user-${index}`"
+                                class="avatar-with-bt"
+                            >
+                                <b-avatar
+                                    
+                                    :text="getTextAvatar(user.userAssignId)"
+                                    class="mr-1 avatar-owner mt-1"
+                                >
+                                    
+                                </b-avatar>
+                                <span class="del-bt-in-avatar">x</span>
+                            </div> -->
+                            
                             
                             <b-dropdown
                                 right
@@ -372,4 +395,5 @@ export default {
     border: none;
     border-radius: 100%;
 }
+
 </style>
