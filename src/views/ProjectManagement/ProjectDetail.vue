@@ -120,6 +120,9 @@ export default {
 </script>
 
 <style scoped>
+.ProjectDetail{
+    padding: 1rem;
+    }
   #search{
     border: 1px solid rgb(174, 199, 255);
     border-radius: 20px;
