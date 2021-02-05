@@ -3,29 +3,29 @@
         <b-button v-b-modal.modalPopover>Show Modal</b-button>
 
         <b-modal id="modalPopover" title="Modal with Popover" size="xl">
-            <div class="row px-2">
-                <div class="col-xl-8">
+            <div class="row px-1">
+                <div class="col-xl-7 col-lg-12">
                     <div class="row">
-                        <div class="col-4 font-gen text-right">
+                        <div class="col-3 font-gen text-right">
                             Error ID : 
                         </div>
-                        <div class="col-8 font-detail text-left">
+                        <div class="col-9 font-detail text-left">
                             {{ errorDetail.errorId }}
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-4 font-gen text-right">
+                        <div class="col-3 font-gen text-right">
                             Error Detail : 
                         </div>
-                        <div class="col-8 font-detail text-left">
+                        <div class="col-9 font-detail text-left">
                             {{ errorDetail.errorDetail }}
                         </div>
                     </div>
                     <div class="row mt-3">
-                        <div class="col-4 font-gen text-right">
+                        <div class="col-3 font-gen text-right">
                             User Assign : 
                         </div>
-                        <div class="col-8 font-detail text-left">
+                        <div class="col-9 font-detail text-left">
                             
                             <div class="wrap"
                                 v-for="(user, index) in errorDetail.userAssignment"
@@ -36,7 +36,7 @@
                                     :text="getTextAvatar(user.userAssignId)"
                                 >
                                 </b-avatar>
-                                    <span class="wrap-span" @click="pick(user.userAssignId)">
+                                    <span class="wrap-span" @click="delUser(user.userAssignId)">
                                         <font-awesome-icon :icon="['fas', 'times']"/>
                                     </span>
                             </div>
@@ -63,21 +63,21 @@
                                 variant="link"
                                 toggle-class="text-decoration-none"
                                 no-caret
-                                class="add-user-bt dropdown-bt"
+                                class="hide-bt"
                                 :menu-class="{'prevent-close' : showDropdown == true, 'show-dropdown' : showDropdown == false}"
                                 id="dropdown-member"
                                 
                                 >
                                 <template #button-content>
-                                    <button class="hide-bt" @click="show()"><font-awesome-icon :icon="['fas', 'plus']"/></button>
+                                    <button class="no-color" @click="show()"><font-awesome-icon :icon="['fas', 'plus']"/></button>
                                 </template>
                                     <b-dropdown-header href="#">
                                         <div class="row">
-                                            <div class="col">
+                                            <div class="col font-topic">
                                                 Add User Assign
                                             </div>
                                             <div class="col text-right">
-                                                <b-button class="hide-bt" @click="closeDropDown()">
+                                                <b-button class="no-color" @click="closeDropDown()">
                                                     x
                                                 </b-button>
                                             </div>
@@ -122,8 +122,21 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-xl-4">
-                    test
+                <div class="col-xl-5 col-lg-12">
+                    <div class="row">
+                        <div class="col-xl-4 col-lg-12 font-gen">
+                            Error Status : 
+                        </div>
+                        <div class="col-xl-8 col-lg-12 font-detail">
+
+                            <b-form-select 
+                            v-model="selected" 
+                            :options="options"
+                            @change="confirmChange()"
+                            ></b-form-select>
+
+                        </div>
+                    </div>
                 </div>
             </div>
         </b-modal>
@@ -131,10 +144,14 @@
 </template>
 
 <script>
+import { mapState } from 'vuex';
+import Swal from 'sweetalert2'
+
 export default {
     name: 'modal-task',
     data() {
         return {
+            selected: '',
             errorDetail: {
                 errorId: 123456789,
                 errorDetail: "this is detail of xxx error example Some quick example text to build on the card title and make up the bulk of the card's content",
@@ -245,6 +262,10 @@ export default {
         }
     },
     mounted() {
+
+        //call service get error by id
+        this.selected = this.errorDetail.errorStatusId;
+
         this.users.forEach(us => {
             let text = ''
             if(us.userName != "" && us.userLastName != ""){
@@ -305,13 +326,34 @@ export default {
 
                         this.errorDetail.userAssignment = res;
                         console.log(this.errorDetail.userAssignment);
+
+                        //=================== call service ===================
                     }else{
                         p.selected = true;
                         let addUser = {
                             userAssignId: p.userId
                         }
                         this.errorDetail.userAssignment.push(addUser);
+
+                        //=================== call service ===================
                     }
+                }
+            });
+        },
+        delUser(id){
+            this.pickUsers.forEach(p => {
+                if(p.userId === id){
+                    p.selected = false;
+
+                    //============== delete user =================
+                    let res = this.errorDetail.userAssignment;
+
+                    res = res.filter((data) => data.userAssignId !== id)
+
+                    this.errorDetail.userAssignment = res;
+                    console.log(this.errorDetail.userAssignment);
+                    
+                    //=================== call service ===================
                 }
             });
         },
@@ -322,20 +364,41 @@ export default {
         closeDropDown(){
             this.showDropdown = false;
             console.log(`${this.showDropdown} : close`);
+        },
+        confirmChange(){
+            console.log('change');
+
+            Swal.fire({
+                title: 'Edit Status',
+                text: 'Do you want to change this error status?',
+                icon: 'warning',
+                confirmButtonText: 'OK',
+                showCancelButton: true
+            })
+            .then((result) => {
+                if(result.isConfirmed){
+                    this.errorDetail.errorStatusId = this.selected;
+                }else{
+                    this.selected = this.errorDetail.errorStatusId;
+                }
+            })
         }
     },
     computed: {
         filteredUsers() {
-        return this.pickUsers.filter((row) => {
-            const userName = row.userName.toLowerCase();
-            const searchTerm = this.filterText.toLowerCase();
+            return this.pickUsers.filter((row) => {
+                const userName = row.userName.toLowerCase();
+                const searchTerm = this.filterText.toLowerCase();
 
-            return (
-            userName.includes(searchTerm)
-            );
-        });
-    },
-  }
+                return (
+                userName.includes(searchTerm)
+                );
+            })
+        },
+        ...mapState({
+            options: (state) => state.errorStatus,
+        })
+    }
 }
 </script>
 
@@ -353,29 +416,53 @@ export default {
     display: block !important;
 }
 .hide-bt {
-    color: #96A1AE;
-    background-color: inherit;
-    border: none;
-    border-radius: 100%;
+    /* display: inline-block; */
+    height: 45px;
+    width: 45px;
+    border-radius: 22.5px;
+    color:  #96A1AE;
+    background-color: #E3E3E3;
 }
 
 .hide-bt:focus{
-    color: #96A1AE;
-    background-color: inherit;
-    border: none;
-    border-radius: 100%;
+    /* display: inline-block; */
+    height: 45px;
+    width: 45px;
+    border-radius: 22.5px;
+    color:  #96A1AE;
+    background-color: #bdbaba;
 }
 .hide-bt:hover{
-    color: #96A1AE;
-    background-color: inherit;
-    border: none;
-    border-radius: 100%;
+    /* display: inline-block; */
+    height: 45px;
+    width: 45px;
+    border-radius: 22.5px;
+    color:  #96A1AE;
+    background-color:#bdbaba;
 }
 .hide-bt:active{
-    color: #96A1AE;
-    background-color: inherit;
+    /* display: inline-block; */
+    height: 45px;
+    width: 45px;
+    border-radius: 22.5px;
+    color:  #96A1AE;
+    background-color:#bdbaba;
+}
+.no-color{
+    color: grey;
+    padding-left: 2px;
     border: none;
-    border-radius: 100%;
+    background-color: inherit;
+}
+.no-color:hover{
+    color: grey;
+    border: none;
+    background-color: inherit;
+}
+.no-color:active{
+    color: grey;
+    border: none;
+    background-color: inherit;
 }
 .dropdown-bt{
     color: #96A1AE;
