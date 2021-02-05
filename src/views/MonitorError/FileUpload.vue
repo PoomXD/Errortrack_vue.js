@@ -103,7 +103,7 @@
                       <div>
                         <label class="font-gen m-0">File Rename</label>
                         <hr />
-                        <b-form-input @input="e => input(e, index)" :id="`input${index}`"></b-form-input>
+                        <b-form-input :id="`input${index}`"></b-form-input>
                         <br />
                         <div class="row">
                           <div class="col">
@@ -245,19 +245,9 @@ export default {
       console.log(this.file[0].name);
       this.$refs.select.focus = false;
     },
-    cancelDel(index) {
-      this.$refs['dropdownDel'+index][0].hide(true)
-    },
-    cancelEdit(index) {
-      this.$refs['dropdownEdit'+index][0].hide(true)
-      this.rename = ""
-    },
     del(index){
-
-    },
-    input(e, index){
-      // this.rename = e
-      console.log(index)
+      // delby index
+      this.$refs['dropdownDel'+index][0].hide(true)
     },
     update(index){
       console.log(document.getElementById("input"+index).value);
