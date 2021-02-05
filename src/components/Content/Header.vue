@@ -40,7 +40,7 @@
       <b-col class=" col-xl-4 col-lg-2 col-md-2 col-sm-2">
         <div class="d-flex justify-content-end">
           <div class="p-2 align-middle ">
-            <font-awesome-icon :icon="['fas', 'bell']" />
+            <font-awesome-icon :icon="['far', 'bell']" style="font-size: 20px; margin-top: 5px"/>
           </div>
           <div class="p-2 align-middle display">
             <b-avatar

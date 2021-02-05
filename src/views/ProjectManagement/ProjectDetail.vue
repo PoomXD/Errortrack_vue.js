@@ -2,39 +2,45 @@
     <div class="ProjectDetail"> 
         <div id="Edit_Button">
             <router-link :to="{name:'ProjectEdit'}">
-            <b-button class="bt-blue float-right" style="width: 90px" >
+            <b-button class="bt-blue float-right" style="width: 90px;" >
             <font-awesome-icon :icon="['fas','edit']"/> Edit</b-button></router-link>
         </div>
 
         <br>
         <br>
          <div class="card-list row" id="cardlist">
-             <div class="col-xl-6 col-md-12" style="margin-top:-2%">
+             <div class="col-xl-6 col-md-6 col-sm-5" style="margin-top:-2%">
                 <div class="row">
-                    <div class="col-xl-4 col-md-3 font-gen" style="font-weight: bold" align="right">Project ID  : </div>
-                    <div class="col-xl-6 col-md-5 font-detail" align="left">{{Project_ID}} </div>
+                    <div id="Topic" class="col-xl-4 col-md-5 font-gen" 
+                    :class="{'move':mobileView}" style="font-weight: bold" align="right">Project ID  : </div>
+                    <div class="col-xl-6 col-md-7 font-detail" align="left">{{Project_ID}} </div>
                 </div> 
                 <div class="row" style="margin-top:1%">
-                    <div class="col-xl-4 col-md-3 font-gen" style="font-weight: bold; margin-bottom:3%" align="right">Project Details  : </div>
-                    <div class="col-xl-6 col-md-5 font-detail" align="left" style="margin-bottom:3%">{{Project_Detail}} </div>
+                    <div id="Topic" class="col-xl-4 col-md-5 font-gen" 
+                    :class="{'move':mobileView}" style="font-weight: bold; margin-bottom:3%" align="right">Project Details  : </div>
+                    <div class="col-xl-6 col-md-7 font-detail" 
+                    :class="{'go_up':mobileView}" align="left" style="margin-bottom:3%;">{{Project_Detail}} </div>
                 </div>
              </div>
-             <div class="col-6 col-md-6" style="margin-top:-2%">
+             <div class="col-xl-6 col-md-6 col-sm-7 " style="margin-top:-2%">
                 <div class="row">
-                    <div class="col-xl-4 col-md-6 font-gen" style="font-weight: bold" align="right">Project Name  : </div>
-                    <div class="col-xl-5 col-md-6 font-detail" align="left">{{Project_Name}} </div>
+                    <div id="Topic" class="col-xl-4 col-md-5 font-gen" 
+                    :class="{'move':mobileView}" style="font-weight: bold" align="right">Project Name  : </div>
+                    <div class="col-xl-5 col-md-7 font-detail" align="left">{{Project_Name}} </div>
                 </div>
                 <div class="row" style="margin-top:2%">
-                    <div class="col-xl-4 col-md-6 font-gen" style="font-weight: bold" align="right">Project Owner  : </div>
-                    <div class="col-xl-8 col-md-6 font-detail" align="left">
+                    <div id="Topic" class="col-xl-4 col-md-5 font-gen" 
+                    :class="{'move':mobileView}" style="font-weight: bold" align="right">Project Owner  : </div>
+                    <div class="col-xl-8 col-md-7 font-detail" align="left">
                     <tr v-for="(Project_Owner, index) in Project_Owner" :key="`Project_Owner-${index}`">
                     <td>{{ [Project_Owner].sort().join(',') }}</td>
                     </tr>
                     </div>
                 </div>
                 <div class="row" style="margin-top:2%">
-                    <div class="col-xl-4 col-md-6 font-gen" style="font-weight: bold" align="right">Member  :</div>
-                    <div class="col-xl-5 col-md-4 font-detail" align="left"> 
+                    <div id="Topic" class="col-xl-4 col-md-5 font-gen" 
+                    :class="{'move':mobileView}" style="font-weight: bold" align="right">Member  :</div>
+                    <div class="col-xl-5 col-md-7 font-detail" align="left"> 
                     <tr v-for="(Member, index) in Member" :key="`Member-${index}`">
                     <td>{{Member.name}}</td>
                     </tr>
@@ -68,9 +74,11 @@
 export default {
     name:"ProjectDetail",
     created(){
+        this.handleView();
+        window.addEventListener('resize', this.handleView);
         if(this.$route.meta.showEdit == false){
             this.Member = this.User_Maintenance
-        }
+        };
         
     },
     mounted(){
@@ -83,10 +91,11 @@ export default {
     },
     data(){
         return{
+            mobileView: true,
             keyword: '',
             fields: [{key:'No',thStyle: {width: '5%'}},
                      {key:'Service_ID',thStyle: {width: '20%'}},
-                     {key:'Service_Name',thStyle: {width: '65%' , align:'left'}},
+                     {key:'Service_Name',thStyle: {width: '65%'}},
                     //  {key:' ',thStyle: {width: '35%'}},
                      {key:'Create_Date',thStyle: {width: '10%',}}],
             dataArray: [
@@ -98,9 +107,9 @@ export default {
                         {No: 6, Service_ID: '987-654-321', Service_Name: 'Name Servicename6',Create_Date: '11-12-2563'},
                        ],
             Project_ID:"xxx-xxxx-xxxx-xxx",
-            Project_Detail:"Detail",
+            Project_Detail:"Detail Detail Detail",
             Project_Name:"Covid 19 Airports Project",
-            Project_Owner:{Owner : ['firstname lastname','firstname lastname']},
+            Project_Owner:{Owner : ['firstname lastname ','firstname lastname ']},
             Member:[{name : 'name_lastname'},{name : 'name_lastname'},{name : 'name_lastname'},{name : 'name_lastname'}],
             User_Maintenance:[{name : "xxx-xxxx-xxxx-xxx"}], 
         }
@@ -113,9 +122,12 @@ export default {
                 item.Service_Name.includes(this.keyword))
 				: this.dataArray
     },
-    
-
-}
+},
+methods: {
+    handleView() {
+      this.mobileView = window.innerWidth <= 770
+    },
+  },
 }
 </script>
 
@@ -127,13 +139,14 @@ export default {
     border: 1px solid rgb(174, 199, 255);
     border-radius: 20px;
     background: #fff; 
-    width: 400px;
+    width: 350px;
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
     margin-top: -4%;
+    margin-right: 100%;
     }
   #ServiceSearch{
     border: 1px solid rgb(255, 255, 255);
-    width: 350px;
+    width: 300px;
     border-radius: 20px;
     background: #fff;
     outline: -webkit-focus-ring-color auto 0px;
@@ -142,7 +155,13 @@ export default {
       margin: 1px;
       border-radius: 100%;
   }
-
+  .move {
+    text-align: left;
+    margin-top: 3%;
+  }
+  .go_up{
+    margin-top: -3%;
+  }
 
 
 </style>
