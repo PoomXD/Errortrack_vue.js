@@ -8,7 +8,8 @@
     <ul class="nav font-no-size-color">
       <li><router-link :to="{name : 'MonitorList' }"
         :class="{'router-link-active': $route.fullPath === '/monitor/list' || 
-          $route.fullPath === '/monitor/detail'}">
+          $route.fullPath === '/monitor/detail' || 
+          $route.fullPath === '/monitor/task'}">
           <font-awesome-icon :icon="['fas', 'desktop']"/>  Monitor Error
         </router-link></li>
       <li><router-link :to="{name : 'ListProject' }" 

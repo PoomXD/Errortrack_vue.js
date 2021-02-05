@@ -66,16 +66,6 @@ main{
   font-size: 30px;
   color:#0077FF;
   }
-  .router-view {
-  position: absolute;
-  top: 10px;
-  width: calc(100% - 60px);
-  height: calc(100vh - 60px);
-  padding: 20px;
-  background-color: #fff;
-  border-radius: 30px;
-  box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2);
-  }
   .openNav {
     transform: translateX(250px);
     transition: 1s transform cubic-bezier(0,.12,.14,1);
