@@ -94,7 +94,7 @@
           v-for="(task, index) in filteredRows"
           :key="index"
         >
-          <b-card class="card-list">
+          <b-card class="card-list" v-b-modal="`modalPopover${index}`">
             <b-card-title>{{ task.name }}</b-card-title>
             <b-card-text class="cut-text font-weight-light">
               {{ task.detail }}
@@ -161,14 +161,17 @@
                 </p>
               </div>
             </div>
+            <b-modal :id="`modalPopover${index}`" title="Error Something" size="xl">
+              <ModalForTask :indexError=index></ModalForTask>
+            </b-modal>
           </b-card>
         </div>
       </div>
     </div>
   </div>
 </template>
-
 <script>
+import ModalForTask from "./ModalForTask.vue"
 export default {
   name: "TaskError",
   computed: {
@@ -178,6 +181,9 @@ export default {
         return this.selected.includes(row.status);
       });
     },
+  },
+  components:{
+    ModalForTask
   },
   methods: {},
   updated() {},
