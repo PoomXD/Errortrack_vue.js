@@ -56,8 +56,8 @@
           <hr />
           <div class="px-4">
             <b-card
-              v-for="item in file"
-              :key="item.name"
+              v-for="(item, index) in file"
+              :key="index"
               class="my-3 shadow-sm"
             >
               <div class="d-flex justify-content-between">
@@ -78,7 +78,7 @@
                   </div>
                 </div>
                 <div class="d-flex justify-content-end">
-                  <div class="text-center icon-download mx-2">
+                  <div class="text-center bt-download">
                     <font-awesome-icon
                       :icon="['fas', 'download']"
                       class="icon-size-18"
@@ -86,23 +86,50 @@
                     <br />
                     Download
                   </div>
-                  <div class="text-center mx-2 icon-edit">
-                    <font-awesome-icon
-                      :icon="['fas', 'edit']"
-                      class="icon-size-18"
-                    />
-                    <br />
-                    Edit
-                  </div>
-                  <div class="text-center icon-delete mx-2">
-                    <font-awesome-icon
-                      :icon="['fas', 'trash-alt']"
-                      class="icon-size-18"
-                    />
-                    <br />
-                    Delete
-                  </div>
-                  <b-dropdown class="bt-grey" right variant="link" ref="dropdowDel" no-caret>
+
+                  <b-dropdown
+                    class="dropdown-edit"
+                    right
+                    variant="link"
+                    :ref="`dropdownEdit${index}`"
+                    no-caret
+                  >
+                    <template #button-content>
+                      <font-awesome-icon :icon="['fas', 'edit']" />
+                      <br />
+                      Edit
+                    </template>
+                    <b-dropdown-form class="text-center">
+                      <div>
+                        <label class="font-gen m-0">File Rename</label>
+                        <hr />
+                        <b-form-input @input="e => input(e, index)" :id="`input${index}`"></b-form-input>
+                        <br />
+                        <div class="row">
+                          <div class="col">
+                            <b-button
+                              class="w-100 bt-cancel-grey py-1"
+                              @click="$refs['dropdownEdit'+index][0].hide(true)"
+                              >Cancel</b-button
+                            >
+                          </div>
+                          <div class="col">
+                            <b-button @click="update(index)" class="w-100 bt-green py-1"
+                              >Update</b-button
+                            >
+                          </div>
+                        </div>
+                      </div>
+                    </b-dropdown-form>
+                  </b-dropdown>
+
+                  <b-dropdown
+                    class="dropdown-del"
+                    right
+                    variant="link"
+                    :ref="`dropdownDel${index}`"
+                    no-caret
+                  >
                     <template #button-content>
                       <font-awesome-icon :icon="['fas', 'trash-alt']" />
                       <br />
@@ -112,13 +139,24 @@
                       <div>
                         <label class="font-gen m-0">Delete File?</label>
                         <hr />
-                        <label class="font-detail m-0">Do you want to remove the file?</label>
-                        <br>
+                        <label class="font-detail m-0"
+                          >Do you want to remove the file?</label
+                        >
+                        <br />
                         <div class="row mt-3">
-                          <div class="col"><b-button class="w-100 bt-cancel-grey" @click="cancelDel()">Cancel</b-button></div>
-                          <div class="col"><b-button class="w-100 bt-red">Delete</b-button></div>
+                          <div class="col">
+                            <b-button
+                              class="w-100 bt-cancel-grey py-1"
+                              @click="$refs['dropdownDel'+index][0].hide(true)"
+                              >Cancel</b-button
+                            >
+                          </div>
+                          <div class="col">
+                            <b-button class="w-100 bt-red py-1"
+                              >Delete</b-button
+                            >
+                          </div>
                         </div>
-                        <!-- <b-button>Cancel</b-button><b-button>Delete</b-button> -->
                       </div>
                     </b-dropdown-form>
                   </b-dropdown>
@@ -135,8 +173,10 @@
 <script>
 export default {
   name: "fileUpload-Test",
+ 
   data() {
     return {
+      rename: "",
       file: [],
       errorDetail: {
         errorId: 123456789,
@@ -205,9 +245,24 @@ export default {
       console.log(this.file[0].name);
       this.$refs.select.focus = false;
     },
-    cancelDel() {
-      alert("dropdowDel")
-      this.$refs.dropdowDel.show(false)
+    cancelDel(index) {
+      this.$refs['dropdownDel'+index][0].hide(true)
+    },
+    cancelEdit(index) {
+      this.$refs['dropdownEdit'+index][0].hide(true)
+      this.rename = ""
+    },
+    del(index){
+
+    },
+    input(e, index){
+      // this.rename = e
+      console.log(index)
+    },
+    update(index){
+      console.log(document.getElementById("input"+index).value);
+      document.getElementById("input"+index).value = ""
+      this.$refs['dropdownEdit'+index][0].hide(true)
     },
   },
 };
@@ -218,40 +273,11 @@ export default {
   font-size: 50px;
   color: #96a1ae;
 }
-.icon-size-18 {
-  font-size: 18px;
-}
 .icon-upload {
   color: #0077ff;
   font-size: 18px;
 }
-.icon-download {
-  font-family: "Prompt";
-  font-style: normal;
-  font-size: 14px;
-  color: grey;
-}
-.icon-download:hover {
-  color: #2fbc70;
-}
-.icon-edit {
-  font-family: "Prompt";
-  font-style: normal;
-  font-size: 14px;
-  color: grey;
-}
-.icon-edit:hover {
-  color: #0077ff;
-}
-.icon-delete {
-  font-family: "Prompt";
-  font-style: normal;
-  font-size: 14px;
-  color: grey;
-}
-.icon-delete:active {
-  color: #bc4b51;
-}
+
 .font-gen2 {
   font-family: "Prompt";
   font-style: normal;
@@ -260,10 +286,66 @@ export default {
   line-height: 24px;
   color: #000000;
 }
-.bt-grey {
+.bt-download {
+  padding: 2px;
+  width: 80px;
+  background: none;
+  font-family: "Prompt";
+  font-style: normal;
+  font-size: 14px;
+  padding: 0px;
+  color: #96a1ae;
+  &:hover {
+    color: #2fbc70;
+  }
+  &:active {
+    color: #2fbc70;
+  }
+  svg {
+    margin-top: 4px;
+    font-size: 18px;
+  }
+}
+
+.dropdown-edit {
   width: 80px;
   background: none;
   button {
+    font-family: "Prompt";
+    font-style: normal;
+    font-size: 14px;
+    padding: 0px;
+    color: #96a1ae;
+    &:hover {
+      color: #0077ff;
+    }
+    &:active {
+      color: #0077ff;
+    }
+    &:focus {
+      outline: none !important;
+      box-shadow: none !important;
+    }
+    svg {
+      font-size: 18px;
+    }
+  }
+  ul {
+    li {
+      form {
+        width: 300px;
+      }
+    }
+  }
+}
+
+.dropdown-del {
+  width: 80px;
+  background: none;
+  button {
+    font-family: "Prompt";
+    font-style: normal;
+    font-size: 14px;
     padding: 0px;
     color: #96a1ae;
     &:hover {
@@ -272,17 +354,20 @@ export default {
     &:active {
       color: #bc4b51;
     }
+    &:focus {
+      outline: none !important;
+      box-shadow: none !important;
+    }
     svg {
       font-size: 18px;
     }
   }
-  ul{
-    li{
-      form{
+  ul {
+    li {
+      form {
         width: 300px;
       }
     }
   }
-  
 }
 </style>
