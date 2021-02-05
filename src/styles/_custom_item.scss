@@ -207,3 +207,95 @@
   height: 70px;
   -webkit-box-orient: vertical;
 }
+.icon-file {
+  font-size: 50px;
+  color: #96a1ae;
+}
+.icon-upload {
+  color: #0077ff;
+  font-size: 18px;
+}
+.bt-download {
+  padding: 2px;
+  width: 80px;
+  background: none;
+  font-family: "Prompt";
+  font-style: normal;
+  font-size: 14px;
+  padding: 0px;
+  color: #96a1ae;
+  &:hover {
+    color: #2fbc70;
+  }
+  &:active {
+    color: #2fbc70;
+  }
+  svg {
+    margin-top: 4px;
+    font-size: 18px;
+  }
+}
+
+.dropdown-edit {
+  width: 80px;
+  background: none;
+  button {
+    font-family: "Prompt";
+    font-style: normal;
+    font-size: 14px;
+    padding: 0px;
+    color: #96a1ae;
+    &:hover {
+      color: #0077ff;
+    }
+    &:active {
+      color: #0077ff;
+    }
+    &:focus {
+      outline: none !important;
+      box-shadow: none !important;
+    }
+    svg {
+      font-size: 18px;
+    }
+  }
+  ul {
+    li {
+      form {
+        width: 300px;
+      }
+    }
+  }
+}
+
+.dropdown-del {
+  width: 80px;
+  background: none;
+  button {
+    font-family: "Prompt";
+    font-style: normal;
+    font-size: 14px;
+    padding: 0px;
+    color: #96a1ae;
+    &:hover {
+      color: #bc4b51;
+    }
+    &:active {
+      color: #bc4b51;
+    }
+    &:focus {
+      outline: none !important;
+      box-shadow: none !important;
+    }
+    svg {
+      font-size: 18px;
+    }
+  }
+  ul {
+    li {
+      form {
+        width: 300px;
+      }
+    }
+  }
+}
