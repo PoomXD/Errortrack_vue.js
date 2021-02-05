@@ -6,26 +6,26 @@
             <div class="row px-1">
                 <div class="col-xl-7 col-lg-12">
                     <div class="row">
-                        <div class="col-4 font-gen text-right">
+                        <div class="col-3 font-gen text-right">
                             Error ID : 
                         </div>
-                        <div class="col-8 font-detail text-left">
+                        <div class="col-9 font-detail text-left">
                             {{ errorDetail.errorId }}
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-4 font-gen text-right">
+                        <div class="col-3 font-gen text-right">
                             Error Detail : 
                         </div>
-                        <div class="col-8 font-detail text-left">
+                        <div class="col-9 font-detail text-left">
                             {{ errorDetail.errorDetail }}
                         </div>
                     </div>
                     <div class="row mt-3">
-                        <div class="col-4 font-gen text-right">
+                        <div class="col-3 font-gen text-right">
                             User Assign : 
                         </div>
-                        <div class="col-8 font-detail text-left">
+                        <div class="col-9 font-detail text-left">
                             
                             <div class="wrap"
                                 v-for="(user, index) in errorDetail.userAssignment"
@@ -73,7 +73,7 @@
                                 </template>
                                     <b-dropdown-header href="#">
                                         <div class="row">
-                                            <div class="col">
+                                            <div class="col font-topic">
                                                 Add User Assign
                                             </div>
                                             <div class="col text-right">
