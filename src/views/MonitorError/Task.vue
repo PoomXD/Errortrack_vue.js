@@ -164,67 +164,6 @@
           </b-card>
         </div>
       </div>
-      <div>
-        <b-button v-b-modal.modal-xl variant="primary">xl modal</b-button>
-        <b-modal id="modal-xl" size="xl" title="Extra Large Modal"
-          ><div class="d-flex justify-content-start">
-            <div class="p-2">
-              <font-awesome-icon :icon="['fas', 'comment-dots']" />
-            </div>
-            <div class="p-2">Comment</div>
-            <div class="p-2">(12 Comment)</div>
-          </div>
-          <hr />
-          <div class="pl-5 pr-5">
-            <div id="Comment">
-              <b-row>
-                <b-col class="d-flex justify-content-start">
-                  <b-avatar variant="primary" text="BV" class="mr-3"></b-avatar>
-                  <div class="align-middle">User name</div>
-                </b-col>
-              </b-row>
-              <div class="card-list ml-5 p-1">
-                <b-form-textarea
-                  no-resize
-                  class="border-0 textaera"
-                  placeholder="Write a commet..."
-                ></b-form-textarea>
-                <div class="d-flex justify-content-end">
-                  <b-button variant="outline-secondary" class="m-2 comment-size-buttom"
-                    >Cancel</b-button
-                  >
-                  <b-button variant="success" class="m-2 comment-size-buttom">Save</b-button>
-                </div>
-              </div>
-            </div>
-            <div
-              id="Comment"
-              v-for="(message, index) in listMessage"
-              :key="index"
-            >
-              <b-row>
-                <b-col class="d-flex justify-content-start">
-                  <b-avatar variant="primary" text="BV" class="mr-3"></b-avatar>
-                  <div class="align-middle">{{ message.username }}</div>
-                </b-col>
-                <b-col class="d-flex justify-content-end"
-                  ><div class="align-middle fontColor-comment">{{ message.date }}</div></b-col
-                >
-              </b-row>
-              <div class="card-list mb-1 ml-5 p-2 textareabackgrou fontColor-comment">
-                {{ message.message }}
-              </div>
-              <div
-                class="d-flex justify-content-start ml-5 "
-                v-if="message.id === 2"
-              >
-                <a href="" class="fontColor-comment mr-4">Edit</a>
-                <a href="" class="fontColor-comment">Delete</a>
-              </div>
-            </div>
-          </div>
-        </b-modal>
-      </div>
     </div>
   </div>
 </template>
@@ -244,36 +183,7 @@ export default {
   updated() {},
   data() {
     return {
-      listMessage: [
-        {
-          id: 1,
-          username: "Game Kanna",
-          message:
-            "Alternative browsers which use the latest version of WebKit, Blink, or Gecko, whether directly or via the platform’s web view API, are not explicitly supported. However, Bootstrap should (in most cases) display and function correctly in these browsers as well. More specific support information is provided below.",
-          date: "Dec 17 at 11:01AM",
-        },
-        {
-          id: 1,
-          username: "Game Kanna",
-          message:
-            "Alternative browsers which use the latest version of WebKit, Blink, or Gecko, whether directly or via the platform’s web view API, are not explicitly supported. However, Bootstrap should (in most cases) display and function correctly in these browsers as well. More specific support information is provided below.",
-          date: "Dec 17 at 11:01AM",
-        },
-        {
-          id: 2,
-          username: "Fa kamontip",
-          message:
-            "Alternative browsers which use the latest version of WebKit, Blink, or Gecko, whether directly or via the platform’s web view API, are not explicitly supported. However, Bootstrap should (in most cases) display and function correctly in these browsers as well. More specific support information is provided below.",
-          date: "Dec 17 at 11:01AM",
-        },
-        {
-          id: 4,
-          username: "Airada",
-          message:
-            "Alternative browsers which use the latest version of WebKit, Blink, or Gecko, whether directly or via the platform’s web view API, are not explicitly supported. However, Bootstrap should (in most cases) display and function correctly in these browsers as well. More specific support information is provided below.",
-          date: "Dec 17 at 11:01AM",
-        },
-      ],
+      
       selected: ["doing", "todo", "waiting", "done", "testing"], // Must be an array reference!
       options: [
         { text: "Waiting", value: "waiting" },
