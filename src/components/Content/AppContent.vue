@@ -1,7 +1,7 @@
 <template>
   <div class="app-content background">
     
-    <div class="content" :class="{'open':showNav,'close1':!showNav}"> 
+    <div class="content" :class="{'openNav':showNav,'closeNav':!showNav}"> 
       <div v-if="!mobileView">
         <app-sidebar/>
         <app-header/>
@@ -12,7 +12,7 @@
       <div v-else>
         <app-sidebar style=" margin-left: -250px;"/>
         <app-header style="margin-left: -13rem; "/>
-        <div id="navigation-icon" @click="showNav = !showNav">
+        <div class="navigation-icon" @click="showNav = !showNav">
           <font-awesome-icon :icon="['fas', 'bars']"/>
         </div>
       <main  class="content-wrapper">
@@ -59,7 +59,7 @@ main{
     padding-right: 1%;
     margin-top: 1.5rem;
   }
-  #navigation-icon {
+  .navigation-icon {
   padding: 10px 10px 0px 20px;
   margin-top: -75px;
   cursor: pointer;
@@ -76,12 +76,12 @@ main{
   border-radius: 30px;
   box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2);
   }
-  .open {
+  .openNav {
     transform: translateX(250px);
     transition: 1s transform cubic-bezier(0,.12,.14,1);
   }
-  .close1 {
+  .closeNav {
     transform: translateX(0px);
-    transition: 1s transform cubic-bezier(0,.12,.14,1);
+    transition: 1.5s transform cubic-bezier(0,.12,.14,1);
   }
 </style>

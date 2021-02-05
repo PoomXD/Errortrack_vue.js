@@ -62,7 +62,7 @@
         <div class="row table-box" id="ServiceTable">
            <b-table class="table-color" striped hover :items="items" :fields="fields" :keyword="keyword">
                 <template v-slot:cell(Service_ID)="data">
-                    <router-link :to="{name:'Monitor'}" style="text-decoration: underline">{{ data.item.Service_ID}}</router-link>
+                    <router-link :to="{name:'TaskError'}" style="text-decoration: underline">{{ data.item.Service_ID}}</router-link>
                  </template>
            </b-table>
         </div>
