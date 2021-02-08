@@ -383,7 +383,6 @@ export default {
     },
   },
   updated() {
-    console.log(this.indexError);
   },
   name: "modal-task",
   data() {
@@ -542,7 +541,7 @@ export default {
       } else if (us.userName != "" && us.userLastName == "") {
         text = `${us.userName[0]}`;
       } else {
-        console.log(`null`);
+      
         text = `Un`;
       }
       let addToPick = {
@@ -580,7 +579,8 @@ export default {
           } else if (user.userName != "" && user.userLastName == "") {
             text = `${user.userName[0]}`;
           } else {
-            console.log(`null`);
+            
+
             text = `Un`;
           }
         }
@@ -589,7 +589,7 @@ export default {
     },
     pick(id) {
       this.showDropdown = true;
-      console.log(`pick id : ${id}`);
+      
 
       this.pickUsers.forEach((p) => {
         if (p.userId === id) {
@@ -602,7 +602,7 @@ export default {
             res = res.filter((data) => data.userAssignId !== id);
 
             this.errorDetail.userAssignment = res;
-            console.log(this.errorDetail.userAssignment);
+            
 
             //=================== call service ===================
           } else {
@@ -628,7 +628,7 @@ export default {
           res = res.filter((data) => data.userAssignId !== id);
 
           this.errorDetail.userAssignment = res;
-          console.log(this.errorDetail.userAssignment);
+         
 
           //=================== call service ===================
         }
@@ -636,14 +636,12 @@ export default {
     },
     show() {
       this.showDropdown = true;
-      console.log("test");
+     
     },
     closeDropDown() {
       this.showDropdown = false;
-      console.log(`${this.showDropdown} : close`);
     },
     confirmChange() {
-      console.log("change");
 
       Swal.fire({
         title: "Edit Status",
@@ -662,11 +660,9 @@ export default {
 
     // ################################### file upload method ####################
     onFilePicked(event) {
-      console.log(event.target.files);
       event.target.files.forEach((e) => {
         this.file.push(e);
       });
-      console.log(this.file[0].name);
       this.$refs.select.focus = false;
     },
     del(index) {
@@ -674,7 +670,6 @@ export default {
       this.$refs["dropdownDel" + index][0].hide(true);
     },
     update(index) {
-      console.log(document.getElementById("input" + index).value);
       document.getElementById("input" + index).value = "";
       this.$refs["dropdownEdit" + index][0].hide(true);
     },
