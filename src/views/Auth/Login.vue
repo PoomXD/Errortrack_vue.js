@@ -62,6 +62,7 @@ export default {
   },
   methods: {
     clickLogin() {
+      
       this.$router.push({ name: "ListProject" });
       //this.$store.dispatch("setAllLinkHeader", listlink);
     },
