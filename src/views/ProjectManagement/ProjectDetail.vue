@@ -89,6 +89,7 @@ export default {
         
     },
     mounted(){
+        console.log(this.$route.params.projectId)
     if(this.$route.meta.showEdit == false){
             document.getElementById("search").style.marginTop = "0%";
             document.getElementById("Edit_Button").style.display = "none";

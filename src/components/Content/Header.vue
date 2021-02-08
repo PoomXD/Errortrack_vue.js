@@ -97,14 +97,20 @@
         </div>
       </b-col>
     </b-row>
+    <!-- {{ header }} -->
   </div>
 </template>
 
 <script>
 import { mapState } from "vuex";
+// import UserService from '@/services/api/user.service';
+
 export default {
   name: "component-header",
-  mounted() {},
+  mounted() {
+    this.getListUser();
+    
+  },
   computed: {
     ...mapState({
       header: (state) => state.header.allLinkHeader,
@@ -115,6 +121,15 @@ export default {
       console.log("url", url);
       this.$router.push(url);
     },
+    getListUser(){
+      this.$store.dispatch("user/getUser");
+      // UserService.getListUser().then(result => {
+      //   console.log('User result',result)
+        
+      // }).catch(err => {
+
+      // });
+    }
   },
 };
 </script>
