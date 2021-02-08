@@ -76,13 +76,19 @@ export default {
     created(){
         this.handleView();
         window.addEventListener('resize', this.handleView);
+        console.log("Name: ",this.$route.meta.name)
         if(this.$route.meta.showEdit == false){
             this.Member = this.User_Maintenance
         };
+        if(this.$route.meta.name == "ProjectDetail"){
+            this.$store.dispatch("header/setAllLinkHeader", "ProjectDetail");
+        }
+        if(this.$route.meta.name == "Detail"){
+            this.$store.dispatch("header/setAllLinkHeader", "Detail");
+        }
         
     },
     mounted(){
-    this.$store.dispatch("header/setAllLinkHeader", "ProjectDetail");
     if(this.$route.meta.showEdit == false){
             document.getElementById("search").style.marginTop = "0%";
             document.getElementById("Edit_Button").style.display = "none";

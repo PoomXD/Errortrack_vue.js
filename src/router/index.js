@@ -62,9 +62,10 @@ const routes = [
           // },
           {
             path: "detail",
-            name: "ServiceError",
+            name: "Detail",
             meta :{
-              showEdit : false
+              showEdit : false,
+              name: "Detail"
             },
             component: () =>
               import("../views/ProjectManagement/ProjectDetail.vue"),
@@ -109,6 +110,7 @@ const routes = [
           {
             path: "detail",
             name: "ProjectDetail",
+            meta:{name: "ProjectDetail"},
             component: () =>
               import("../views/ProjectManagement/ProjectDetail.vue"),
           },

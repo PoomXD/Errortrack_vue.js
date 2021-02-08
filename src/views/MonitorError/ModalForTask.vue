@@ -332,7 +332,7 @@
           </div>
           <div
             class="d-flex justify-content-start ml-5 "
-            
+            v-if="message.id == 2"
           >
             <a class="fontColor-comment mr-4 cursor-pointer" @click="editComment(`comment${indexError}${index}`,`editComment${indexError}${index}`)">Edit</a>
             <a class="fontColor-comment cursor-pointer" >Delete</a>

@@ -187,6 +187,9 @@ export default {
   },
   methods: {},
   updated() {},
+  mounted(){
+    this.$store.dispatch("header/setAllLinkHeader", "Task");
+  },
   data() {
     return {
       
