@@ -9,12 +9,12 @@
           <div class="col pr-5">
             <h1 class="title-font text-center mt-5 mb-5">Sing In</h1>
             <b-form-input
-              v-model="text"
+              v-model="username"
               placeholder="Username"
               class="rounded-pill mt-3"
             ></b-form-input>
             <b-form-input
-              v-model="text"
+              v-model="password"
               placeholder="Password"
               class="rounded-pill mt-3"
             ></b-form-input>
@@ -54,6 +54,12 @@
 <script>
 export default {
   name: "login",
+  data() {
+    return{
+      username: "",
+      password: "",
+    }
+  },
   methods: {
     clickLogin() {
       this.$router.push({ name: "ListProject" });
