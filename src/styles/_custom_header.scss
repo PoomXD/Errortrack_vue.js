@@ -2,9 +2,14 @@
 .header-space{
     background:$white;
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-    // margin-left:200px;
+    // margin-left:200px
+    position: fixed;
+    z-index: 1;
+    width: 100%;
     padding: 10px;
     padding-left: 17rem;
+    transition: 1s
+   
 }
 .align-middle{
     align-self: center !important;

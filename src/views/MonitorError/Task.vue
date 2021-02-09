@@ -3,49 +3,56 @@
     <div class="p-5 background-container">
       <div class="row">
         <div class="col-xl col-lg-12">
-          <ul class="p-0">
-            <li class="list-inline-item">
+          <div class="row">
+            <div class="col-4 text-right">
               <p class="font-weight-bold font-gen">Project Name :</p>
-            </li>
-            <li class="list-inline-item ">
+            </div>
+            <div class="col-8">
               <p class="font-weight-light font-detail"> {{ serviceDetail.projectName }} </p>
-            </li>
-          </ul>
-          <ul class="p-0">
-            <li class="list-inline-item">
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-4 text-right">
               <p class="font-weight-bold font-gen">Project Owner :</p>
-            </li>
-            <li class="list-inline-item">
-              <p class="font-weight-light font-detail">Covid 19 Airports project 1</p>
-              
-            </li>
-          </ul>
-          <ul class="p-0">
-            <li class="list-inline-item">
+            </div>
+            <div class="col-8">
+              <p v-for="(user,index) in serviceDetail.projectOwner"
+              :key="`userOwner-${index}`"
+              class="font-weight-light font-detail">
+              {{ getNameUser(user.userId) }}
+              </p>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-4 text-right">
               <p class="font-weight-bold font-gen">Service ID :</p>
-            </li>
-            <li class="list-inline-item">
+            </div>
+            <div class="col-8">
               <p class="font-weight-light font-detail">{{ serviceDetail.serviceId }}</p>
-            </li>
-          </ul>
+            </div>
+          </div>
         </div>
         <div class="col-xl-6 col-lg-12">
-          <ul class="p-0">
-            <li class="list-inline-item">
+          <div class="row">
+            <div class="col-4 text-right">
               <p class="font-weight-bold font-gen">Service Name :</p>
-            </li>
-            <li class="list-inline-item">
+            </div>
+            <div class="col-8">
               <p class="font-weight-light font-detail">{{ serviceDetail.serviceName }}</p>
-            </li>
-          </ul>
-          <ul class=" p-0">
-            <li class="list-inline-item ">
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-4 text-right">
               <p class="font-weight-bold font-gen">User Maintenance :</p>
-            </li>
-            <li class="list-inline-item">
-              <p class="font-weight-light font-detail">Covid 19 Airports project</p>
-            </li>
-          </ul>
+            </div>
+            <div class="col-8">
+              <p v-for="(user,index) in serviceDetail.userMainten"
+              :key="`userMainten-${index}`"
+              class="font-weight-light font-detail">
+              {{ getNameUser(user.userId) }}
+              </p>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -96,14 +103,14 @@
           :key="index"
         >
           <b-card class="card-list" v-b-modal="`modalPopover${index}`">
-            <b-card-title class="font-gen ">{{ task.name }}</b-card-title>
+            <b-card-title class="font-gen ">{{ task.errDetail }}</b-card-title>
             <b-card-text class="cut-text font-weight-light font-detail">
-              {{ task.detail }}
+              {{ task.errParameter }}
             </b-card-text>
             <div class="d-flex justify-content-end">
               <div
                 class="status-waiting rounded-pill"
-                v-if="task.status == 'waiting'"
+                v-if="task.errStatus == 'waiting'"
               >
                 <p class="fw-bold m-0 text-center white-space ">
                   Waiting
@@ -115,7 +122,7 @@
               </div>
               <div
                 class="status-todo rounded-pill"
-                v-if="task.status == 'todo'"
+                v-if="task.errStatus == 'todo'"
               >
                 <p class="fw-bold m-0 text-center white-space">
                   To do
@@ -127,7 +134,7 @@
               </div>
               <div
                 class="status-doing rounded-pill"
-                v-if="task.status == 'doing'"
+                v-if="task.errStatus == 'doing'"
               >
                 <p class="fw-bold m-0 text-center white-space">
                   Doing
@@ -139,7 +146,7 @@
               </div>
               <div
                 class="status-testing rounded-pill"
-                v-if="task.status == 'testing'"
+                v-if="task.errStatus == 'testing'"
               >
                 <p class="fw-bold m-0 text-center white-space">
                   Testing
@@ -151,7 +158,7 @@
               </div>
               <div
                 class="status-done rounded-pill"
-                v-if="task.status == 'done'"
+                v-if="task.errStatus == 'done'"
               >
                 <p class="fw-bold m-0 text-center white-space">
                   Done
@@ -174,14 +181,21 @@
 <script>
 import ModalForTask from "./ModalForTask.vue";
 import ServiceService from '@/services/api/service.service';
+import ProjectService from '@/services/api/project.service';
+import ErrorService from '@/services/api/error.service';
+import { mapState } from "vuex";
 
 export default {
   name: "TaskError",
   computed: {
+    ...mapState({
+      dataUser: (store) => store.user.users,
+      status: (store) => store.errorStatus.status
+    }),
     filteredRows() {
-      return this.listTasks.filter((row) => {
+      return this.listError.filter((row) => {
         row;
-        return this.selected.includes(row.status);
+        return this.selected.includes(row.errStatus);
       });
     },
   },
@@ -194,14 +208,58 @@ export default {
         console.log('service : ', result);
         this.serviceDetail.serviceId = result.serviceId;
         this.serviceDetail.serviceName = result.serviceName;
+
+        ProjectService.getProject(result.projectId).then(res => {
+          console.log('project get by Id : ',res);
+          this.serviceDetail.projectName = res.projectName;
+          this.serviceDetail.projectOwner = res.userOwner;
+          this.serviceDetail.userMainten = res.userMaintenance;
+        })
+        this.getListError(result.serviceId);
       })
+    },
+    getNameUser(userId){
+      let name = '';
+      this.dataUser.forEach(user => {
+        if(user.id === userId){
+          name =  `${user.firstName} ${user.lastName}`;
+        }
+      });
+      return name;
+    },
+    getListError(serviceId){
+      ErrorService.getListError(serviceId).then(result => {
+        console.log('error list : ',result);
+        result.forEach(res => {
+          let err = {
+            errId: res.errorId,
+            errDetail: res.errorDetail,
+            errParameter: res.errorParameter,
+            errStatus: res.errorStatusName
+          }
+          this.listError.push(err);
+          console.log('listError : ',this.listError);
+        });
+      })
+    },
+    setOptions(){
+      this.status.forEach(s => {
+        let op = {
+          text: s.text,
+          value: s.text
+        }
+        this.options.push(op);
+        this.selected.push(`${s.text}`);
+      });
     }
   },
   updated() {},
   mounted(){
     this.$store.dispatch("header/setAllLinkHeader", "Task");
     // this.getService(this.$route.params.serviceId)
-    this.getService(1);
+    this.getService(4);
+    this.setOptions();
+    // console.log('status : ',this.status);
   },
   data() {
     return {
@@ -212,53 +270,10 @@ export default {
         serviceName : '',
         userMainten : []
       },
-      selected: ["doing", "todo", "waiting", "done", "testing"], // Must be an array reference!
-      options: [
-        { text: "Waiting", value: "waiting" },
-        { text: "To do", value: "todo" },
-        { text: "Doing", value: "doing" },
-        { text: "Testing", value: "testing" },
-        { text: "Done", value: "done" },
-      ],
-      listTasks: [
-        {
-          name: "ERROR1",
-          detail:
-            "Detail Error 1 Connect not sucess Detail Error 1 Connect not sucess Detail Error 1Connect not sucess Detail Error 1Connect not sucess Detail Error 1Connect not sucess Detail Error 1",
-          status: "waiting",
-        },
-        {
-          name: "ERROR2",
-          detail: "Detail Error 1 Connect not sucess",
-          status: "waiting",
-        },
-        {
-          name: "ERROR1",
-          detail: "Detail Error 1 Connect not sucess",
-          status: "waiting",
-        },
-        {
-          name: "ERROR1",
-          detail:
-            "Render groups of checkboxes with the look of a button-group by setting the prop buttons on <b-form-checkbox-group>. Change the button variant by setting the button-variant prop to one of the standard Bootstrap button variants (see <b-button> for supported variants). The default button-variant is secondary.",
-          status: "done",
-        },
-        {
-          name: "ERROR1",
-          detail: "Detail Error 1 Connect not sucess",
-          status: "testing",
-        },
-        {
-          name: "ERROR1",
-          detail: "Detail Error 1 Connect not sucess",
-          status: "todo",
-        },
-        {
-          name: "ERROR1",
-          detail: "Detail Error 1 Connect not sucess",
-          status: "doing",
-        },
-      ],
+      listError: [],
+      selected: [], // Must be an array reference!
+      options: [],
+      
     };
   },
 };

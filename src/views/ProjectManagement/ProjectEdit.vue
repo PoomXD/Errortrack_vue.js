@@ -1,6 +1,6 @@
 <template>
   <div>
-    <form @submit.prevent="addProject">
+    <form @submit.prevent="updateProject">
       <div
         class="container-main font-no-size-color d-flex align-content-between flex-wrap"
       >
@@ -10,7 +10,7 @@
               <div class="row mb-3">
                 <div class="col-3 text-right font-gen">Project ID :</div>
                 <div class="font-detail col-8 text-left">
-                  xxxx-xxxx-xxxxx
+                  {{ projectId }}
                 </div>
               </div>
               <div
@@ -158,20 +158,17 @@
 
 
 <script>
+import ProjectService from "@/services/api/project.service";
 import Multiselect from "vue-multiselect";
-// import { addProject } from "@/services/api/project.service";
 import { required, minLength } from "vuelidate/lib/validators";
-// import { mapGetters, mapState } from "vuex";
+import { mapState } from "vuex";
 
 export default {
   name: "ProjectAdd",
   computed: {
-    // ...mapState({
-    //   nameTest: state => state.project.name
-    // }),
-    // ...mapGetters({
-    //   getFullName: "project/getFullName",
-    // }),
+    ...mapState({
+      dataUser: (store) => store.user.users,
+    }),
   },
   component: {
     multiselect: Multiselect,
@@ -192,38 +189,56 @@ export default {
       ProjectDetail: "",
       value: null,
       listUserMaintenance: [],
-      listUserOwner: [
-        { name: "kamonthip fa", id: 1 },
-        { name: "airada ai", id: 2 },
-        { name: "natawut game", id: 3 },
-        { id: 40, name: "Dickerson Macdonald" },
-        { id: 21, name: "Larsen Shaw" },
-        { id: 89, name: "Geneva Wilson" },
-        { id: 38, name: "Jami Carney" },
-      ],
+      listUserOwner: [],
       valueMaintenance: [],
       valueOwner: [],
     };
   },
   mounted() {
-    //รับค่า projectId
-     this.$store.dispatch("header/setAllLinkHeader", "ProjectEdit");
-    // console.log(this.$v.projectName.required)
-    this.listUserMaintenance = this.listUserOwner;
-    // this.$v.projectName.$error = false
-    // console.log(this.$v.projectName.$error)
+    this.getDetailProject(this.$route.params.projectId);
+    this.$store.dispatch("header/setAllLinkHeader", "ProjectEdit");
   },
+
   methods: {
-    addName() {
-      // this.$v.$error = false
-      // console.log( this.$store.dispatch("/project.module/getFullName") );
-      // console.log(this.getFullName);
-      // this.getFullName.then((res) => {
-      //   console.log(res);
-      // });
-    },
-    onDelete(index) {
-      this.array.splice(index, 1);
+    getDetailProject(projectId) {
+      ProjectService.getProject(projectId).then((result) => {
+        console.log("get for edit", result);
+        this.projectName = result.projectName;
+        this.projectId = result.projectId;
+        this.ProjectDetail = result.projectDetail;
+        result.userMaintenance.forEach((data) => {
+          var user = this.dataUser.filter((e) => e.id === data.userId);
+          this.valueMaintenance.push({
+            id: user[0].id,
+            name: `${user[0].firstName} ${user[0].lastName}`,
+          });
+          // console.log("4545456456")
+          // this.dataUser = this.dataUser.filter(e => e.id !== data.id)
+          // console.log("sokdksdfkp[skf")
+        });
+        result.userOwner.forEach((data) => {
+          var user = this.dataUser.filter((e) => e.id === data.userId);
+          this.valueOwner.push({
+            id: user[0].id,
+            name: `${user[0].firstName} ${user[0].lastName}`,
+          });
+        });
+        console.log("set list user");
+        this.dataUser.forEach((data) => {
+          this.listUserOwner.push({
+            id: data.id,
+            name: `${data.firstName} ${data.lastName}`,
+          });
+        });
+        let lm = this.listUserMaintenance;
+        let lo = this.listUserOwner;
+        this.valueMaintenance.forEach((e) => {
+          lm = lm.filter((data) => data.id !== e.id);
+          lo = lo.filter((data) => data.id !== e.id);
+        });
+        this.listUserMaintenance = lm;
+        this.listUserOwner = lo;
+      });
     },
     addUserMaintenance() {
       this.valueMaintenance.push({ name: this.value.name, id: this.value.id });
@@ -246,7 +261,7 @@ export default {
       // console.log(res)
       this.valueMaintenance = res;
     },
-    addProject() {
+    updateProject() {
       this.save = true;
       this.$v.$touch();
       console.log(this.$v.projectName.$error);
@@ -265,17 +280,18 @@ export default {
           projectId: this.projectId,
           projectName: this.projectName,
           projectDetail: this.ProjectDetail,
-          userOwner: ownerId,
+          projectOwner: ownerId,
           userMaintenance: maintenanceId,
         };
-        console.log("param edit : ");
-        console.log(param);
-        // this.addProject(param);
-        this.$router.push({ name: "ListProject" });
+        console.log('ownerId',ownerId)
+        // console.log("param edit : ");
+        // console.log(param);
+        ProjectService.updateProject(param);
+        this.$router.push({
+          name: "ProjectDetail",
+          params: { projectId: this.projectId },
+        });
       }
-    },
-    nameWithLang({ name, id }) {
-      return `${name} — [${id}]`;
     },
   },
   watch: {

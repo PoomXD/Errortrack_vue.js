@@ -685,7 +685,7 @@ export default {
       });
     },
     ...mapState({
-      options: (state) => state.errorStatus,
+      options: (state) => state.errorStatus.status,
     }),
   },
 };
