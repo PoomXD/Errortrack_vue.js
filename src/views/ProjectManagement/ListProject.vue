@@ -206,47 +206,11 @@ export default {
     };
   },
   mounted(){
-    this.getListProject("08d8c9bc-ee3c-43e2-8d32-7c9a7f452dbc");
+    this.getListProject(localStorage.getItem("userId"));
     this.$store.dispatch("header/setAllLinkHeader", "ListProject");
     
   },
-  beforeMount() {
-    this.projects.forEach((project) => {
-      let userEachProject = [];
-      // console.log('test');
-      project.projectOwners.forEach((owner) => {
-        let text = `${owner.userName[0]}${owner.userLastName[0]}`;
-        // owner["text"] = text;
-        let us = {
-          "userId" : owner.userId,
-          "userName" : owner.userName,
-          "userLastName" : owner.userLastName,
-          "role" : "owner",
-          "text" : text
-        }
-        // console.log(us);
-        userEachProject.push(us);
-        // console.log('user for each',userEachProject);
-        // console.log('project: ',project.projectName);
-      });
-      project.userMaintenance.forEach((user) => {
-        let text = `${user.userName[0]}${user.userLastName[0]}`;
-        
-        let us = {
-          "userId" : user.userId,
-          "userName" : user.userName,
-          "userLastName" : user.userLastName,
-          "role" : "user",
-          "text" : text
-        }
-
-        userEachProject.push(us);
-      });
-      this.users.push(userEachProject);
-      // console.log('users in loop: ',this.users);
-    });
-    // console.log('users: ',this.users);
-  },
+  
   computed: {
     ...mapState({
       dataUser: (store) => store.user.users,

@@ -175,6 +175,7 @@ export default {
     }
   },
   mounted() {
+    console.log(this.$route.params.projectId)
     this.getDetail(this.$route.params.projectId);
     if (this.$route.meta.showEdit == false) {
       document.getElementById("search").style.marginTop = "0%";

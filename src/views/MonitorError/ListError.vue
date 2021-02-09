@@ -11,7 +11,7 @@
                   :placeholder="'Project Search ...'"
                   v-model="filter"
                   class="input-search font-no-size-color px-1"
-                >
+                />
                 <!-- </b-form-input> -->
               </td>
               <td>
@@ -42,7 +42,12 @@
           v-for="(project, index) in filteredRows"
           :key="`project-${index}`"
         >
-          <router-link :to="{ name: 'Detail', params: { projectId: project.projectId }}">
+          <router-link
+            :to="{
+              name: 'Detail',
+              params: { projectId: project.projectId },
+            }"
+          >
             <div class="card-list">
               <table class="table-grid">
                 <tr>
@@ -64,46 +69,51 @@
                         </div>
                       </div> -->
                       <div
-                        v-for="(user, i) in users[index]"
+                        v-for="(user, i) in project.projectUser"
                         :key="`user-${index}-${i}`"
                       >
                         <div v-if="i < 3">
                           <div v-if="user.role === 'owner'">
                             <b-avatar
-                            :id="`popover2-${index}-${user.userId}`"
-                            :size="30"
-                            class="mr-left avatar-owner"
-                            >{{ user.text }}</b-avatar>
+                              :id="`popover2-${index}-${user.userId}`"
+                              :size="30"
+                              class="mr-left avatar-owner"
+                              :text="getTextAvatar(user.userId)"
+                              ></b-avatar
+                            >
 
-                          <b-popover
-                            :target="`popover2-${index}-${user.userId}`"
-                            :placement="'bottom'"
-                            triggers="hover focus"
-                            :content="`${user.userName} ${user.userLastName}`"
-                          ></b-popover>
+                            <b-popover
+                              :target="`popover2-${index}-${user.userId}`"
+                              :placement="'bottom'"
+                              triggers="hover focus"
+                              :content="`${user.userName} ${user.userLastName}`"
+                            ></b-popover>
                           </div>
                           <div v-else>
                             <b-avatar
-                            :id="`popover2-${index}-${user.userId}`"
-                            :size="30"
-                            class="mr-left avatar-user"
-                            >{{ user.text }}</b-avatar>
+                              :id="`popover2-${index}-${user.userId}`"
+                              :size="30"
+                              class="mr-left avatar-user"
+                              :text="getTextAvatar(user.userId)"
+                              ></b-avatar
+                            >
 
-                          <b-popover
-                            :target="`popover2-${index}-${user.userId}`"
-                            :placement="'bottom'"
-                            triggers="hover focus"
-                            :content="`${user.userName} ${user.userLastName}`"
-                          ></b-popover>
+                            <b-popover
+                              :target="`popover2-${index}-${user.userId}`"
+                              :placement="'bottom'"
+                              triggers="hover focus"
+                              :content="`${user.userName} ${user.userLastName}`"
+                            ></b-popover>
                           </div>
                         </div>
-                        <div v-if="i==3">
+                        <div v-if="i == 3">
                           <b-avatar
                             :id="`popover2-${index}-else`"
                             :size="30"
                             class="mr-left avatar-more"
-                            ><font-awesome-icon :icon="['fas', 'ellipsis-h']"/></b-avatar>
-                            <!-- <b-popover
+                            ><font-awesome-icon :icon="['fas', 'ellipsis-h']"
+                          /></b-avatar>
+                          <!-- <b-popover
                             :target="`popover2-${index}-else`"
                             :placement="'bottom'"
                             triggers="hover focus"
@@ -115,223 +125,96 @@
                   </td>
                 </tr>
               </table>
-
-              <!-- {{project}} -->
             </div>
           </router-link>
         </div>
       </div>
     </div>
+    <!-- {{projects}} -->
+    <!-- {{ dataUser }} -->
   </div>
 </template>
 
 <script>
-export default {
-  name: "MonitorList",
+import ProjectService from '@/services/api/project.service';
+import { mapState } from "vuex";
 
+export default {
+  name: "ListProject",
+  methods:{
+    getTextAvatar(id) {
+      let text = "";
+      this.dataUser.forEach((user) => {
+        if (user.id === id) {
+          // console.log(user)
+          if (user.firstName != "" && user.lastName != "") {
+            text = `${user.firstName[0]}${user.lastName[0]}`;
+          } else if (user.firstName != "" && user.lastName == "") {
+            text = `${user.firstName[0]}`;
+          } else {
+            text = `Un`;
+          }
+        }
+      });
+      return text;
+    },
+    getListProject(userID){
+      ProjectService.getListProject(userID).then(result => {
+        console.log('result',result)
+        result.forEach(data => {
+          var projectUser = []
+          data.userOwner.forEach(owner => {
+           var user = this.dataUser.filter(u => u.id == owner.userId)
+           projectUser.push({
+             userId: user[0].id,
+             userName: user[0].firstName,
+             userLastName: user[0].lastName,
+             role: "owner"
+           })
+          })
+          data.userMaintenance.forEach(maintenance => {
+           var user = this.dataUser.filter(u => u.id == maintenance.userId)
+           projectUser.push({
+             userId: user[0].id,
+             userName: user[0].firstName,
+             userLastName: user[0].lastName,
+             role: "maintenance"
+           })
+          })
+          this.projects.push({
+             projectId: data.projectId,
+             projectName: data.projectName,
+             projectUser: projectUser,
+             
+           })
+        })
+        // this.projects = result;
+
+      }).catch(err => {
+
+      });
+    }
+  },
   data() {
     return {
       Id: null,
-      projects: [
-        {
-          projectId: "111-111-111",
-          projectName: "Covid 19 Airport Project",
-          projectOwners: [
-            {
-              userId: "123456789",
-              userName: "Zala",
-              userLastName: "Pao",
-            },
-          ],
-          userMaintenance: [
-            {
-              userId: "784666115",
-              userName: "Ai",
-              userLastName: "Kotoba",
-            },
-            {
-              userId: "152463258",
-              userName: "Game",
-              userLastName: "Kanna",
-            },
-          ],
-        },
-        {
-          projectId: "111-222-333",
-          projectName: "Linkage Project",
-          projectOwners: [
-            {
-              userId: "109698745",
-              userName: "Aristeaz",
-              userLastName: "Fa",
-            },
-          ],
-          userMaintenance: [
-            {
-              userId: "564852369",
-              userName: "Pin",
-              userLastName: "Wanyen",
-            },
-            {
-              userId: "152463258",
-              userName: "Game",
-              userLastName: "Kanna",
-            },
-            {
-              userId: "789558512",
-              userName: "Test",
-              userLastName: "User",
-            },
-          ],
-        },
-        {
-          projectId: "452-125-488",
-          projectName: "Error Tracking",
-          projectOwners: [
-            {
-              userId: "109698745",
-              userName: "Aristeaz",
-              userLastName: "Fa",
-            },
-            {
-              userId: "152463258",
-              userName: "Game",
-              userLastName: "Kanna",
-            },
-            {
-              userId: "784666115",
-              userName: "Ai",
-              userLastName: "Kotoba",
-            },
-            {
-              userId: "125488563",
-              userName: "Poom",
-              userLastName: "Khabbbb",
-            },
-          ],
-          userMaintenance: [
-            {
-              userId: "564852369",
-              userName: "Pin",
-              userLastName: "Wanyen",
-            },
-          ],
-        },
-        {
-          projectId: "622-542-285",
-          projectName: "Test Project",
-          projectOwners: [
-            {
-              userId: "109698745",
-              userName: "Aristeaz",
-              userLastName: "Fa",
-            },
-            {
-              userId: "152463258",
-              userName: "Game",
-              userLastName: "Kanna",
-            },
-            {
-              userId: "784666115",
-              userName: "Ai",
-              userLastName: "Kotoba",
-            },
-            {
-              userId: "125488563",
-              userName: "Poom",
-              userLastName: "Khabbbb",
-            },
-          ],
-          userMaintenance: [
-            {
-              userId: "564852369",
-              userName: "Pin",
-              userLastName: "Wanyen",
-            },
-          ],
-        },
-        {
-          projectId: "622-542-285",
-          projectName: "Test Project",
-          projectOwners: [
-            {
-              userId: "109698745",
-              userName: "Aristeaz",
-              userLastName: "Fa",
-            },
-            {
-              userId: "152463258",
-              userName: "Game",
-              userLastName: "Kanna",
-            },
-            {
-              userId: "784666115",
-              userName: "Ai",
-              userLastName: "Kotoba",
-            },
-            {
-              userId: "125488563",
-              userName: "Poom",
-              userLastName: "Khabbbb",
-            },
-          ],
-          userMaintenance: [
-            {
-              userId: "564852369",
-              userName: "Pin",
-              userLastName: "Wanyen",
-            },
-          ],
-        },
-      ],
+      projects: [],
+       user: [],
       filter: "",
       users: [],
       userMoreThan3: '',
     };
   },
   mounted(){
+    this.getListProject(localStorage.getItem("userId"));
+    this.$store.dispatch("header/setAllLinkHeader", "ListProject");
     
-    this.$store.dispatch("header/setAllLinkHeader","MonitorList");
-  },
-  beforeMount() {
-    this.projects.forEach((project) => {
-      let userEachProject = [];
-      // console.log('test');
-      project.projectOwners.forEach((owner) => {
-        let text = `${owner.userName[0]}${owner.userLastName[0]}`;
-        // owner["text"] = text;
-        let us = {
-          "userId" : owner.userId,
-          "userName" : owner.userName,
-          "userLastName" : owner.userLastName,
-          "role" : "owner",
-          "text" : text
-        }
-        // console.log(us);
-        userEachProject.push(us);
-        // console.log('user for each',userEachProject);
-        // console.log('project: ',project.projectName);
-      });
-      project.userMaintenance.forEach((user) => {
-        let text = `${user.userName[0]}${user.userLastName[0]}`;
-        
-        let us = {
-          "userId" : user.userId,
-          "userName" : user.userName,
-          "userLastName" : user.userLastName,
-          "role" : "user",
-          "text" : text
-        }
-
-        userEachProject.push(us);
-      });
-      this.users.push(userEachProject);
-      // console.log('users in loop: ',this.users);
-    });
-    // console.log('users: ',this.users);
   },
   
   computed: {
+    ...mapState({
+      dataUser: (store) => store.user.users,
+    }),
     filteredRows() {
       return this.projects.filter((row) => {
         const projectName = row.projectName.toLowerCase();
