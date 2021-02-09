@@ -149,7 +149,6 @@ methods: {
     width: 350px;
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
     margin-top: -4%;
-    margin-right: 100%;
     }
   #ServiceSearch{
     border: 1px solid rgb(255, 255, 255);
