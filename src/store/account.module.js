@@ -23,6 +23,7 @@ const initialState = {
 
 const actions = {
   login({ commit }, data) {
+    console.log(data)
     return AccountService.login(data).then(
       res => {
         console.log('login:res',res);
