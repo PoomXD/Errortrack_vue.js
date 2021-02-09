@@ -42,7 +42,7 @@
           v-for="(project, index) in filteredRows"
           :key="`project-${index}`"
         >
-          <router-link :to="{ name: 'ServiceError', params: { projectId: project.projectId }}">
+          <router-link :to="{ name: 'Detail', params: { projectId: project.projectId }}">
             <div class="card-list">
               <table class="table-grid">
                 <tr>
@@ -127,7 +127,7 @@
 
 <script>
 export default {
-  name: "list-monitor",
+  name: "MonitorList",
 
   data() {
     return {
@@ -290,13 +290,8 @@ export default {
     };
   },
   mounted(){
-    let listlink = [
-        {
-          name: "Monitor Error",
-          url: "#",
-        },
-      ];
-    this.$store.dispatch("header/setAllLinkHeader", listlink);
+    
+    this.$store.dispatch("header/setAllLinkHeader","MonitorList");
   },
   beforeMount() {
     this.projects.forEach((project) => {

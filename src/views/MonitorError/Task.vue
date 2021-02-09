@@ -5,44 +5,44 @@
         <div class="col-xl col-lg-12">
           <ul class="p-0">
             <li class="list-inline-item">
-              <p class="font-weight-bold">Project Name :</p>
+              <p class="font-weight-bold font-gen">Project Name :</p>
             </li>
             <li class="list-inline-item ">
-              <p class="font-weight-light">Covid 19 Airports project</p>
+              <p class="font-weight-light font-detail">Covid 19 Airports project</p>
             </li>
           </ul>
           <ul class="p-0">
             <li class="list-inline-item">
-              <p class="font-weight-bold">Project Owner :</p>
+              <p class="font-weight-bold font-gen">Project Owner :</p>
             </li>
             <li class="list-inline-item">
-              <p class="font-weight-light">Covid 19 Airports project</p>
+              <p class="font-weight-light font-detail">Covid 19 Airports project</p>
             </li>
           </ul>
           <ul class="p-0">
             <li class="list-inline-item">
-              <p class="font-weight-bold">Service ID :</p>
+              <p class="font-weight-bold font-gen">Service ID :</p>
             </li>
             <li class="list-inline-item">
-              <p class="font-weight-light">Covid 19 Airports project</p>
+              <p class="font-weight-light font-detail">Covid 19 Airports project</p>
             </li>
           </ul>
         </div>
         <div class="col-xl-6 col-lg-12">
           <ul class="p-0">
             <li class="list-inline-item">
-              <p class="font-weight-bold">Service Name :</p>
+              <p class="font-weight-bold font-gen">Service Name :</p>
             </li>
             <li class="list-inline-item">
-              <p class="font-weight-light">Covid 19 Airports project</p>
+              <p class="font-weight-light font-detail">Covid 19 Airports project</p>
             </li>
           </ul>
           <ul class=" p-0">
             <li class="list-inline-item ">
-              <p class="font-weight-bold">User Maintenance :</p>
+              <p class="font-weight-bold font-gen">User Maintenance :</p>
             </li>
             <li class="list-inline-item">
-              <p class="font-weight-light">Covid 19 Airports project</p>
+              <p class="font-weight-light font-detail">Covid 19 Airports project</p>
             </li>
           </ul>
         </div>
@@ -50,12 +50,12 @@
     </div>
     <div class="p-5 background-container mt-5">
       <div class="row">
-        <div class="col-xl-4 col-lg-5 col-sm-8 align-middle">
+        <div class="col-xl-4 col-lg-5 col-sm-8 align-middle font-gen">
           <h5>สถานะ Service Error</h5>
         </div>
         <div class="col-xl-8 col-lg-7 col-sm-4">
           <div class="d-flex justify-content-end">
-            <b-form-group v-slot="{ ariaDescribedby }" class="display-task">
+            <b-form-group v-slot="{ ariaDescribedby }" class="display-task font-gen">
               <b-form-checkbox-group
                 size="lg"
                 id="checkbox-group-1"
@@ -69,7 +69,7 @@
             <b-dropdown
               text="Filter"
               variant="primary"
-              class="m-2 display-dropdow-task"
+              class="m-2 display-dropdow-task font-gen"
             >
               <b-dropdown-form>
                 <b-form-group v-slot="{ ariaDescribedby }">
@@ -94,9 +94,9 @@
           v-for="(task, index) in filteredRows"
           :key="index"
         >
-          <b-card class="card-list">
-            <b-card-title>{{ task.name }}</b-card-title>
-            <b-card-text class="cut-text font-weight-light">
+          <b-card class="card-list" v-b-modal="`modalPopover${index}`">
+            <b-card-title class="font-gen ">{{ task.name }}</b-card-title>
+            <b-card-text class="cut-text font-weight-light font-detail">
               {{ task.detail }}
             </b-card-text>
             <div class="d-flex justify-content-end">
@@ -104,7 +104,7 @@
                 class="status-waiting rounded-pill"
                 v-if="task.status == 'waiting'"
               >
-                <p class="fw-bold m-0 text-center white-space">
+                <p class="fw-bold m-0 text-center white-space ">
                   Waiting
                   <font-awesome-icon
                     class="font-status"
@@ -161,14 +161,17 @@
                 </p>
               </div>
             </div>
+            <b-modal :id="`modalPopover${index}`" title="Error Something" size="xl">
+              <ModalForTask :indexError=index></ModalForTask>
+            </b-modal>
           </b-card>
         </div>
       </div>
     </div>
   </div>
 </template>
-
 <script>
+import ModalForTask from "./ModalForTask.vue"
 export default {
   name: "TaskError",
   computed: {
@@ -179,8 +182,14 @@ export default {
       });
     },
   },
+  components:{
+    ModalForTask
+  },
   methods: {},
   updated() {},
+  mounted(){
+    this.$store.dispatch("header/setAllLinkHeader", "Task");
+  },
   data() {
     return {
       

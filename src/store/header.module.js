@@ -16,7 +16,7 @@ const state = {
           name: "Project Managemant",
           url: { name: "ListProject" },
         },
-      
+
         {
           name: "Add",
           url: "#",
@@ -53,22 +53,61 @@ const state = {
         },
       ],
     },
+    {
+      name: "MonitorList",
+      data: [
+        {
+          name: "Monitor Error",
+          url: "#",
+        },
+      ],
+    },
+    {
+      name: "Detail",
+      data: [
+        {
+          name: "Monitor Error",
+          url: {name: "MonitorList"},
+        },
+        {
+          name: "Detail",
+          url: "#",
+        },
+
+      ],
+    },
+    {
+      name: "Task",
+      data: [
+        {
+          name: "Monitor Error",
+          url: {name: "MonitorList"},
+        },
+        {
+          name: "Detail",
+          url: {name: "Detail"},
+        },
+        {
+          name: "Task",
+          url: "#",
+        },
+      ],
+    },
   ],
   allLinkHeader: [],
 };
 const actions = {
-  setAllLinkHeader({ commit,state }, list) {
-    console.log(list)
-    state.listHeader.find(f =>{
-      if(f.name === list){
-        commit("setlist",f.data)
+  setAllLinkHeader({ commit, state }, list) {
+    
+    state.listHeader.find((f) => {
+      if (f.name === list) {
+        commit("setlist", f.data);
       }
-    })
+    });
   },
 };
 const mutations = {
   setlist(state, list) {
-    console.log("mutation:", list);
     state.allLinkHeader = list;
   },
 };

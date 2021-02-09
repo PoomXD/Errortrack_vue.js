@@ -207,7 +207,7 @@ export default {
   },
   mounted() {
     //รับค่า projectId
-    // this.$store.dispatch("header/setAllLinkHeader", "ProjectAdd");
+     this.$store.dispatch("header/setAllLinkHeader", "ProjectEdit");
     // console.log(this.$v.projectName.required)
     this.listUserMaintenance = this.listUserOwner;
     // this.$v.projectName.$error = false

@@ -162,16 +162,17 @@
 
 <script>
 import Multiselect from "vue-multiselect";
-// import { addProject } from "@/services/api/project.service";
+import ProjectService from '@/services/api/project.service';
 import { required, minLength } from "vuelidate/lib/validators";
-// import { mapGetters, mapState } from "vuex";
+import { mapState } from "vuex";
 
 export default {
   name: "ProjectAdd",
+  
   computed: {
-    // ...mapState({
-    //   nameTest: state => state.project.name
-    // }),
+    ...mapState({
+      dataUser: (store) => store.user.users,
+    }),
     // ...mapGetters({
     //   getFullName: "project/getFullName",
     // }),
@@ -194,15 +195,7 @@ export default {
       ProjectDetail: "",
       value: null,
       listUserMaintenance: [],
-      listUserOwner: [
-        { name: "kamonthip fa", id: 1 },
-        { name: "airada ai", id: 2 },
-        { name: "natawut game", id: 3 },
-        { id: 40, name: "Dickerson Macdonald" },
-        { id: 21, name: "Larsen Shaw" },
-        { id: 89, name: "Geneva Wilson" },
-        { id: 38, name: "Jami Carney" },
-      ],
+      listUserOwner: [],
       valueMaintenance: [],
       valueOwner: [],
     };
@@ -210,7 +203,14 @@ export default {
   mounted() {
     this.$store.dispatch("header/setAllLinkHeader", "ProjectAdd");
     // console.log(this.$v.projectName.required)
-    this.listUserMaintenance = this.listUserOwner;
+    this.dataUser.forEach(data => {
+      this.listUserOwner.push({
+        id: data.id,
+        name: `${data.firstName} ${data.lastName}`
+      })
+    })
+    // this.listUserOwner= this.dataUser
+    this.listUserMaintenance = this.listUserOwner
     // this.$v.projectName.$error = false
     // console.log(this.$v.projectName.$error)
   },
@@ -270,8 +270,8 @@ export default {
         };
         console.log("param : ");
         console.log(param);
-        // this.addProject(param);
-        this.$router.push({ name: "ProjectDetail" });
+        ProjectService.addProject(param)
+        this.$router.push({ name: "ListProject" });
       }
     },
     nameWithLang({ name, id }) {
