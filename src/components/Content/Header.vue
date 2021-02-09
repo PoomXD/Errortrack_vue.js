@@ -109,7 +109,7 @@ export default {
   name: "component-header",
   mounted() {
     this.getListUser();
-    
+    this.getErrorStatus();
   },
   computed: {
     ...mapState({
@@ -129,6 +129,9 @@ export default {
       // }).catch(err => {
 
       // });
+    },
+    getErrorStatus(){
+      this.$store.dispatch("errorStatus/getErrorStatus");
     }
   },
 };
