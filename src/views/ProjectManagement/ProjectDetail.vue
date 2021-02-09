@@ -258,39 +258,6 @@ export default {
 </script>
 
 <style scoped>
-<<<<<<< HEAD
-.ProjectDetail{
-    padding: 1rem;
-    }
-  #search{
-    border: 1px solid rgb(174, 199, 255);
-    border-radius: 20px;
-    background: #fff; 
-    width: 350px;
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-    margin-top: -4%;
-    }
-  #ServiceSearch{
-    border: 1px solid rgb(255, 255, 255);
-    width: 300px;
-    border-radius: 20px;
-    background: #fff;
-    outline: -webkit-focus-ring-color auto 0px;
-  }
-  #icon{
-      margin: 1px;
-      border-radius: 100%;
-  }
-  .move {
-    text-align: left;
-    margin-top: 3%;
-  }
-  .go_up{
-    margin-top: -3%;
-  }
-
-
-=======
 .ProjectDetail {
   padding: 1rem;
 }
@@ -321,5 +288,4 @@ export default {
 .go_up {
   margin-top: -3%;
 }
->>>>>>> feature/ai-airada
 </style>
