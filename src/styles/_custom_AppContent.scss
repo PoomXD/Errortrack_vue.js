@@ -1,0 +1,36 @@
+main{
+    padding-top: 7rem;
+    margin-left: 18rem;
+    padding-right: 1.5%;
+    transition: 1s
+  }
+  .navigation-icon {
+  cursor: pointer;
+  margin-top: 18px;
+  position: fixed;
+  font-size: 30px;
+  color:#0077FF;
+  z-index: 1;
+  }
+  .new-main {
+    padding-top: 7rem;
+    width: 95%;
+    margin-left: 4%;
+    transition: 1s
+  }
+  .openNav {
+    transform: translateX(-250px);
+    transition: 1s transform cubic-bezier(0,.12,.14,1);
+  }
+  .closeNav {
+    transform: translateX(0px);
+    transition: 1.5s transform cubic-bezier(0,.12,.14,1);
+  }
+  .openNav2 {
+    transform: translateX(250px);
+    transition: 1s transform cubic-bezier(0,.12,.14,1);
+  }
+  .closeNav2 {
+    transform: translateX(0px);
+    transition: 1.5s transform cubic-bezier(0,.12,.14,1);
+  }
