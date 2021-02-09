@@ -202,27 +202,15 @@ export default {
   },
   mounted() {
     this.$store.dispatch("header/setAllLinkHeader", "ProjectAdd");
-    // console.log(this.$v.projectName.required)
     this.dataUser.forEach(data => {
       this.listUserOwner.push({
         id: data.id,
         name: `${data.firstName} ${data.lastName}`
       })
     })
-    // this.listUserOwner= this.dataUser
     this.listUserMaintenance = this.listUserOwner
-    // this.$v.projectName.$error = false
-    // console.log(this.$v.projectName.$error)
   },
   methods: {
-    addName() {
-      // this.$v.$error = false
-      // console.log( this.$store.dispatch("/project.module/getFullName") );
-      // console.log(this.getFullName);
-      // this.getFullName.then((res) => {
-      //   console.log(res);
-      // });
-    },
     onDelete(index) {
       this.array.splice(index, 1);
     },
