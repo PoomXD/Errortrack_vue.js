@@ -31,6 +31,22 @@ class ProjectService {
     const response = await httpClient(config);
     return response.data;
   }
+  async getProject(projectId) {
+    // console.log(projectId);
+    const config = {
+      method: "get",
+      url: `${END_POINT}/getProject`,
+      params: {
+        projectId: projectId,
+      },
+      headers: {
+        "content-type": "application/json",
+      },
+    };
+    const response = await httpClient(config);
+    // console.log(response.data)
+    return response.data;
+  }
 }
 
 export default new ProjectService();
