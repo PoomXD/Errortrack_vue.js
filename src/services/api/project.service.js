@@ -47,6 +47,20 @@ class ProjectService {
     // console.log(response.data)
     return response.data;
   }
+  async updateProject(param) {
+    console.log("update api",param);
+    const config = {
+      method: "put",
+      url: `${END_POINT}/updateProject`,
+      data: param,
+      headers: {
+        "content-type": "application/json",
+      },
+    };console.log("update api",config);
+    const response = await httpClient(config);
+    // console.log(response.data)
+    return response.data;
+  }
 }
 
 export default new ProjectService();

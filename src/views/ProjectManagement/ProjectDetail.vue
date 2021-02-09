@@ -1,7 +1,13 @@
 <template>
   <div class="ProjectDetail">
+    <!-- {{ Project_ID }} -->
     <div id="Edit_Button">
-      <router-link :to="{ name: 'ProjectEdit' }">
+      <router-link
+        :to="{
+          name: 'ProjectEdit',
+          params: { projectId: Project_ID },
+        }"
+      >
         <b-button class="bt-blue float-right" style="width: 90px">
           <font-awesome-icon :icon="['fas', 'edit']" /> Edit</b-button
         ></router-link
@@ -76,7 +82,7 @@
               v-for="(Project_Owner, index) in Project_Owner"
               :key="`Project_Owner-${index}`"
             >
-              <td>{{ [Project_Owner].sort().join(",") }}</td>
+              <td>{{ Project_Owner.name }}</td>
             </tr>
           </div>
         </div>
@@ -88,10 +94,13 @@
             style="font-weight: bold"
             align="right"
           >
-            Member :
+            User Maintenance :
           </div>
           <div class="col-xl-5 col-md-7 font-detail" align="left">
-            <tr v-for="(Member, index) in Member" :key="`Member-${index}`">
+            <tr
+              v-for="(Member, index) in User_Maintenance"
+              :key="`Member-${index}`"
+            >
               <td>{{ Member.name }}</td>
             </tr>
           </div>
@@ -131,7 +140,10 @@
       >
         <template v-slot:cell(Service_ID)="data">
           <router-link
-            :to="{ name: 'TaskError' }"
+            :to="{
+              name: 'TaskError',
+              params: { serviceId: data.item.Service_ID },
+            }"
             style="text-decoration: underline"
             >{{ data.item.Service_ID }}</router-link
           >
@@ -143,6 +155,8 @@
 
 <script>
 import ProjectService from "@/services/api/project.service";
+import ServiceService from "@/services/api/service.service";
+import { mapState } from "vuex";
 
 export default {
   name: "ProjectDetail",
@@ -179,55 +193,13 @@ export default {
         //  {key:' ',thStyle: {width: '35%'}},
         { key: "Create_Date", thStyle: { width: "10%" } },
       ],
-      dataArray: [
-        {
-          No: 1,
-          Service_ID: "123-456-789",
-          Service_Name: "Name Servicename1",
-          Create_Date: "11-12-2563",
-        },
-        {
-          No: 2,
-          Service_ID: "987-654-321",
-          Service_Name: "Name Servicename2",
-          Create_Date: "11-12-2563",
-        },
-        {
-          No: 3,
-          Service_ID: "123-456-789",
-          Service_Name: "Name Servicename3",
-          Create_Date: "11-12-2563",
-        },
-        {
-          No: 4,
-          Service_ID: "123-456-789",
-          Service_Name: "Name Servicename4",
-          Create_Date: "11-12-2563",
-        },
-        {
-          No: 5,
-          Service_ID: "987-654-321",
-          Service_Name: "Name Servicename5",
-          Create_Date: "11-12-2563",
-        },
-        {
-          No: 6,
-          Service_ID: "987-654-321",
-          Service_Name: "Name Servicename6",
-          Create_Date: "11-12-2563",
-        },
-      ],
+      dataArray: [],
       Project_ID: "",
       Project_Detail: "",
       Project_Name: "",
-      Project_Owner: { Owner: ["firstname lastname ", "firstname lastname "] },
-      Member: [
-        { name: "name_lastname" },
-        { name: "name_lastname" },
-        { name: "name_lastname" },
-        { name: "name_lastname" },
-      ],
-      User_Maintenance: [{ name: "xxx-xxxx-xxxx-xxx" }],
+      Project_Owner: [],
+      Member: [],
+      User_Maintenance: [],
     };
   },
   computed: {
@@ -240,17 +212,45 @@ export default {
           )
         : this.dataArray;
     },
+    ...mapState({
+      dataUser: (store) => store.user.users,
+    }),
   },
   methods: {
     handleView() {
       this.mobileView = window.innerWidth <= 770;
     },
     getDetail(projectId) {
-      ProjectService.getProject(projectId).then(result => {
-        console.log("detail", result)
-        this.Project_ID = result.projectId
-        this.Project_Detail=result.projectDetail
-        this.Project_Name=result.projectName
+      ProjectService.getProject(projectId).then((result) => {
+        console.log("detail", result);
+        this.Project_ID = result.projectId;
+        this.Project_Detail = result.projectDetail;
+        this.Project_Name = result.projectName;
+        result.userMaintenance.forEach((e) => {
+          var user = this.dataUser.filter((data) => data.id === e.userId);
+          this.User_Maintenance.push({
+            name: `${user[0].firstName} ${user[0].lastName}`,
+          });
+        });
+        result.userOwner.forEach((e) => {
+          var user = this.dataUser.filter((data) => data.id === e.userId);
+          this.Project_Owner.push({
+            name: `${user[0].firstName} ${user[0].lastName}`,
+          });
+        }); // this.dataArray.push()
+      });
+      ServiceService.getListService(projectId).then((result) => {
+        console.log("service", result);
+        var i = 1;
+        result.forEach((e) => {
+          this.dataArray.push({
+            No: i,
+            Service_ID: e.serviceId,
+            Service_Name: e.serviceName,
+            Create_Date: e.createDate.toString().split("T")[0],
+          });
+          i++;
+        });
       });
     },
   },
