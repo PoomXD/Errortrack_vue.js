@@ -8,7 +8,7 @@
               <p class="font-weight-bold font-gen">Project Name :</p>
             </li>
             <li class="list-inline-item ">
-              <p class="font-weight-light font-detail">Covid 19 Airports project</p>
+              <p class="font-weight-light font-detail"> {{ serviceDetail.projectName }} </p>
             </li>
           </ul>
           <ul class="p-0">
@@ -16,7 +16,8 @@
               <p class="font-weight-bold font-gen">Project Owner :</p>
             </li>
             <li class="list-inline-item">
-              <p class="font-weight-light font-detail">Covid 19 Airports project</p>
+              <p class="font-weight-light font-detail">Covid 19 Airports project 1</p>
+              
             </li>
           </ul>
           <ul class="p-0">
@@ -24,7 +25,7 @@
               <p class="font-weight-bold font-gen">Service ID :</p>
             </li>
             <li class="list-inline-item">
-              <p class="font-weight-light font-detail">Covid 19 Airports project</p>
+              <p class="font-weight-light font-detail">{{ serviceDetail.serviceId }}</p>
             </li>
           </ul>
         </div>
@@ -34,7 +35,7 @@
               <p class="font-weight-bold font-gen">Service Name :</p>
             </li>
             <li class="list-inline-item">
-              <p class="font-weight-light font-detail">Covid 19 Airports project</p>
+              <p class="font-weight-light font-detail">{{ serviceDetail.serviceName }}</p>
             </li>
           </ul>
           <ul class=" p-0">
@@ -171,7 +172,9 @@
   </div>
 </template>
 <script>
-import ModalForTask from "./ModalForTask.vue"
+import ModalForTask from "./ModalForTask.vue";
+import ServiceService from '@/services/api/service.service';
+
 export default {
   name: "TaskError",
   computed: {
@@ -185,14 +188,30 @@ export default {
   components:{
     ModalForTask
   },
-  methods: {},
+  methods: {
+    getService(servId){
+      ServiceService.getService(servId).then(result => {
+        console.log('service : ', result);
+        this.serviceDetail.serviceId = result.serviceId;
+        this.serviceDetail.serviceName = result.serviceName;
+      })
+    }
+  },
   updated() {},
   mounted(){
     this.$store.dispatch("header/setAllLinkHeader", "Task");
+    // this.getService(this.$route.params.serviceId)
+    this.getService(1);
   },
   data() {
     return {
-      
+      serviceDetail: {
+        projectName : '',
+        projectOwner : [],
+        serviceId : null,
+        serviceName : '',
+        userMainten : []
+      },
       selected: ["doing", "todo", "waiting", "done", "testing"], // Must be an array reference!
       options: [
         { text: "Waiting", value: "waiting" },
