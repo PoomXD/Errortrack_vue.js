@@ -2,7 +2,7 @@ import httpClient from '../httpClient'
 import { TokenService } from '../storage.service';
 //import * as _utils from '../utils.service';
 
-const END_POINT = 'Account'
+const END_POINT = 'Login'
 
 class AccountService{
   async login(user) {
@@ -17,7 +17,7 @@ class AccountService{
 
     const config = {
       method: 'post',
-      url: `${END_POINT}/Login`,
+      url: `${END_POINT}`,
       data : params,
       headers:{
         'content-type' : 'application/json'
@@ -35,12 +35,12 @@ class AccountService{
       };
 
       if (response && response.data) {
-        // const { accessToken, refreshToken } = response.data;
+        const { accessToken, refreshToken } = response.data;
 
-        // if(accessToken && refreshToken){
-        //   TokenService.saveToken(accessToken);
-        //   TokenService.saveRefreshToken(refreshToken);
-        // }
+        if(accessToken && refreshToken){
+          TokenService.saveToken(accessToken);
+          TokenService.saveRefreshToken(refreshToken);
+        }
       }
 
     }

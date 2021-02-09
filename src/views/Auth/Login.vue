@@ -21,7 +21,7 @@
             <b-form-checkbox
               class="mt-3 float-left"
               id="checkbox-1"
-              v-model="status"
+      
               name="checkbox-1"
               value="accepted"
               unchecked-value="not_accepted"
@@ -56,8 +56,16 @@ export default {
   name: "login",
   data() {
     return{
-      username: "",
-      password: "",
+      username: "5555555",
+      password: "5555555",
+    }
+  },
+  mounted(){
+    if(this.username){
+      console.log("TRUE")
+    }
+    else{
+      console.log("FALSE")
     }
   },
   methods: {
