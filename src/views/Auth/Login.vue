@@ -61,7 +61,6 @@ export default {
       checkBoxKeepMeSingnedIn: "false",
     };
   },
-
   mounted() {
     this.setKeepMeSignedIn();
     this.checkLogin();

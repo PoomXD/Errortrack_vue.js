@@ -87,11 +87,9 @@
                 href="#"
                 >User name</b-dropdown-item
               >
-              <b-dropdown-item
-                ><router-link :to="{ name: 'Login' }"
-                  ><div class="h-100 w-100">Log Out</div>
-                </router-link></b-dropdown-item
-              >
+              <b-dropdown-item>
+                <a class="h-100 w-100" @click="clickLogOut()">Log Out</a>
+              </b-dropdown-item>
             </b-dropdown>
           </div>
         </div>
@@ -117,22 +115,28 @@ export default {
     }),
   },
   methods: {
+    clickLogOut() {
+      localStorage.removeItem("refresh_token");
+      localStorage.removeItem("access_token");
+      localStorage.removeItem("userId");
+      this.$router.push({ name: "Login" });
+    },
     goto(url) {
       console.log("url", url);
       this.$router.push(url);
     },
-    getListUser(){
+    getListUser() {
       this.$store.dispatch("user/getUser");
       // UserService.getListUser().then(result => {
       //   console.log('User result',result)
-        
+
       // }).catch(err => {
 
       // });
     },
-    getErrorStatus(){
+    getErrorStatus() {
       this.$store.dispatch("errorStatus/getErrorStatus");
-    }
+    },
   },
 };
 </script>
