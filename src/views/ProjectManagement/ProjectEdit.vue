@@ -36,7 +36,6 @@
                   </div>
                 </div>
               </div>
-
               <div
                 class="row mb-3 form-group"
                 :class="{ 'form-group--error': $v.valueOwner.$error }"
@@ -156,13 +155,12 @@
   </div>
 </template>
 
-
 <script>
 import ProjectService from "@/services/api/project.service";
 import Multiselect from "vue-multiselect";
 import { required, minLength } from "vuelidate/lib/validators";
 import { mapState } from "vuex";
-
+import Swal from "sweetalert2";
 export default {
   name: "ProjectAdd",
   computed: {
@@ -195,12 +193,22 @@ export default {
     };
   },
   mounted() {
-    console.log(this.$route.query.projectId)
+    console.log(this.$route.query.projectId);
     this.getDetailProject(this.$route.query.projectId);
-    this.$store.dispatch("header/setEditLinkHeader", `ProjectEdit ${this.$route.query.projectId}`);
+    this.$store.dispatch(
+      "header/setEditLinkHeader",
+      `ProjectEdit ${this.$route.query.projectId}`
+    );
   },
 
   methods: {
+    alertOops() {
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "Something went wrong!",
+      });
+    },
     getDetailProject(projectId) {
       ProjectService.getProject(projectId).then((result) => {
         console.log("get for edit", result);
@@ -289,17 +297,24 @@ export default {
         // console.log(param);
         try {
           let response = await ProjectService.updateProject(param);
-          this.$router.push({
-            name: "ProjectDetail",
-            query: { projectId: this.projectId },
-          });
-        } catch (ex) {}
+          if (response.status) {
+            this.$router.push({
+              name: "ProjectDetail",
+              query: { projectId: this.projectId },
+            });
+          } else {
+            this.alertOops();
+          }
+        } catch (ex) {
+          this.alertOops();
+          console.log("CATCH")
+        }
       }
     },
   },
   watch: {
     valueOwner: {
-      handler: function (val, oldVal) {
+      handler: function(val, oldVal) {
         this.value = null;
         let res = this.listUserOwner;
         val.forEach((e) => {
@@ -314,5 +329,4 @@ export default {
 </script>
 
 <style src="vue-multiselect/dist/vue-multiselect.min.css"></style>
-<style>
-</style>
+<style></style>

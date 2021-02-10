@@ -17,14 +17,12 @@
     <br />
     <br />
     <div class="card-list row" id="cardlist">
-      <div class="col-xl-6 col-md-12 " >
-
+      <div class="col-xl-6 col-md-12 ">
         <div class="row mb-3 mt-3">
           <div
             class="col-xl-4 col-md-3 font-gen text-right"
             :class="{ move: mobileView }"
             style="font-weight: bold;"
-            
           >
             Project ID :
           </div>
@@ -32,10 +30,20 @@
             {{ Project_ID }}
           </div>
         </div>
-
         <div class="row mb-3 mt-3">
           <div
-         
+            class="col-xl-4 col-md-3 font-gen text-right"
+            :class="{ move: mobileView }"
+            style="font-weight: bold"
+          >
+            Project Name :
+          </div>
+          <div class="col-xl-5 col-md-7 font-detail" align="left">
+            {{ Project_Name }}
+          </div>
+        </div>
+        <div class="row mb-3 mt-3">
+          <div
             class="col-xl-4 col-md-3 font-gen mt-0 text-right"
             :class="{ move: mobileView }"
             style="font-weight: bold"
@@ -47,7 +55,6 @@
             class="col-xl-6 col-md-7 font-detail"
             :class="{ go_up: mobileView }"
             align="left"
-            
           >
             {{ Project_Detail }}
           </div>
@@ -56,25 +63,9 @@
       <div class="col-xl-6 col-md-12">
         <div class="row mb-3 mt-3">
           <div
-            
             class="col-xl-4 col-md-3 font-gen text-right"
             :class="{ move: mobileView }"
             style="font-weight: bold"
-            
-          >
-            Project Name :
-          </div>
-          <div class="col-xl-5 col-md-7 font-detail" align="left">
-            {{ Project_Name }}
-          </div>
-        </div>
-        <div class="row mb-3 mt-3" >
-          <div
-          
-            class="col-xl-4 col-md-3 font-gen text-right"
-            :class="{ move: mobileView }"
-            style="font-weight: bold"
-            
           >
             Project Owner :
           </div>
@@ -87,12 +78,11 @@
             </tr>
           </div>
         </div>
-        <div class="row mb-3 mt-3" >
+        <div class="row mb-3 mt-3">
           <div
             class="col-xl-4 col-md-3 font-gen text-right"
             :class="{ move: mobileView }"
             style="font-weight: bold"
-           
           >
             User Maintenance :
           </div>
@@ -288,5 +278,4 @@ export default {
   text-align: left;
   /* margin-top: 3%; */
 }
-
 </style>
