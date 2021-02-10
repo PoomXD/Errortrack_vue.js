@@ -8,16 +8,27 @@
         <div class="col pr-5">
           <h1 class="title-font text-center mt-5 mb-5">Sing In</h1>
           <b-form-input
+            @keyup.enter="clickLogin()"
+            id="username"
             v-model="username"
             placeholder="Username"
             class="rounded-pill mt-3"
           ></b-form-input>
           <b-form-input
+            @keyup.enter="clickLogin()"
+            id="password"
             v-model="password"
             type="password"
             placeholder="Password"
             class="rounded-pill mt-3"
           ></b-form-input>
+          <div
+            class="alert-incorrect"
+            id="alert-incorrect"
+            :style="{ display: 'none' }"
+          >
+            Username or Password is incorrect
+          </div>
           <b-form-checkbox
             class="mt-3 float-left"
             v-model="checkBoxKeepMeSingnedIn"
@@ -51,6 +62,12 @@
 </template>
 
 <script>
+var usernameEven = document.getElementById("username");
+var passwordEven = document.getElementById("password");
+
+// usernameEven.addEventListener("keyup", function(event){
+//   if(event.keyCode === 13)
+// })
 import AccountService from "../../services/api/account.service.js";
 export default {
   name: "login",
@@ -73,7 +90,7 @@ export default {
       ) {
         console.log("access_token and refesh_token is reday");
         AccountService.refreshToken().then((res) => {
-          if(res.status){
+          if (res.status) {
             this.$router.push({ name: "ListProject" });
           }
         });
@@ -97,7 +114,7 @@ export default {
           }
           this.$router.push({ name: "ListProject" });
         } else {
-          console.log("fail");
+          document.getElementById("alert-incorrect").style.display = "block";
         }
       });
     },
