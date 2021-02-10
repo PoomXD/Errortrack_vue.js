@@ -18,6 +18,9 @@ const routes = [
   //   path: "*",
   //   redirect: { name: "Login" }
   // },
+  { 
+    path: '/', 
+    redirect: '/login' },
   {
     path: "/login",
     component: AuthLogin,
@@ -33,7 +36,7 @@ const routes = [
     ]
   },
   {
-    path: "/",
+    path: "/home",
     name: "app-content",
     component: AppContent,
     children: [
