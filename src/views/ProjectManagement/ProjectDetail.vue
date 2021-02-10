@@ -174,9 +174,13 @@ export default {
       this.$store.dispatch("header/setAllLinkHeader", "Detail");
     }
   },
-  mounted() {
-    console.log(this.$route.params.projectId)
+  created() {
+    console.log('id = ',this.$route.params.projectId);
     this.getDetail(this.$route.params.projectId);
+  },
+  mounted() {
+    // console.log(this.$route.params.projectId)
+    // this.getDetail(this.$route.params.projectId);
     if (this.$route.meta.showEdit == false) {
       document.getElementById("search").style.marginTop = "0%";
       document.getElementById("Edit_Button").style.display = "none";

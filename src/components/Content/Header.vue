@@ -51,12 +51,12 @@
             <b-avatar
               button
               variant="primary"
-              text="FF"
+              :text="`${userName.split(' ')[0][0]}${userName.split(' ')[1][0]}`"
               class="align-baseline"
             ></b-avatar>
           </div>
           <div class="p-2 align-middle display white-space font-no-size-color">
-            User name
+            {{ userName }}
           </div>
           <div class="p-2 align-middle">
             <b-dropdown
@@ -95,7 +95,7 @@
         </div>
       </b-col>
     </b-row>
-    <!-- {{ header }} -->
+    <!-- {{ dataUser }} -->
   </div>
 </template>
 
@@ -109,9 +109,15 @@ export default {
     this.getListUser();
     this.getErrorStatus();
   },
+  data() {
+    return {
+      userName: "",
+    };
+  },
   computed: {
     ...mapState({
       header: (state) => state.header.allLinkHeader,
+      dataUser: (store) => store.user.users,
     }),
   },
   methods: {
@@ -127,12 +133,11 @@ export default {
     },
     getListUser() {
       this.$store.dispatch("user/getUser");
-      // UserService.getListUser().then(result => {
-      //   console.log('User result',result)
 
-      // }).catch(err => {
-
-      // });
+      var user = this.dataUser.filter(
+        (data) => data.id === localStorage.getItem("userId")
+      );
+      this.userName = `${user[0].firstName} ${user[0].lastName}`;
     },
     getErrorStatus() {
       this.$store.dispatch("errorStatus/getErrorStatus");
