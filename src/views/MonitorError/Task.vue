@@ -259,7 +259,7 @@ export default {
   },
   mounted(){
     this.$store.dispatch("header/setAllLinkHeader", "Task");
-    this.getService(this.$route.params.serviceId)
+    this.getService(this.$route.query.serviceId)
     // this.getService(4);
     // console.log('status : ',this.status);
     this.setOptions();
