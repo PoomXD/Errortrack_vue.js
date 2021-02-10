@@ -259,8 +259,8 @@ export default {
   },
   mounted(){
     this.$store.dispatch("header/setAllLinkHeader", "Task");
-    // this.getService(this.$route.params.serviceId)
-    this.getService(4);
+    this.getService(this.$route.params.serviceId)
+    // this.getService(4);
     // console.log('status : ',this.status);
     this.setOptions();
     console.log('options mo: ',this.options);
