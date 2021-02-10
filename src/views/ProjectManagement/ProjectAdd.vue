@@ -235,7 +235,7 @@ export default {
       // console.log(res)
       this.valueMaintenance = res;
     },
-    addProject() {
+    async addProject() {
       this.save = true;
       this.$v.$touch();
       console.log(this.$v.projectName.$error);
@@ -258,7 +258,7 @@ export default {
         };
         console.log("param : ");
         console.log(param);
-        ProjectService.addProject(param)
+        await ProjectService.addProject(param)
         this.$router.push({ name: "ListProject" });
       }
     },

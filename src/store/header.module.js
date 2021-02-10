@@ -32,7 +32,8 @@ const state = {
         },
         {
           name: "Project Detail",
-          url: { name: "ProjectDetail" },
+          url: { name: "ProjectDetail", query: { projectId: 0 } },
+          
         },
         {
           name: "Edit",
@@ -86,6 +87,7 @@ const state = {
         {
           name: "Detail",
           url: {name: "Detail"},
+
         },
         {
           name: "Task",
@@ -105,11 +107,32 @@ const actions = {
       }
     });
   },
+  setEditLinkHeader({ commit, state }, data) {
+    var list = data.split(' ')[0]
+    var query = data.split(' ')[1]
+    console.log("setEditLinkHeader",query )
+    state.listHeader.find((f) => {
+      if (f.name === list) {
+        var listLink = {data: f.data, query: query}
+        commit("setlistEdit", listLink);
+      }
+    });
+  },
 };
 const mutations = {
   setlist(state, list) {
     state.allLinkHeader = list;
   },
+  setlistEdit(state, list){
+    list.data.find(f => {
+      if(f.name == 'Project Detail'){
+        console.log("query",list.query)
+        f.url.query.projectId = list.query
+        console.log(f)
+    }
+  })
+    state.allLinkHeader = list.data
+  }
 };
 export const header = {
   namespaced: true,

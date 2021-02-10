@@ -16,6 +16,11 @@ const actions = {
 };
 const mutations = {
   setUser(state, list) {
+    list.forEach(data => {
+      if(data.lastName == null){
+        data.lastName = ''
+      }
+    });
     state.users = list;
     console.log(state.users);
   },

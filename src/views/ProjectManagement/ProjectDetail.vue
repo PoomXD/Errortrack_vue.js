@@ -5,7 +5,7 @@
       <router-link
         :to="{
           name: 'ProjectEdit',
-          params: { projectId: Project_ID },
+          query: { projectId: Project_ID },
         }"
       >
         <b-button class="bt-blue float-right" style="width: 90px">
@@ -142,7 +142,7 @@
           <router-link
             :to="{
               name: 'TaskError',
-              params: { serviceId: data.item.Service_ID },
+              query: { serviceId: data.item.Service_ID },
             }"
             style="text-decoration: underline"
             >{{ data.item.Service_ID }}</router-link
@@ -173,10 +173,8 @@ export default {
     if (this.$route.meta.name == "Detail") {
       this.$store.dispatch("header/setAllLinkHeader", "Detail");
     }
-  },
-  created() {
-    console.log('id = ',this.$route.params.projectId);
-    this.getDetail(this.$route.params.projectId);
+    // console.log('id = ',this.$route.query.projectId);
+    this.getDetail(this.$route.query.projectId);
   },
   mounted() {
     // console.log(this.$route.params.projectId)

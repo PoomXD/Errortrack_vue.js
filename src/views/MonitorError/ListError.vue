@@ -45,7 +45,7 @@
           <router-link
             :to="{
               name: 'Detail',
-              params: { projectId: project.projectId },
+              query: { projectId: project.projectId },
             }"
           >
             <div class="card-list">

@@ -75,7 +75,7 @@
                   <b-avatar
                     button
                     variant="primary"
-                    text="FF"
+                    :text="getTextAvatar(userName)"
                     class="align-baseline display-dropdow"
                   ></b-avatar>
                 </div>
@@ -85,7 +85,7 @@
                 disabled
                 class="display-dropdow font-no-size-color"
                 href="#"
-                >User name</b-dropdown-item
+                >{{ userName }}</b-dropdown-item
               >
               <b-dropdown-item>
                 <a class="h-100 w-100" @click="clickLogOut()">Log Out</a>
@@ -95,7 +95,7 @@
         </div>
       </b-col>
     </b-row>
-    <!-- {{ dataUser }} -->
+    <!-- {{ header }} -->
   </div>
 </template>
 
@@ -131,11 +131,16 @@ export default {
       console.log("url", url);
       this.$router.push(url);
     },
-    getTextAvatar(userName){
-      if(userName !== ''){
-      return `${userName.split(' ')[0][0]}${userName.split(' ')[1][0]}`
-      }else{
-        return 'Un'
+    getTextAvatar(userName) {
+      console.log("user name = ", userName);
+      console.log("user name = ", userName.split(" "));
+      // return 'Un'
+      if (userName.split(" ").length === 2 && userName.split(" ")[1] !== "") {
+        return `${userName.split(" ")[0][0]}${userName.split(" ")[1][0]}`;
+      } else if (userName !== "") {
+        return userName[0];
+      } else {
+        return "Un";
       }
     },
     async getListUser() {
@@ -144,7 +149,11 @@ export default {
       var user = this.dataUser.filter(
         (data) => data.id === localStorage.getItem("userId")
       );
-      this.userName = `${user[0].firstName} ${user[0].lastName}`;
+      if (user[0].lastName !== null) {
+        this.userName = `${user[0].firstName} ${user[0].lastName}`;
+      }else{
+        this.userName = user[0].firstName
+      }
     },
     getErrorStatus() {
       this.$store.dispatch("errorStatus/getErrorStatus");

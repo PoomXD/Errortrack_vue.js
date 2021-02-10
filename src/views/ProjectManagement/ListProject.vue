@@ -45,7 +45,7 @@
           <router-link
             :to="{
               name: 'ProjectDetail',
-              params: { projectId: project.projectId },
+              query:{ projectId: project.projectId },
             }"
           >
             <div class="card-list">
@@ -147,9 +147,9 @@ export default {
       this.dataUser.forEach((user) => {
         if (user.id === id) {
           // console.log(user)
-          if (user.firstName != "" && user.lastName != "") {
+          if (user.firstName != "" && user.lastName != "" && user.lastName != null) {
             text = `${user.firstName[0]}${user.lastName[0]}`;
-          } else if (user.firstName != "" && user.lastName == "") {
+          } else if (user.firstName != "" && (user.lastName == '' || user.lastName == null)) {
             text = `${user.firstName[0]}`;
           } else {
             text = `Un`;

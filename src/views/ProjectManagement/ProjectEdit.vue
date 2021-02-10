@@ -195,8 +195,9 @@ export default {
     };
   },
   mounted() {
-    this.getDetailProject(this.$route.params.projectId);
-    this.$store.dispatch("header/setAllLinkHeader", "ProjectEdit");
+    console.log(this.$route.query.projectId)
+    this.getDetailProject(this.$route.query.projectId);
+    this.$store.dispatch("header/setEditLinkHeader", `ProjectEdit ${this.$route.query.projectId}`);
   },
 
   methods: {
@@ -290,7 +291,7 @@ export default {
           let response = await ProjectService.updateProject(param);
           this.$router.push({
             name: "ProjectDetail",
-            params: { projectId: this.projectId },
+            query: { projectId: this.projectId },
           });
         } catch (ex) {}
       }
