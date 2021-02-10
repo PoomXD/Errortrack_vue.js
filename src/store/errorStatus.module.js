@@ -16,6 +16,7 @@ const actions = {
                         text: re.errorStatusName
                     }
                     listStatus.push(errStatus);
+                    i+=1;
                 });
                 commit("setStatus", listStatus);
                 return Promise.resolve(res);
