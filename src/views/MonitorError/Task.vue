@@ -102,7 +102,7 @@
           v-for="(task, index) in filteredRows"
           :key="index"
         >
-          <b-card class="card-list" v-b-modal="`modalPopover${index}`">
+          <b-card class="card-list" v-b-modal="`modalPopover${task.errId}`">
             <b-card-title class="font-gen ">{{ task.errDetail }}</b-card-title>
             <b-card-text class="cut-text font-weight-light font-detail">
               {{ task.errParameter }}
@@ -110,10 +110,10 @@
             <div class="d-flex justify-content-end">
               <div
                 class="status-waiting rounded-pill"
-                v-if="task.errStatus == 'waiting'"
+                v-if="task.errStatus == status[0].text"
               >
                 <p class="fw-bold m-0 text-center white-space ">
-                  Waiting
+                  {{ task.errStatus }}
                   <font-awesome-icon
                     class="font-status"
                     :icon="['fas', 'tag']"
@@ -122,10 +122,10 @@
               </div>
               <div
                 class="status-todo rounded-pill"
-                v-if="task.errStatus == 'todo'"
+                v-if="task.errStatus == status[1].text"
               >
                 <p class="fw-bold m-0 text-center white-space">
-                  To do
+                  {{ task.errStatus }}
                   <font-awesome-icon
                     class="font-status"
                     :icon="['fas', 'tag']"
@@ -134,10 +134,10 @@
               </div>
               <div
                 class="status-doing rounded-pill"
-                v-if="task.errStatus == 'doing'"
+                v-if="task.errStatus == status[2].text"
               >
                 <p class="fw-bold m-0 text-center white-space">
-                  Doing
+                  {{ task.errStatus }}
                   <font-awesome-icon
                     class="font-status"
                     :icon="['fas', 'tag']"
@@ -146,22 +146,22 @@
               </div>
               <div
                 class="status-testing rounded-pill"
-                v-if="task.errStatus == 'testing'"
+                v-if="task.errStatus == status[3].text"
               >
                 <p class="fw-bold m-0 text-center white-space">
-                  Testing
+                  {{ task.errStatus }}
                   <font-awesome-icon
                     class="font-status"
                     :icon="['fas', 'tag']"
                   />
-                </p>
+                </p> 
               </div>
               <div
                 class="status-done rounded-pill"
-                v-if="task.errStatus == 'done'"
+                v-if="task.errStatus == status[4].text"
               >
                 <p class="fw-bold m-0 text-center white-space">
-                  Done
+                  {{ task.errStatus }}
                   <font-awesome-icon
                     class="font-status"
                     :icon="['fas', 'tag']"
@@ -169,8 +169,8 @@
                 </p>
               </div>
             </div>
-            <b-modal :id="`modalPopover${index}`" title="Error Something" size="xl">
-              <ModalForTask :indexError=index></ModalForTask>
+            <b-modal :id="`modalPopover${task.errId}`" title="Error Something" size="xl">
+              <ModalForTask :indexError="task.errId"></ModalForTask>
             </b-modal>
           </b-card>
         </div>
@@ -238,11 +238,13 @@ export default {
             errStatus: res.errorStatusName
           }
           this.listError.push(err);
-          console.log('listError : ',this.listError);
         });
+        console.log('listError : ',this.listError);
       })
     },
-    setOptions(){
+    async setOptions(){
+      this.options = [];
+      this.selected = [];
       this.status.forEach(s => {
         let op = {
           text: s.text,
@@ -253,13 +255,15 @@ export default {
       });
     }
   },
-  updated() {},
+  updated() {
+  },
   mounted(){
     this.$store.dispatch("header/setAllLinkHeader", "Task");
     // this.getService(this.$route.params.serviceId)
     this.getService(4);
-    this.setOptions();
     // console.log('status : ',this.status);
+    this.setOptions();
+    console.log('options mo: ',this.options);
   },
   data() {
     return {

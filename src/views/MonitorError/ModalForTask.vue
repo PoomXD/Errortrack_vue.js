@@ -30,28 +30,13 @@
             >
               <b-avatar
                 class="avatar-owner"
-                :text="getTextAvatar(user.userAssignId)"
+                :text="getTextAvatar(user.userId)"
               >
               </b-avatar>
-              <span class="wrap-span" @click="delUser(user.userAssignId)">
+              <span class="wrap-span" @click="delUser(user.userId)">
                 <font-awesome-icon :icon="['fas', 'times']" />
               </span>
             </div>
-
-            <!-- <div
-                                v-for="(user, index) in errorDetail.userAssignment"
-                                :key="`user-${index}`"
-                                class="avatar-with-bt"
-                            >
-                                <b-avatar
-                                    
-                                    :text="getTextAvatar(user.userAssignId)"
-                                    class="mr-1 avatar-owner mt-1"
-                                >
-                                    
-                                </b-avatar>
-                                <span class="del-bt-in-avatar">x</span>
-                            </div> -->
 
             <b-dropdown
               right
@@ -374,6 +359,7 @@
 <script>
 import { mapState } from "vuex";
 import Swal from "sweetalert2";
+import ErrorService from '@/services/api/error.service';
 
 export default {
   
@@ -391,110 +377,12 @@ export default {
       rename: "",
       file: [],
       errorDetail: {
-        errorId: 123456789,
-        errorDetail:
-          "this is detail of xxx error example Some quick example text to build on the card title and make up the bulk of the card's content",
-        userAssignment: [
-          {
-            userAssignId: 1,
-          },
-          {
-            userAssignId: 2,
-          },
-        ],
+        errorId: 0,
+        errorDetail: "",
+        userAssignment: [],
         errorStatusId: 1,
-        comment: [
-          {
-            errorId: 123456789,
-            userId: 1,
-            comment: "test comment 1",
-          },
-          {
-            errorId: 123456789,
-            userId: 2,
-            comment: "test comment 2",
-          },
-          {
-            errorId: 123456789,
-            userId: 1,
-            comment: "test comment 3",
-          },
-        ],
+        comment: [],
       },
-      users: [
-        {
-          userId: 1,
-          userName: "Kamonthip",
-          userLastName: "Thethong",
-          role: "owner",
-        },
-        {
-          userId: 2,
-          userName: "Airada",
-          userLastName: "Stong",
-          role: "mainten",
-        },
-        {
-          userId: 3,
-          userName: "Natthawut",
-          userLastName: "Chiphimon",
-          role: "mainten",
-        },
-        {
-          userId: 4,
-          userName: "User",
-          userLastName: "Test",
-          role: "mainten",
-        },
-        {
-          userId: 5,
-          userName: "pin",
-          userLastName: "wanyen",
-          role: "mainten",
-        },
-        {
-          userId: 6,
-          userName: "wanwi",
-          userLastName: "srisopa",
-          role: "owner",
-        },
-        {
-          userId: 7,
-          userName: "toey",
-          userLastName: "han",
-          role: "mainten",
-        },
-        {
-          userId: 8,
-          userName: "daniel",
-          userLastName: "kang",
-          role: "mainten",
-        },
-        {
-          userId: 9,
-          userName: "Aristeaz",
-          userLastName: "Cutie",
-          role: "mainten",
-        },
-        {
-          userId: 10,
-          userName: "Milky",
-          userLastName: "Way",
-          role: "mainten",
-        },
-        {
-          userId: 11,
-          userName: "Sirius",
-          userLastName: "Red",
-          role: "mainten",
-        },
-        {
-          userId: 12,
-          userName: "Azeii",
-          userLastName: "Gei",
-          role: "mainten",
-        },
-      ],
       pickUsers: [],
       showDropdown: false,
       filterText: "",
@@ -530,38 +418,34 @@ export default {
       ],
     };
   },
-  mounted() {
-    //call service get error by id
-    this.selected = this.errorDetail.errorStatusId;
-
-    this.users.forEach((us) => {
-      let text = "";
-      if (us.userName != "" && us.userLastName != "") {
-        text = `${us.userName[0]}${us.userLastName[0]}`;
-      } else if (us.userName != "" && us.userLastName == "") {
-        text = `${us.userName[0]}`;
-      } else {
-      
-        text = `Un`;
-      }
-      let addToPick = {
-        userId: us.userId,
-        userName: `${us.userName} ${us.userLastName}`,
-        text: text,
-        selected: false,
-      };
-      this.pickUsers.push(addToPick);
-    });
-
-    this.errorDetail.userAssignment.forEach((userAss) => {
-      this.pickUsers.forEach((pUser) => {
-        if (userAss.userAssignId == pUser.userId) {
-          pUser.selected = true;
-        }
-      });
-    });
-  },
   methods: {
+    getError(errId){
+      console.log('errId : ',errId);
+      console.log('test');
+
+      ErrorService.getErrorById(errId).then(result => {
+        console.log('error modal : ',result);
+        this.errorDetail.errorId = result.errorId;
+        this.errorDetail.errorDetail = result.errorDetail;
+        this.selected = result.errorStatusId;
+        console.log('json comment : ', JSON.parse(result.comment));
+        if(result.comment == null){
+          this.errorDetail.comment = []
+        }else{
+          this.errorDetail.comment = JSON.parse(result.comment);
+        }
+        
+        if(result.userAssignment == null){
+          this.errorDetail.userAssignment = []
+        }else{
+          this.errorDetail.userAssignment = JSON.parse(result.userAssignment);
+        }
+
+        console.log('errorDetail : ', this.errorDetail.userAssignment);
+
+        this.addPickUsers();
+      })
+    },
     editComment(index,index2) {
         document.getElementById(index).style.display = "none";
         document.getElementById(index2).style.display = "block";
@@ -572,15 +456,14 @@ export default {
     },
     getTextAvatar(id) {
       let text = "";
-      this.users.forEach((user) => {
-        if (user.userId === id) {
-          if (user.userName != "" && user.userLastName != "") {
-            text = `${user.userName[0]}${user.userLastName[0]}`;
-          } else if (user.userName != "" && user.userLastName == "") {
-            text = `${user.userName[0]}`;
+      this.dataUser.forEach((user) => {
+        if (user.id === id) {
+          // console.log(user)
+          if (user.firstName != "" && user.lastName != "") {
+            text = `${user.firstName[0]}${user.lastName[0]}`;
+          } else if (user.firstName != "" && user.lastName == "") {
+            text = `${user.firstName[0]}`;
           } else {
-            
-
             text = `Un`;
           }
         }
@@ -599,20 +482,45 @@ export default {
             //============== delete user =================
             let res = this.errorDetail.userAssignment;
 
-            res = res.filter((data) => data.userAssignId !== id);
-
-            this.errorDetail.userAssignment = res;
+            res = res.filter((data) => data.userId !== id);
+            console.log('res : ',res);
             
-
             //=================== call service ===================
+            let updateParam = {
+              errorId: this.errorDetail.errorId,
+              userAssigns: res,
+              errorStatusId: this.selected
+            }
+
+            this.updateUserAndStatus(updateParam).then(re => {
+              console.log('re: ',re)
+              if(re.status){
+                this.errorDetail.userAssignment = res;
+              }
+            });
           } else {
             p.selected = true;
             let addUser = {
-              userAssignId: p.userId,
+              userId: p.userId,
             };
-            this.errorDetail.userAssignment.push(addUser);
+            console.log('print something')
+            let addNewUser = this.errorDetail.userAssignment;
+            addNewUser.push(addUser);
 
             //=================== call service ===================
+            let updateParam = {
+              errorId: this.errorDetail.errorId,
+              userAssigns: this.errorDetail.userAssignment,
+              errorStatusId: this.selected
+            };
+
+            this.updateUserAndStatus(updateParam).then(re => {
+              console.log('re: ',re)
+              if(re.status){
+                this.errorDetail.userAssignment = addNewUser;
+              }
+            });
+
           }
         }
       });
@@ -625,12 +533,23 @@ export default {
           //============== delete user =================
           let res = this.errorDetail.userAssignment;
 
-          res = res.filter((data) => data.userAssignId !== id);
-
+          res = res.filter((data) => data.userId !== id);
+          console.log('res : ',res);
           this.errorDetail.userAssignment = res;
-         
-
+          
           //=================== call service ===================
+            let updateParam = {
+              errorId: this.errorDetail.errorId,
+              userAssigns: res,
+              errorStatusId: this.selected
+            }
+
+            this.updateUserAndStatus(updateParam).then(re => {
+              console.log('re: ',re)
+              if(re.status){
+                this.errorDetail.userAssignment = res;
+              }
+            });
         }
       });
     },
@@ -651,7 +570,20 @@ export default {
         showCancelButton: true,
       }).then((result) => {
         if (result.isConfirmed) {
-          this.errorDetail.errorStatusId = this.selected;
+          console.log('selected : ', this.selected)
+          let updateParam = {
+            errorId: this.errorDetail.errorId,
+            userAssigns: this.errorDetail.userAssignment,
+            errorStatusId: this.selected
+          }
+
+          this.updateUserAndStatus(updateParam).then(re => {
+            console.log('update status: ',re)
+            if(re.status){
+              this.errorDetail.errorStatusId = this.selected;
+            }
+          });
+          
         } else {
           this.selected = this.errorDetail.errorStatusId;
         }
@@ -673,6 +605,50 @@ export default {
       document.getElementById("input" + index).value = "";
       this.$refs["dropdownEdit" + index][0].hide(true);
     },
+    getNameUser(userId){
+      let name = '';
+      this.dataUser.forEach(user => {
+        if(user.id === userId){
+          name =  `${user.firstName} ${user.lastName}`;
+        }
+      });
+      return name;
+    },
+    addPickUsers(){
+      console.log('userAssignment', this.errorDetail.userAssignment);
+      console.log('dataUsers : ',this.dataUser);
+      this.dataUser.forEach((user) => {
+        let text = "";
+        if (user.firstName != "" && user.lastName != "") {
+            text = `${user.firstName[0]}${user.lastName[0]}`;
+        } else if (user.firstName != "" && user.lastName == "") {
+            text = `${user.firstName[0]}`;
+        } else {
+            text = `Un`;
+        }
+        let addToPick = {
+          userId: user.id,
+          userName: `${user.firstName} ${user.lastName}`,
+          text: text,
+          selected: false,
+        };
+        this.pickUsers.push(addToPick);
+        
+      });
+      console.log('pickUsers : ',this.pickUsers);
+
+      this.errorDetail.userAssignment.forEach((userAss) => {
+        this.pickUsers.forEach((pUser) => {
+          if (userAss.userId == pUser.userId) {
+            pUser.selected = true;
+          }
+        });
+      });
+    },
+    updateUserAndStatus(upParam){
+      console.log('upParam : ', upParam);
+      return ErrorService.updateUsersAndErrorStatus(upParam)
+    }
   },
 
   computed: {
@@ -686,8 +662,21 @@ export default {
     },
     ...mapState({
       options: (state) => state.errorStatus.status,
+      dataUser: (store) => store.user.users,
     }),
   },
+  mounted() {
+    //call service get error by id
+    this.getError(this.indexError);
+    
+    console.log('errorDetail (mounted): ',this.errorDetail);
+
+
+    console.log('index : ',this.indexError);
+    console.log('options : ',this.options);
+    
+  },
+  
 };
 </script>
 
