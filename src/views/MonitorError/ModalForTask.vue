@@ -260,25 +260,25 @@
     <!-- ######################################### comment ################################################### -->
     <div class="d-flex justify-content-start">
       <div class="p-2">
-        <font-awesome-icon :icon="['fas', 'comment-dots']" />
+        <font-awesome-icon class="icon-upload" :icon="['fas', 'comment-dots']" />
       </div>
-      <div class="p-2">Comment</div>
-      <div class="p-2">( {{ errorDetail.comment.length }} Comment )</div>
+      <div class="p-2 font-gen2 mx-2">Comment</div>
+      <div class="p-2 font-detail">( {{ errorDetail.comment.length }} Comment )</div>
     </div>
     <hr />
     <div class="pl-5 pr-5">
       <div id="Comment">
         <b-row>
           <b-col class="d-flex justify-content-start">
-            <b-avatar variant="primary" :text="getTextAvatar(userLogin)" class="mr-3"></b-avatar>
-            <div class="align-middle">{{ getNameUser(userLogin) }}</div>
+            <b-avatar variant="primary" :text="getTextAvatar(userLogin)" class="mr-3 font-no-size-color"></b-avatar>
+            <div class="align-middle font-gen">{{ getNameUser(userLogin) }}</div>
           </b-col>
         </b-row>
         <div class="card-list ml-5 p-1">
           <b-form-textarea
           v-model="commentInput"
             no-resize
-            class="border-0 textaera"
+            class="border-0 textaera font-detail"
             placeholder="Write a commet..."
           ></b-form-textarea>
           <div class="d-flex justify-content-end">
@@ -302,18 +302,18 @@
               <b-avatar
                 variant="primary"
                 :text="getTextAvatar(message.userId)"
-                class="mr-3"
+                class="mr-3 font-no-size-color"
               ></b-avatar>
-              <div class="align-middle">{{ getNameUser(message.userId) }}</div>
+              <div class="align-middle font-gen">{{ getNameUser(message.userId) }}</div>
             </b-col>
             <b-col class="d-flex justify-content-end"
-              ><div class="align-middle fontColor-comment">
-                {{ message.commentDate }}
+              ><div class="align-middle fontColor-comment font-detail">
+                {{ getDateTimeForShow(message.commentDate) }}
               </div></b-col
             >
           </b-row>
           <div
-            class="card-list mb-1 ml-5 p-2 textareabackgrou fontColor-comment"
+            class="card-list mb-1 ml-5 p-2 textareabackgrou fontColor-comment font-detail"
           >
             {{ message.commentDetail }}
           </div>
@@ -321,11 +321,11 @@
             class="d-flex justify-content-start ml-5 "
             v-if="message.userId === userLogin"
           >
-            <a class="fontColor-comment mr-4 cursor-pointer" 
+            <a class="fontColor-comment mr-4 cursor-pointer font-detail" 
             @click="editComment(`comment${message.commentId}`,`editComment${message.commentId}`)">
                 Edit
             </a>
-            <a class="fontColor-comment cursor-pointer" 
+            <a class="fontColor-comment cursor-pointer font-detail" 
             @click="delComment(message.commentId)"
             >
                 Delete
@@ -337,8 +337,8 @@
         <div :ref="`editComment${indexError}${index}`" :style="{ display: 'none'} " :id="`editComment${message.commentId}`">
           <b-row>
             <b-col class="d-flex justify-content-start">
-              <b-avatar variant="primary" :text="getTextAvatar(message.id)" class="mr-3"></b-avatar>
-              <div class="align-middle">{{ message.username }}</div>
+              <b-avatar variant="primary" :text="getTextAvatar(message.userId)" class="mr-3 font-no-size-color"></b-avatar>
+              <div class="align-middle font-gen">{{ getNameUser(message.userId) }}</div>
             </b-col>
           </b-row>
           <div class="card-list ml-5 p-1">
@@ -371,6 +371,7 @@
 import { mapState } from "vuex";
 import Swal from "sweetalert2";
 import ErrorService from '@/services/api/error.service';
+import moment from 'moment';
 
 export default {
   
@@ -654,6 +655,7 @@ export default {
       })
     },
     editMyComment(ind){
+      
       console.log('comment id:',ind);
       let com = document.getElementById("EditComment"+ind).value;
       let editCommentParam = {
@@ -677,19 +679,35 @@ export default {
       })
     },
     delComment(commentId){
-      let delParam = {
-        errorId: this.errorDetail.errorId,
-        commentId: commentId
-      }
 
-      ErrorService.deleteComment(delParam).then(result => {
-        console.log('result del: ',result);
-        if(result.status){
-          ErrorService.getComment(this.errorDetail.errorId).then(com => {
-            this.errorDetail.comment = com;
+      Swal.fire({
+        title: "Edit Status",
+        text: "Do you want to change this error status?",
+        icon: "warning",
+        confirmButtonText: "OK",
+        showCancelButton: true,
+      }).then((result) => {
+        if (result.isConfirmed) {
+          let delParam = {
+            errorId: this.errorDetail.errorId,
+            commentId: commentId
+          }
+
+          ErrorService.deleteComment(delParam).then(result => {
+            console.log('result del: ',result);
+            if(result.status){
+              ErrorService.getComment(this.errorDetail.errorId).then(com => {
+                this.errorDetail.comment = com;
+              })
+            }
           })
-        }
-      })
+          
+        } 
+      });
+      
+    },
+    getDateTimeForShow(strDateTime){
+      return moment(strDateTime).format('MM/DD/YYYY hh:mm');
     }
   },
 
