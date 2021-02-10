@@ -17,14 +17,14 @@
     <br />
     <br />
     <div class="card-list row" id="cardlist">
-      <div class="col-xl-6 col-md-6 col-sm-5" style="margin-top: -2%">
-        <div class="row">
+      <div class="col-xl-6 col-md-12 " >
+
+        <div class="row mb-3 mt-3">
           <div
-            id="Topic"
-            class="col-xl-4 col-md-5 font-gen"
+            class="col-xl-4 col-md-3 font-gen text-right"
             :class="{ move: mobileView }"
-            style="font-weight: bold"
-            align="right"
+            style="font-weight: bold;"
+            
           >
             Project ID :
           </div>
@@ -32,13 +32,14 @@
             {{ Project_ID }}
           </div>
         </div>
-        <div class="row" style="margin-top: 1%">
+
+        <div class="row mb-3 mt-3">
           <div
-            id="Topic"
-            class="col-xl-4 col-md-5 font-gen"
+         
+            class="col-xl-4 col-md-3 font-gen mt-0 text-right"
             :class="{ move: mobileView }"
-            style="font-weight: bold; margin-bottom: 3%"
-            align="right"
+            style="font-weight: bold"
+            a
           >
             Project Details :
           </div>
@@ -46,20 +47,20 @@
             class="col-xl-6 col-md-7 font-detail"
             :class="{ go_up: mobileView }"
             align="left"
-            style="margin-bottom: 3%"
+            
           >
             {{ Project_Detail }}
           </div>
         </div>
       </div>
-      <div class="col-xl-6 col-md-6 col-sm-7" style="margin-top: -2%">
-        <div class="row">
+      <div class="col-xl-6 col-md-12">
+        <div class="row mb-3 mt-3">
           <div
-            id="Topic"
-            class="col-xl-4 col-md-5 font-gen"
+            
+            class="col-xl-4 col-md-3 font-gen text-right"
             :class="{ move: mobileView }"
             style="font-weight: bold"
-            align="right"
+            
           >
             Project Name :
           </div>
@@ -67,13 +68,13 @@
             {{ Project_Name }}
           </div>
         </div>
-        <div class="row" style="margin-top: 2%">
+        <div class="row mb-3 mt-3" >
           <div
-            id="Topic"
-            class="col-xl-4 col-md-5 font-gen"
+          
+            class="col-xl-4 col-md-3 font-gen text-right"
             :class="{ move: mobileView }"
             style="font-weight: bold"
-            align="right"
+            
           >
             Project Owner :
           </div>
@@ -86,13 +87,12 @@
             </tr>
           </div>
         </div>
-        <div class="row" style="margin-top: 2%">
+        <div class="row mb-3 mt-3" >
           <div
-            id="Topic"
-            class="col-xl-4 col-md-5 font-gen"
+            class="col-xl-4 col-md-3 font-gen text-right"
             :class="{ move: mobileView }"
             style="font-weight: bold"
-            align="right"
+           
           >
             User Maintenance :
           </div>
@@ -288,9 +288,7 @@ export default {
 }
 .move {
   text-align: left;
-  margin-top: 3%;
+  /* margin-top: 3%; */
 }
-.go_up {
-  margin-top: -3%;
-}
+
 </style>
