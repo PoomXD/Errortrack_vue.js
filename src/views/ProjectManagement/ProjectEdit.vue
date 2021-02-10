@@ -261,7 +261,7 @@ export default {
       // console.log(res)
       this.valueMaintenance = res;
     },
-    updateProject() {
+    async updateProject() {
       this.save = true;
       this.$v.$touch();
       console.log(this.$v.projectName.$error);
@@ -286,11 +286,13 @@ export default {
         console.log('ownerId',ownerId)
         // console.log("param edit : ");
         // console.log(param);
-        ProjectService.updateProject(param);
+        try{
+        let response = await ProjectService.updateProject(param);
         this.$router.push({
           name: "ProjectDetail",
           params: { projectId: this.projectId },
         });
+        }catch{}
       }
     },
   },
