@@ -46,6 +46,65 @@ class ErrorService {
     const response = await httpClient(config);
     return response.data;
   }
+  async addNewComment(param) {
+    console.log("update Comment");
+    const config = {
+      method: "put",
+      url: `${END_POINT}/addComment`,
+      data: param,
+      headers: {
+        "content-type": "application/json",
+      },
+    };
+
+    const response = await httpClient(config);
+    return response.data;
+  }
+
+  async getComment(errorId){
+    const config = {
+      method: "get",
+      url: `${END_POINT}/getComment`,
+      params: {
+        errorId: errorId,
+      },
+      headers: {
+        "content-type": "application/json",
+      },
+    };
+    const response = await httpClient(config);
+    return response.data;
+  }
+
+  async editComment(param) {
+    console.log("update Comment");
+    const config = {
+      method: "put",
+      url: `${END_POINT}/updateComment`,
+      data: param,
+      headers: {
+        "content-type": "application/json",
+      },
+    };
+
+    const response = await httpClient(config);
+    return response.data;
+  }
+
+  async deleteComment(param) {
+    console.log("update Comment");
+    const config = {
+      method: "put",
+      url: `${END_POINT}/deleteComment`,
+      data: param,
+      headers: {
+        "content-type": "application/json",
+      },
+    };
+
+    const response = await httpClient(config);
+    return response.data;
+  }
 }
 
 export default new ErrorService();

@@ -263,69 +263,78 @@
         <font-awesome-icon :icon="['fas', 'comment-dots']" />
       </div>
       <div class="p-2">Comment</div>
-      <div class="p-2">( {{ listMessage.length }} Comment)</div>
+      <div class="p-2">( {{ errorDetail.comment.length }} Comment )</div>
     </div>
     <hr />
     <div class="pl-5 pr-5">
       <div id="Comment">
         <b-row>
           <b-col class="d-flex justify-content-start">
-            <b-avatar variant="primary" text="BV" class="mr-3"></b-avatar>
-            <div class="align-middle">User name</div>
+            <b-avatar variant="primary" :text="getTextAvatar(userLogin)" class="mr-3"></b-avatar>
+            <div class="align-middle">{{ getNameUser(userLogin) }}</div>
           </b-col>
         </b-row>
         <div class="card-list ml-5 p-1">
           <b-form-textarea
+          v-model="commentInput"
             no-resize
             class="border-0 textaera"
             placeholder="Write a commet..."
           ></b-form-textarea>
           <div class="d-flex justify-content-end">
             <b-button
-              variant="outline-secondary"
-              class="m-2 comment-size-buttom"
+              class="m-2 comment-size-buttom bt-cancel-grey"
               >Cancel</b-button
             >
-            <b-button variant="success" class="m-2 comment-size-buttom"
+            <b-button 
+            class="m-2 comment-size-buttom bt-green"
+            @click="saveComment()"
               >Save</b-button
             >
           </div>
         </div>
       </div>
       <!-- message -->
-      <div id="Comment" v-for="(message, index) in listMessage" :key="index">
-        <div :ref="`comment${indexError}${index}`"  :id="`comment${indexError}${index}`">
+      <div id="Comment" v-for="(message, index) in errorDetail.comment" :key="index">
+        <div :id="`comment${message.commentId}`">
           <b-row>
             <b-col class="d-flex justify-content-start">
               <b-avatar
                 variant="primary"
-                :text="getTextAvatar(message.id)"
+                :text="getTextAvatar(message.userId)"
                 class="mr-3"
               ></b-avatar>
-              <div class="align-middle">{{ message.username }}</div>
+              <div class="align-middle">{{ getNameUser(message.userId) }}</div>
             </b-col>
             <b-col class="d-flex justify-content-end"
               ><div class="align-middle fontColor-comment">
-                {{ message.date }}
+                {{ message.commentDate }}
               </div></b-col
             >
           </b-row>
           <div
             class="card-list mb-1 ml-5 p-2 textareabackgrou fontColor-comment"
           >
-            {{ message.message }}
+            {{ message.commentDetail }}
           </div>
           <div
             class="d-flex justify-content-start ml-5 "
-            v-if="message.id == 2"
+            v-if="message.userId === userLogin"
           >
-            <a class="fontColor-comment mr-4 cursor-pointer" @click="editComment(`comment${indexError}${index}`,`editComment${indexError}${index}`)">Edit</a>
-            <a class="fontColor-comment cursor-pointer" >Delete</a>
+            <a class="fontColor-comment mr-4 cursor-pointer" 
+            @click="editComment(`comment${message.commentId}`,`editComment${message.commentId}`)">
+                Edit
+            </a>
+            <a class="fontColor-comment cursor-pointer" 
+            @click="delComment(message.commentId)"
+            >
+                Delete
+            </a>
             
           </div>
         </div>
         <!-- Edit comment -->
-        <div :ref="`editComment${indexError}${index}`" :style="{ display: 'none'} " :id="`editComment${indexError}${index}`">
+        <div :ref="`editComment${indexError}${index}`" :style="{ display: 'none'} " :id="`editComment${message.commentId}`">
           <b-row>
             <b-col class="d-flex justify-content-start">
               <b-avatar variant="primary" :text="getTextAvatar(message.id)" class="mr-3"></b-avatar>
@@ -334,18 +343,20 @@
           </b-row>
           <div class="card-list ml-5 p-1">
             <b-form-textarea
+              :id="`EditComment${message.commentId}`"
               no-resize
               class="border-0 textaera"
               placeholder="Write a commet..."
             ></b-form-textarea>
             <div class="d-flex justify-content-end">
               <b-button
-                variant="outline-secondary"
-                class="m-2 comment-size-buttom"
-                @click="cancelEditComment(`comment${indexError}${index}`,`editComment${indexError}${index}`)"
+                class="m-2 comment-size-buttom bt-cancel-grey"
+                @click="cancelEditComment(`comment${message.commentId}`,`editComment${message.commentId}`)"
                 >Cancel</b-button
               >
-              <b-button variant="success" class="m-2 comment-size-buttom"
+              <b-button 
+              class="m-2 comment-size-buttom bt-green"
+              @click="editMyComment(message.commentId)"
                 >Save</b-button
               >
             </div>
@@ -386,36 +397,8 @@ export default {
       pickUsers: [],
       showDropdown: false,
       filterText: "",
-      listMessage: [
-        {
-          id: 1,
-          username: "Game Kanna",
-          message:
-            "Alternative browsers which use the latest version of WebKit, Blink, or Gecko, whether directly or via the platform’s web view API, are not explicitly supported. However, Bootstrap should (in most cases) display and function correctly in these browsers as well. More specific support information is provided below.",
-          date: "Dec 17 at 11:01AM",
-        },
-        {
-          id: 1,
-          username: "Game Kanna",
-          message:
-            "Alternative browsers which use the latest version of WebKit, Blink, or Gecko, whether directly or via the platform’s web view API, are not explicitly supported. However, Bootstrap should (in most cases) display and function correctly in these browsers as well. More specific support information is provided below.",
-          date: "Dec 17 at 11:01AM",
-        },
-        {
-          id: 2,
-          username: "Fa kamontip",
-          message:
-            "Alternative browsers which use the latest version of WebKit, Blink, or Gecko, whether directly or via the platform’s web view API, are not explicitly supported. However, Bootstrap should (in most cases) display and function correctly in these browsers as well. More specific support information is provided below.",
-          date: "Dec 17 at 11:01AM",
-        },
-        {
-          id: 4,
-          username: "Airada",
-          message:
-            "Alternative browsers which use the latest version of WebKit, Blink, or Gecko, whether directly or via the platform’s web view API, are not explicitly supported. However, Bootstrap should (in most cases) display and function correctly in these browsers as well. More specific support information is provided below.",
-          date: "Dec 17 at 11:01AM",
-        },
-      ],
+      userLogin: null,
+      commentInput: ""
     };
   },
   methods: {
@@ -646,8 +629,67 @@ export default {
       });
     },
     updateUserAndStatus(upParam){
-      console.log('upParam : ', upParam);
       return ErrorService.updateUsersAndErrorStatus(upParam)
+    },
+    addComment(param){
+      console.log('param comment: ',param);
+      return ErrorService.addNewComment(param);
+    },
+    saveComment(){
+      let commentParam = {
+        errorId: this.errorDetail.errorId,
+        userId: this.userLogin,
+        comment: this.commentInput
+      }
+
+      this.addComment(commentParam).then(res => {
+        console.log(res);
+        if(res.status){
+          ErrorService.getComment(this.errorDetail.errorId).then(com => {
+            console.log('new comment: ',com);
+            this.errorDetail.comment = com;
+            this.commentInput = "";
+          })
+        }
+      })
+    },
+    editMyComment(ind){
+      console.log('comment id:',ind);
+      let com = document.getElementById("EditComment"+ind).value;
+      let editCommentParam = {
+        errorId: this.errorDetail.errorId,
+        commentId: ind,
+        comment: com
+      }
+      console.log('edit com param: ',editCommentParam);
+
+      ErrorService.editComment(editCommentParam).then(result => {
+        console.log('result edit: ',result);
+        if(result.status){
+          ErrorService.getComment(this.errorDetail.errorId).then(com => {
+            console.log('new comment: ',com);
+            this.errorDetail.comment = com;
+            this.commentInput = "";
+
+            this.cancelEditComment(`comment${ind}`, `editComment${ind}`)
+          })
+        }
+      })
+    },
+    delComment(commentId){
+      let delParam = {
+        errorId: this.errorDetail.errorId,
+        commentId: commentId
+      }
+
+      ErrorService.deleteComment(delParam).then(result => {
+        console.log('result del: ',result);
+        if(result.status){
+          ErrorService.getComment(this.errorDetail.errorId).then(com => {
+            this.errorDetail.comment = com;
+          })
+        }
+      })
     }
   },
 
@@ -668,7 +710,7 @@ export default {
   mounted() {
     //call service get error by id
     this.getError(this.indexError);
-    
+    this.userLogin = localStorage.getItem('userId');
     console.log('errorDetail (mounted): ',this.errorDetail);
 
 
