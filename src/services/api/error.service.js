@@ -17,6 +17,35 @@ class ErrorService {
     const response = await httpClient(config);
     return response.data;
   }
+
+  async getErrorById(errorId){
+    const config = {
+        method: "get",
+        url: `${END_POINT}/getError`,
+        params: {
+            errorId: errorId,
+        },
+        headers: {
+          "content-type": "application/json",
+        },
+      };
+      const response = await httpClient(config);
+      return response.data;
+  }
+  async updateUsersAndErrorStatus(param) {
+    console.log("update users");
+    const config = {
+      method: "put",
+      url: `${END_POINT}/updateUserAndErrorStatus`,
+      data: param,
+      headers: {
+        "content-type": "application/json",
+      },
+    };
+
+    const response = await httpClient(config);
+    return response.data;
+  }
 }
 
 export default new ErrorService();
