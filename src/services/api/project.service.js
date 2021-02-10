@@ -31,6 +31,21 @@ class ProjectService {
     const response = await httpClient(config);
     return response.data;
   }
+  async getListProjectByOwner(userId) {
+    // console.log(userId);
+    const config = {
+      method: "get",
+      url: `${END_POINT}/getListProjectByOwner`,
+      params: {
+        userId: userId,
+      },
+      headers: {
+        "content-type": "application/json",
+      },
+    };
+    const response = await httpClient(config);
+    return response.data;
+  }
   async getProject(projectId) {
     // console.log(projectId);
     const config = {

@@ -27,7 +27,7 @@
         <div class="col">
           <h4 class="float-left font-no-size-color">Projects</h4>
         </div>
-        <div class="col-3">
+        <div class="col-3" v-if="true">
           <router-link :to="{ name: 'ProjectAdd' }">
             <b-button class="w-100 bt-blue font-no-size-color"
               ><font-awesome-icon :icon="['fas', 'plus']" /> Add New
@@ -159,7 +159,7 @@ export default {
       return text;
     },
     getListProject(userID){
-      ProjectService.getListProject(userID).then(result => {
+      ProjectService.getListProjectByOwner(userID).then(result => {
         console.log('result',result)
         result.forEach(data => {
           var projectUser = []
