@@ -51,7 +51,7 @@
             <b-avatar
               button
               variant="primary"
-              :text="`${userName.split(' ')[0][0]}${userName.split(' ')[1][0]}`"
+              :text="getTextAvatar(userName)"
               class="align-baseline"
             ></b-avatar>
           </div>
@@ -131,8 +131,15 @@ export default {
       console.log("url", url);
       this.$router.push(url);
     },
-    getListUser() {
-      this.$store.dispatch("user/getUser");
+    getTextAvatar(userName){
+      if(userName !== ''){
+      return `${userName.split(' ')[0][0]}${userName.split(' ')[1][0]}`
+      }else{
+        return 'Un'
+      }
+    },
+    async getListUser() {
+      await this.$store.dispatch("user/getUser");
 
       var user = this.dataUser.filter(
         (data) => data.id === localStorage.getItem("userId")

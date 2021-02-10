@@ -283,16 +283,16 @@ export default {
           projectOwner: ownerId,
           userMaintenance: maintenanceId,
         };
-        console.log('ownerId',ownerId)
+        console.log("ownerId", ownerId);
         // console.log("param edit : ");
         // console.log(param);
-        try{
-        let response = await ProjectService.updateProject(param);
-        this.$router.push({
-          name: "ProjectDetail",
-          params: { projectId: this.projectId },
-        });
-        }catch{}
+        try {
+          let response = await ProjectService.updateProject(param);
+          this.$router.push({
+            name: "ProjectDetail",
+            params: { projectId: this.projectId },
+          });
+        } catch (ex) {}
       }
     },
   },
