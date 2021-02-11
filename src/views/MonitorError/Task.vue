@@ -1,5 +1,6 @@
 <template>
   <div>
+    <!-- {{ status }} -->
     <div class="p-5 background-container">
       <div class="row">
         <div class="col-xl col-lg-12">
@@ -242,20 +243,28 @@ export default {
         console.log('listError : ',this.listError);
       })
     },
-    async setOptions(){
-      this.options = [];
-      this.selected = [];
-      this.status.forEach(s => {
-        let op = {
-          text: s.text,
-          value: s.text
-        }
-        this.options.push(op);
-        this.selected.push(`${s.text}`);
-      });
+    setOptions(){
+      
+      console.log('status error: ',this.status);
+      
+        this.options = [];
+        this.selected = [];
+
+        this.status.forEach(s => {
+          let op = {
+            text: s.text,
+            value: s.text
+          }
+          this.options.push(op);
+          this.selected.push(`${s.text}`);
+        });
     }
+    
   },
   updated() {
+  },
+  created(){
+    this.setOptions();
   },
   mounted(){
     this.$store.dispatch("header/setAllLinkHeader", "Task");

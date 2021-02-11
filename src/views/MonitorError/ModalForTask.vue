@@ -404,15 +404,15 @@ export default {
   },
   methods: {
     getError(errId){
-      console.log('errId : ',errId);
-      console.log('test');
+      // console.log('errId : ',errId);
+      // console.log('test');
 
       ErrorService.getErrorById(errId).then(result => {
-        console.log('error modal : ',result);
+        // console.log('error modal : ',result);
         this.errorDetail.errorId = result.errorId;
         this.errorDetail.errorDetail = result.errorDetail;
         this.selected = result.errorStatusId;
-        console.log('json comment : ', JSON.parse(result.comment));
+        // console.log('json comment : ', JSON.parse(result.comment));
         if(result.comment == null){
           this.errorDetail.comment = []
         }else{
@@ -425,7 +425,7 @@ export default {
           this.errorDetail.userAssignment = JSON.parse(result.userAssignment);
         }
 
-        console.log('errorDetail : ', this.errorDetail.userAssignment);
+        // console.log('errorDetail : ', this.errorDetail.userAssignment);
 
         this.addPickUsers();
       })
@@ -729,10 +729,10 @@ export default {
     //call service get error by id
     this.getError(this.indexError);
     this.userLogin = localStorage.getItem('userId');
-    console.log('errorDetail (mounted): ',this.errorDetail);
+    // console.log('errorDetail (mounted): ',this.errorDetail);
 
 
-    console.log('index : ',this.indexError);
+    // console.log('index : ',this.indexError);
     console.log('options : ',this.options);
     
   },
