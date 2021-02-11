@@ -173,6 +173,10 @@ export default {
       document.getElementById("search").style.marginTop = "0%";
       document.getElementById("Edit_Button").style.display = "none";
       document.getElementById("cardlist").style.marginTop = "-3%";
+
+      this.$store.dispatch("sidebar/setActiveNav", "monitor");
+    }else{
+      this.$store.dispatch("sidebar/setActiveNav", "project");
     }
   },
   data() {

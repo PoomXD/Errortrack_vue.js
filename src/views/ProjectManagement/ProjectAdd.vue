@@ -209,6 +209,8 @@ export default {
       })
     })
     this.listUserMaintenance = this.listUserOwner
+
+    this.$store.dispatch("sidebar/setActiveNav", "project");
   },
   methods: {
     onDelete(index) {
