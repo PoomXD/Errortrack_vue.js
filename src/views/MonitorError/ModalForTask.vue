@@ -28,10 +28,7 @@
               v-for="(user, index) in errorDetail.userAssignment"
               :key="`user-${index}`"
             >
-              <b-avatar
-                class="avatar-owner"
-                :text="getTextAvatar(user.userId)"
-              >
+              <b-avatar class="avatar-owner" :text="getTextAvatar(user.userId)">
               </b-avatar>
               <span class="wrap-span" @click="delUser(user.userId)">
                 <font-awesome-icon :icon="['fas', 'times']" />
@@ -136,13 +133,15 @@
           ><font-awesome-icon :icon="['fas', 'paperclip']" class="" />
           แนบไฟล์</b-button
         >
-        <input
-          style="display: none"
-          multiple
-          type="file"
-          ref="fileInput"
-          @change="onFilePicked"
-        />
+        <form>
+          <input
+            style="display: none"
+            multiple
+            type="file"
+            ref="fileInput"
+            @change="onFilePicked"
+          />
+        </form>
         <hr />
         <div class="px-5">
           <b-card
@@ -156,8 +155,9 @@
                   :icon="['far', 'file-alt']"
                   class="icon-file mr-3"
                 />
-                <div>
+                <div class="">
                   <label class="font-gen m-0"> {{ item.name }} </label> <br />
+                  <!-- <b-progress :value="uploadPercentage[index].value" show-progress animated></b-progress> -->
                   <label class="font-detail m-0">
                     {{
                       item.size / 1024 >= 1024
@@ -260,42 +260,56 @@
     <!-- ######################################### comment ################################################### -->
     <div class="d-flex justify-content-start">
       <div class="p-2">
-        <font-awesome-icon class="icon-upload" :icon="['fas', 'comment-dots']" />
+        <font-awesome-icon
+          class="icon-upload"
+          :icon="['fas', 'comment-dots']"
+        />
       </div>
       <div class="p-2 font-gen2 mx-2">Comment</div>
-      <div class="p-2 font-detail">( {{ errorDetail.comment.length }} Comment )</div>
+      <div class="p-2 font-detail">
+        ( {{ errorDetail.comment.length }} Comment )
+      </div>
     </div>
     <hr />
     <div class="pl-5 pr-5">
       <div id="Comment">
         <b-row>
           <b-col class="d-flex justify-content-start">
-            <b-avatar variant="primary" :text="getTextAvatar(userLogin)" class="mr-3 font-no-size-color"></b-avatar>
-            <div class="align-middle font-gen">{{ getNameUser(userLogin) }}</div>
+            <b-avatar
+              variant="primary"
+              :text="getTextAvatar(userLogin)"
+              class="mr-3 font-no-size-color"
+            ></b-avatar>
+            <div class="align-middle font-gen">
+              {{ getNameUser(userLogin) }}
+            </div>
           </b-col>
         </b-row>
         <div class="card-list ml-5 p-1">
           <b-form-textarea
-          v-model="commentInput"
+            v-model="commentInput"
             no-resize
             class="border-0 textaera font-detail"
             placeholder="Write a commet..."
           ></b-form-textarea>
           <div class="d-flex justify-content-end">
-            <b-button
-              class="m-2 comment-size-buttom bt-cancel-grey"
+            <b-button class="m-2 comment-size-buttom bt-cancel-grey"
               >Cancel</b-button
             >
-            <b-button 
-            class="m-2 comment-size-buttom bt-green"
-            @click="saveComment()"
+            <b-button
+              class="m-2 comment-size-buttom bt-green"
+              @click="saveComment()"
               >Save</b-button
             >
           </div>
         </div>
       </div>
       <!-- message -->
-      <div id="Comment" v-for="(message, index) in errorDetail.comment" :key="index">
+      <div
+        id="Comment"
+        v-for="(message, index) in errorDetail.comment"
+        :key="index"
+      >
         <div :id="`comment${message.commentId}`">
           <b-row>
             <b-col class="d-flex justify-content-start">
@@ -304,7 +318,9 @@
                 :text="getTextAvatar(message.userId)"
                 class="mr-3 font-no-size-color"
               ></b-avatar>
-              <div class="align-middle font-gen">{{ getNameUser(message.userId) }}</div>
+              <div class="align-middle font-gen">
+                {{ getNameUser(message.userId) }}
+              </div>
             </b-col>
             <b-col class="d-flex justify-content-end"
               ><div class="align-middle fontColor-comment font-detail">
@@ -321,24 +337,41 @@
             class="d-flex justify-content-start ml-5 "
             v-if="message.userId === userLogin"
           >
-            <a class="fontColor-comment mr-4 cursor-pointer font-detail" 
-            @click="editComment(`comment${message.commentId}`,`editComment${message.commentId}`)">
-                Edit
-            </a>
-            <a class="fontColor-comment cursor-pointer font-detail" 
-            @click="delComment(message.commentId)"
+            <a
+              class="fontColor-comment mr-4 cursor-pointer font-detail"
+              @click="
+                editComment(
+                  `comment${message.commentId}`,
+                  `editComment${message.commentId}`
+                )
+              "
             >
-                Delete
+              Edit
             </a>
-            
+            <a
+              class="fontColor-comment cursor-pointer font-detail"
+              @click="delComment(message.commentId)"
+            >
+              Delete
+            </a>
           </div>
         </div>
         <!-- Edit comment -->
-        <div :ref="`editComment${indexError}${index}`" :style="{ display: 'none'} " :id="`editComment${message.commentId}`">
+        <div
+          :ref="`editComment${indexError}${index}`"
+          :style="{ display: 'none' }"
+          :id="`editComment${message.commentId}`"
+        >
           <b-row>
             <b-col class="d-flex justify-content-start">
-              <b-avatar variant="primary" :text="getTextAvatar(message.userId)" class="mr-3 font-no-size-color"></b-avatar>
-              <div class="align-middle font-gen">{{ getNameUser(message.userId) }}</div>
+              <b-avatar
+                variant="primary"
+                :text="getTextAvatar(message.userId)"
+                class="mr-3 font-no-size-color"
+              ></b-avatar>
+              <div class="align-middle font-gen">
+                {{ getNameUser(message.userId) }}
+              </div>
             </b-col>
           </b-row>
           <div class="card-list ml-5 p-1">
@@ -351,12 +384,17 @@
             <div class="d-flex justify-content-end">
               <b-button
                 class="m-2 comment-size-buttom bt-cancel-grey"
-                @click="cancelEditComment(`comment${message.commentId}`,`editComment${message.commentId}`)"
+                @click="
+                  cancelEditComment(
+                    `comment${message.commentId}`,
+                    `editComment${message.commentId}`
+                  )
+                "
                 >Cancel</b-button
               >
-              <b-button 
-              class="m-2 comment-size-buttom bt-green"
-              @click="editMyComment(message.commentId)"
+              <b-button
+                class="m-2 comment-size-buttom bt-green"
+                @click="editMyComment(message.commentId)"
                 >Save</b-button
               >
             </div>
@@ -370,73 +408,70 @@
 <script>
 import { mapState } from "vuex";
 import Swal from "sweetalert2";
-import ErrorService from '@/services/api/error.service';
-import moment from 'moment';
-
+import ErrorService from "@/services/api/error.service";
+import moment from "moment";
+import axios from "axios";
 export default {
-  
-  props: {
-    indexError: {
-      type: [Number],
+   methods: {
+     onFilePicked(event) {
+      var i = 0;
+      event.target.files.forEach((e) => {
+        this.uploadPercentage.push({value: 0 });
+        this.file.push(e);
+        this.submitFile(e, i);
+        i++;
+      });
     },
-  },
-  updated() {
-  },
-  name: "modal-task",
-  data() {
-    return {
-      selected: "",
-      rename: "",
-      file: [],
-      errorDetail: {
-        errorId: 0,
-        errorDetail: "",
-        userAssignment: [],
-        errorStatusId: 1,
-        comment: [],
-      },
-      pickUsers: [],
-      showDropdown: false,
-      filterText: "",
-      userLogin: null,
-      commentInput: ""
-    };
-  },
-  methods: {
-    getError(errId){
-      // console.log('errId : ',errId);
-      // console.log('test');
-
-      ErrorService.getErrorById(errId).then(result => {
-        // console.log('error modal : ',result);
+    submitFile(file, i) {
+      const formData = new FormData();
+      formData.append("files",file)
+      console.log("files", formData);
+      axios
+        .post("https://localhost:5001/File/uploadFile", formData, {
+          headers: { "Content-Type": "multipart/form-data" },
+          onUploadProgress: function(progressEvent) {
+            console.log("total : ", parseInt(
+              Math.round((progressEvent.loaded / progressEvent.total) * 100)
+            ));
+            this.uploadPercentage[i].value = parseInt(
+              Math.round((progressEvent.loaded / progressEvent.total) * 100)
+            );
+          }.bind(this),
+        })
+        .then(function() {
+          console.log("SUCCESS!!");
+        })
+        .catch(function() {
+          console.log("FAILURE!!");
+        });
+    },
+    getError(errId) {
+      ErrorService.getErrorById(errId).then((result) => {
         this.errorDetail.errorId = result.errorId;
         this.errorDetail.errorDetail = result.errorDetail;
         this.selected = result.errorStatusId;
-        // console.log('json comment : ', JSON.parse(result.comment));
-        if(result.comment == null){
-          this.errorDetail.comment = []
-        }else{
+        if (result.comment == null) {
+          this.errorDetail.comment = [];
+        } else {
           this.errorDetail.comment = JSON.parse(result.comment);
         }
-        
-        if(result.userAssignment == null){
-          this.errorDetail.userAssignment = []
-        }else{
+
+        if (result.userAssignment == null) {
+          this.errorDetail.userAssignment = [];
+        } else {
           this.errorDetail.userAssignment = JSON.parse(result.userAssignment);
         }
 
-        // console.log('errorDetail : ', this.errorDetail.userAssignment);
-
         this.addPickUsers();
-      })
+      });
     },
-    editComment(index,index2) {
-        document.getElementById(index).style.display = "none";
-        document.getElementById(index2).style.display = "block";
+    editComment(index, index2) {
+      document.getElementById(index).style.display = "none";
+      document.getElementById(index2).style.display = "block";
     },
-    cancelEditComment(index,index2){
-        document.getElementById(index).style.display = "block";
-        document.getElementById(index2).style.display = "none";
+    cancelEditComment(index, index2) {
+      document.getElementById(index).style.display = "block";
+      document.getElementById(index2).style.display = "none";
     },
     getTextAvatar(id) {
       let text = "";
@@ -456,7 +491,6 @@ export default {
     },
     pick(id) {
       this.showDropdown = true;
-      
 
       this.pickUsers.forEach((p) => {
         if (p.userId === id) {
@@ -467,18 +501,18 @@ export default {
             let res = this.errorDetail.userAssignment;
 
             res = res.filter((data) => data.userId !== id);
-            console.log('res : ',res);
-            
+            console.log("res : ", res);
+
             //=================== call service ===================
             let updateParam = {
               errorId: this.errorDetail.errorId,
               userAssigns: res,
-              errorStatusId: this.selected
-            }
+              errorStatusId: this.selected,
+            };
 
-            this.updateUserAndStatus(updateParam).then(re => {
-              console.log('re: ',re)
-              if(re.status){
+            this.updateUserAndStatus(updateParam).then((re) => {
+              console.log("re: ", re);
+              if (re.status) {
                 this.errorDetail.userAssignment = res;
               }
             });
@@ -487,7 +521,7 @@ export default {
             let addUser = {
               userId: p.userId,
             };
-            console.log('print something')
+            console.log("print something");
             let addNewUser = this.errorDetail.userAssignment;
             addNewUser.push(addUser);
 
@@ -495,16 +529,15 @@ export default {
             let updateParam = {
               errorId: this.errorDetail.errorId,
               userAssigns: this.errorDetail.userAssignment,
-              errorStatusId: this.selected
+              errorStatusId: this.selected,
             };
 
-            this.updateUserAndStatus(updateParam).then(re => {
-              console.log('re: ',re)
-              if(re.status){
+            this.updateUserAndStatus(updateParam).then((re) => {
+              console.log("re: ", re);
+              if (re.status) {
                 this.errorDetail.userAssignment = addNewUser;
               }
             });
-
           }
         }
       });
@@ -518,34 +551,32 @@ export default {
           let res = this.errorDetail.userAssignment;
 
           res = res.filter((data) => data.userId !== id);
-          console.log('res : ',res);
+          console.log("res : ", res);
           this.errorDetail.userAssignment = res;
-          
-          //=================== call service ===================
-            let updateParam = {
-              errorId: this.errorDetail.errorId,
-              userAssigns: res,
-              errorStatusId: this.selected
-            }
 
-            this.updateUserAndStatus(updateParam).then(re => {
-              console.log('re: ',re)
-              if(re.status){
-                this.errorDetail.userAssignment = res;
-              }
-            });
+          //=================== call service ===================
+          let updateParam = {
+            errorId: this.errorDetail.errorId,
+            userAssigns: res,
+            errorStatusId: this.selected,
+          };
+
+          this.updateUserAndStatus(updateParam).then((re) => {
+            console.log("re: ", re);
+            if (re.status) {
+              this.errorDetail.userAssignment = res;
+            }
+          });
         }
       });
     },
     show() {
       this.showDropdown = true;
-     
     },
     closeDropDown() {
       this.showDropdown = false;
     },
     confirmChange() {
-
       Swal.fire({
         title: "Edit Status",
         text: "Do you want to change this error status?",
@@ -554,20 +585,19 @@ export default {
         showCancelButton: true,
       }).then((result) => {
         if (result.isConfirmed) {
-          console.log('selected : ', this.selected)
+          console.log("selected : ", this.selected);
           let updateParam = {
             errorId: this.errorDetail.errorId,
             userAssigns: this.errorDetail.userAssignment,
-            errorStatusId: this.selected
-          }
+            errorStatusId: this.selected,
+          };
 
-          this.updateUserAndStatus(updateParam).then(re => {
-            console.log('update status: ',re)
-            if(re.status){
+          this.updateUserAndStatus(updateParam).then((re) => {
+            console.log("update status: ", re);
+            if (re.status) {
               this.errorDetail.errorStatusId = this.selected;
             }
           });
-          
         } else {
           this.selected = this.errorDetail.errorStatusId;
         }
@@ -575,12 +605,7 @@ export default {
     },
 
     // ################################### file upload method ####################
-    onFilePicked(event) {
-      event.target.files.forEach((e) => {
-        this.file.push(e);
-      });
-      this.$refs.select.focus = false;
-    },
+   
     del(index) {
       // delby index
       this.$refs["dropdownDel" + index][0].hide(true);
@@ -589,26 +614,26 @@ export default {
       document.getElementById("input" + index).value = "";
       this.$refs["dropdownEdit" + index][0].hide(true);
     },
-    getNameUser(userId){
-      let name = '';
-      this.dataUser.forEach(user => {
-        if(user.id === userId){
-          name =  `${user.firstName} ${user.lastName}`;
+    getNameUser(userId) {
+      let name = "";
+      this.dataUser.forEach((user) => {
+        if (user.id === userId) {
+          name = `${user.firstName} ${user.lastName}`;
         }
       });
       return name;
     },
-    addPickUsers(){
-      console.log('userAssignment', this.errorDetail.userAssignment);
-      console.log('dataUsers : ',this.dataUser);
+    addPickUsers() {
+      console.log("userAssignment", this.errorDetail.userAssignment);
+      console.log("dataUsers : ", this.dataUser);
       this.dataUser.forEach((user) => {
         let text = "";
         if (user.firstName != "" && user.lastName != "") {
-            text = `${user.firstName[0]}${user.lastName[0]}`;
+          text = `${user.firstName[0]}${user.lastName[0]}`;
         } else if (user.firstName != "" && user.lastName == "") {
-            text = `${user.firstName[0]}`;
+          text = `${user.firstName[0]}`;
         } else {
-            text = `Un`;
+          text = `Un`;
         }
         let addToPick = {
           userId: user.id,
@@ -617,9 +642,8 @@ export default {
           selected: false,
         };
         this.pickUsers.push(addToPick);
-        
       });
-      console.log('pickUsers : ',this.pickUsers);
+      console.log("pickUsers : ", this.pickUsers);
 
       this.errorDetail.userAssignment.forEach((userAss) => {
         this.pickUsers.forEach((pUser) => {
@@ -629,57 +653,55 @@ export default {
         });
       });
     },
-    updateUserAndStatus(upParam){
-      return ErrorService.updateUsersAndErrorStatus(upParam)
+    updateUserAndStatus(upParam) {
+      return ErrorService.updateUsersAndErrorStatus(upParam);
     },
-    addComment(param){
-      console.log('param comment: ',param);
+    addComment(param) {
+      console.log("param comment: ", param);
       return ErrorService.addNewComment(param);
     },
-    saveComment(){
+    saveComment() {
       let commentParam = {
         errorId: this.errorDetail.errorId,
         userId: this.userLogin,
-        comment: this.commentInput
-      }
+        comment: this.commentInput,
+      };
 
-      this.addComment(commentParam).then(res => {
+      this.addComment(commentParam).then((res) => {
         console.log(res);
-        if(res.status){
-          ErrorService.getComment(this.errorDetail.errorId).then(com => {
-            console.log('new comment: ',com);
+        if (res.status) {
+          ErrorService.getComment(this.errorDetail.errorId).then((com) => {
+            console.log("new comment: ", com);
             this.errorDetail.comment = com;
             this.commentInput = "";
-          })
+          });
         }
-      })
+      });
     },
-    editMyComment(ind){
-      
-      console.log('comment id:',ind);
-      let com = document.getElementById("EditComment"+ind).value;
+    editMyComment(ind) {
+      console.log("comment id:", ind);
+      let com = document.getElementById("EditComment" + ind).value;
       let editCommentParam = {
         errorId: this.errorDetail.errorId,
         commentId: ind,
-        comment: com
-      }
-      console.log('edit com param: ',editCommentParam);
+        comment: com,
+      };
+      console.log("edit com param: ", editCommentParam);
 
-      ErrorService.editComment(editCommentParam).then(result => {
-        console.log('result edit: ',result);
-        if(result.status){
-          ErrorService.getComment(this.errorDetail.errorId).then(com => {
-            console.log('new comment: ',com);
+      ErrorService.editComment(editCommentParam).then((result) => {
+        console.log("result edit: ", result);
+        if (result.status) {
+          ErrorService.getComment(this.errorDetail.errorId).then((com) => {
+            console.log("new comment: ", com);
             this.errorDetail.comment = com;
             this.commentInput = "";
 
-            this.cancelEditComment(`comment${ind}`, `editComment${ind}`)
-          })
+            this.cancelEditComment(`comment${ind}`, `editComment${ind}`);
+          });
         }
-      })
+      });
     },
-    delComment(commentId){
-
+    delComment(commentId) {
       Swal.fire({
         title: "Edit Status",
         text: "Do you want to change this error status?",
@@ -690,26 +712,52 @@ export default {
         if (result.isConfirmed) {
           let delParam = {
             errorId: this.errorDetail.errorId,
-            commentId: commentId
-          }
+            commentId: commentId,
+          };
 
-          ErrorService.deleteComment(delParam).then(result => {
-            console.log('result del: ',result);
-            if(result.status){
-              ErrorService.getComment(this.errorDetail.errorId).then(com => {
+          ErrorService.deleteComment(delParam).then((result) => {
+            console.log("result del: ", result);
+            if (result.status) {
+              ErrorService.getComment(this.errorDetail.errorId).then((com) => {
                 this.errorDetail.comment = com;
-              })
+              });
             }
-          })
-          
-        } 
+          });
+        }
       });
-      
     },
-    getDateTimeForShow(strDateTime){
-      return moment(strDateTime).format('MM/DD/YYYY hh:mm');
-    }
+    getDateTimeForShow(strDateTime) {
+      return moment(strDateTime).format("MM/DD/YYYY hh:mm");
+    },
   },
+  props: {
+    indexError: {
+      type: [Number],
+    },
+  },
+  updated() {},
+  name: "modal-task",
+  data() {
+    return {
+      selected: "",
+      rename: "",
+      uploadPercentage: [],
+      file: [],
+      errorDetail: {
+        errorId: 0,
+        errorDetail: "",
+        userAssignment: [],
+        errorStatusId: 1,
+        comment: [],
+      },
+      pickUsers: [],
+      showDropdown: false,
+      filterText: "",
+      userLogin: null,
+      commentInput: "",
+    };
+  },
+ 
 
   computed: {
     filteredUsers() {
@@ -728,15 +776,12 @@ export default {
   mounted() {
     //call service get error by id
     this.getError(this.indexError);
-    this.userLogin = localStorage.getItem('userId');
+    this.userLogin = localStorage.getItem("userId");
     // console.log('errorDetail (mounted): ',this.errorDetail);
 
-
     // console.log('index : ',this.indexError);
-    console.log('options : ',this.options);
-    
+    console.log("options : ", this.options);
   },
-  
 };
 </script>
 
