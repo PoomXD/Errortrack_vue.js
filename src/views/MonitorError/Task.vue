@@ -170,7 +170,12 @@
                 </p>
               </div>
             </div>
-            <b-modal :id="`modalPopover${task.errId}`" title="Error Something" size="xl">
+            <b-modal 
+            :ref="`errorModal-${task.errId}`" 
+            :id="`modalPopover${task.errId}`" 
+            title="Error Something" size="xl"
+            @hidden="doSomethingOnHidden"
+            >
               <ModalForTask :indexError="task.errId"></ModalForTask>
             </b-modal>
           </b-card>
@@ -184,6 +189,7 @@ import ModalForTask from "./ModalForTask.vue";
 import ServiceService from '@/services/api/service.service';
 import ProjectService from '@/services/api/project.service';
 import ErrorService from '@/services/api/error.service';
+import ErrorStatusService from '@/services/api/errorStatus.service';
 import { mapState } from "vuex";
 
 export default {
@@ -217,6 +223,7 @@ export default {
           this.serviceDetail.userMainten = res.userMaintenance;
         })
         this.getListError(result.serviceId);
+        
       })
     },
     getNameUser(userId){
@@ -241,30 +248,38 @@ export default {
           this.listError.push(err);
         });
         console.log('listError : ',this.listError);
+        
       })
     },
     setOptions(){
       
-      console.log('status error: ',this.status);
-      
         this.options = [];
         this.selected = [];
 
-        this.status.forEach(s => {
-          let op = {
-            text: s.text,
-            value: s.text
-          }
-          this.options.push(op);
-          this.selected.push(`${s.text}`);
+        ErrorStatusService.getListErrorStatus().then(res => {
+          console.log('response: ',res);
+          res.forEach(re => {
+            let errStatus = {
+              value: re.errorStatusName,
+              text: re.errorStatusName
+            }
+            this.options.push(errStatus);
+            this.selected.push(re.errorStatusName);
+          });
         });
+        console.log('option : ',this.options);
+        console.log('selected : ',this.selected);
+    },
+    doSomethingOnHidden(){
+      console.log('testtttttttttttttttttttttttttttttttttttttttttttttt');
+      this.listError = [];
+      this.getService(this.$route.query.serviceId)
     }
     
   },
   updated() {
   },
   created(){
-    this.setOptions();
   },
   mounted(){
     this.$store.dispatch("header/setAllLinkHeader", "Task");
@@ -272,7 +287,9 @@ export default {
     // this.getService(4);
     // console.log('status : ',this.status);
     this.setOptions();
-    console.log('options mo: ',this.options);
+    console.log('options mounted: ',this.options);
+    console.log('test mounted when refresh');
+
   },
   data() {
     return {
