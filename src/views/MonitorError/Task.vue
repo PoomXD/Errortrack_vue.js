@@ -298,8 +298,9 @@ export default {
     // this.getService(4);
     // console.log('status : ',this.status);
     this.setOptions();
-    console.log("options mounted: ", this.options);
-    console.log("test mounted when refresh");
+    // console.log("options mounted: ", this.options);
+    // console.log("test mounted when refresh");
+    this.$store.dispatch("sidebar/setActiveNav", "monitor");
   },
   data() {
     return {

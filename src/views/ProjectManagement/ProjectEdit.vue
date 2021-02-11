@@ -199,6 +199,7 @@ export default {
       "header/setQueryLinkHeader",
       `ProjectEdit ${this.$route.query.projectId}`
     );
+    this.$store.dispatch("sidebar/setActiveNav", "project");
   },
 
   methods: {
