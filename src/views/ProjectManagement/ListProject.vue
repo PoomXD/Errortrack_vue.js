@@ -158,8 +158,8 @@ export default {
       });
       return text;
     },
-    getListProject(userID){
-      ProjectService.getListProjectByOwner(userID).then(result => {
+    async getListProject(userID){
+      await ProjectService.getListProjectByOwner(userID).then(result => {
         console.log('result',result)
         result.forEach(data => {
           var projectUser = []
@@ -205,8 +205,8 @@ export default {
       userMoreThan3: '',
     };
   },
-  mounted(){
-    this.getListProject(localStorage.getItem("userId"));
+  async mounted(){
+    await this.getListProject(localStorage.getItem("userId"));
     this.$store.dispatch("header/setAllLinkHeader", "ListProject");
     
   },
