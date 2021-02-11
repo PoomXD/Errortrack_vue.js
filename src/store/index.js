@@ -5,6 +5,7 @@ import {header} from "./header.module";
 import project from "@/store/project.module.js";
 import user from "@/store/user.module.js";
 import errorStatus from "@/store/errorStatus.module.js";
+import sidebar from "@/store/sidebar.module.js";
 
 Vue.use(Vuex);
 
@@ -13,7 +14,7 @@ const store = new Vuex.Store({
     
   },
   actions: {
-  
+    
   },
   mutations: {
     
@@ -24,6 +25,7 @@ const store = new Vuex.Store({
     project,
     user,
     errorStatus,
+    sidebar
   },
 });
 
