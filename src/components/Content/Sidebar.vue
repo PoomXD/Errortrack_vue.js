@@ -7,16 +7,18 @@
     <div class="mt-4" >
     <ul class="nav font-no-size-color">
       <li><router-link :to="{name : 'MonitorList' }"
-        :class="{'router-link-active': $route.fullPath === '/monitor/list' || 
-          $route.fullPath === '/monitor/detail' || 
-          $route.fullPath === '/monitor/task'}">
+        :class="{'router-link-active': 
+          $route.fullPath === '/home/monitor/add' || 
+          $route.fullPath === '/home/monitor/detail' || 
+          $route.fullPath === '/home/monitor/task'}">
           <font-awesome-icon :icon="['fas', 'desktop']"/>  Monitor Error
         </router-link></li>
       <li><router-link :to="{name : 'ListProject' }" 
-        :class="{'router-link-active': $route.fullPath === '/project/list' || 
-          $route.fullPath === '/project/detail' || 
-          $route.fullPath === '/project/add' || 
-          $route.fullPath === '/project/edit'}">
+        :class="{'router-link-active': 
+          $route.fullPath === '/home/project/list' || 
+          $route.fullPath === '/home/project/detail' || 
+          $route.fullPath === '/home/project/add' || 
+          $route.fullPath === '/home/project/edit'}">
           <font-awesome-icon :icon="['far', 'check-square']"/>  Project Management
         </router-link></li>
       <li><router-link to="/page"><font-awesome-icon :icon="['fas', 'chart-pie']"/>  Dashboard</router-link></li>
