@@ -128,12 +128,12 @@ export default {
       this.$router.push({ name: "Login" });
     },
     goto(url) {
-      console.log("url", url);
+      // console.log("url", url);
       this.$router.push(url);
     },
     getTextAvatar(userName) {
-      console.log("user name = ", userName);
-      console.log("user name = ", userName.split(" "));
+      // console.log("user name = ", userName);
+      // console.log("user name = ", userName.split(" "));
       // return 'Un'
       if (userName.split(" ").length === 2 && userName.split(" ")[1] !== "") {
         return `${userName.split(" ")[0][0]}${userName.split(" ")[1][0]}`;

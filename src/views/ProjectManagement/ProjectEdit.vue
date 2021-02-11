@@ -196,7 +196,7 @@ export default {
     console.log(this.$route.query.projectId);
     this.getDetailProject(this.$route.query.projectId);
     this.$store.dispatch(
-      "header/setEditLinkHeader",
+      "header/setQueryLinkHeader",
       `ProjectEdit ${this.$route.query.projectId}`
     );
   },
@@ -287,6 +287,7 @@ export default {
         });
         let param = {
           projectId: this.projectId,
+          // projectId:0,
           projectName: this.projectName,
           projectDetail: this.ProjectDetail,
           projectOwner: ownerId,
@@ -297,17 +298,19 @@ export default {
         // console.log(param);
         try {
           let response = await ProjectService.updateProject(param);
+          console.log('response',response)
           if (response.status) {
             this.$router.push({
               name: "ProjectDetail",
               query: { projectId: this.projectId },
             });
           } else {
+            console.log(response)
             this.alertOops();
           }
         } catch (ex) {
           this.alertOops();
-          console.log("CATCH")
+          console.log("CATCH",ex)
         }
       }
     },

@@ -9,7 +9,9 @@
               <p class="font-weight-bold font-gen">Project Name :</p>
             </div>
             <div class="col-8">
-              <p class="font-weight-light font-detail"> {{ serviceDetail.projectName }} </p>
+              <p class="font-weight-light font-detail">
+                {{ serviceDetail.projectName }}
+              </p>
             </div>
           </div>
           <div class="row">
@@ -17,10 +19,12 @@
               <p class="font-weight-bold font-gen">Project Owner :</p>
             </div>
             <div class="col-8">
-              <p v-for="(user,index) in serviceDetail.projectOwner"
-              :key="`userOwner-${index}`"
-              class="font-weight-light font-detail">
-              {{ getNameUser(user.userId) }}
+              <p
+                v-for="(user, index) in serviceDetail.projectOwner"
+                :key="`userOwner-${index}`"
+                class="font-weight-light font-detail"
+              >
+                {{ getNameUser(user.userId) }}
               </p>
             </div>
           </div>
@@ -29,7 +33,9 @@
               <p class="font-weight-bold font-gen">Service ID :</p>
             </div>
             <div class="col-8">
-              <p class="font-weight-light font-detail">{{ serviceDetail.serviceId }}</p>
+              <p class="font-weight-light font-detail">
+                {{ serviceDetail.serviceId }}
+              </p>
             </div>
           </div>
         </div>
@@ -39,7 +45,9 @@
               <p class="font-weight-bold font-gen">Service Name :</p>
             </div>
             <div class="col-8">
-              <p class="font-weight-light font-detail">{{ serviceDetail.serviceName }}</p>
+              <p class="font-weight-light font-detail">
+                {{ serviceDetail.serviceName }}
+              </p>
             </div>
           </div>
           <div class="row">
@@ -47,10 +55,12 @@
               <p class="font-weight-bold font-gen">User Maintenance :</p>
             </div>
             <div class="col-8">
-              <p v-for="(user,index) in serviceDetail.userMainten"
-              :key="`userMainten-${index}`"
-              class="font-weight-light font-detail">
-              {{ getNameUser(user.userId) }}
+              <p
+                v-for="(user, index) in serviceDetail.userMainten"
+                :key="`userMainten-${index}`"
+                class="font-weight-light font-detail"
+              >
+                {{ getNameUser(user.userId) }}
               </p>
             </div>
           </div>
@@ -64,7 +74,10 @@
         </div>
         <div class="col-xl-8 col-lg-7 col-sm-4">
           <div class="d-flex justify-content-end">
-            <b-form-group v-slot="{ ariaDescribedby }" class="display-task font-gen">
+            <b-form-group
+              v-slot="{ ariaDescribedby }"
+              class="display-task font-gen"
+            >
               <b-form-checkbox-group
                 size="lg"
                 id="checkbox-group-1"
@@ -104,7 +117,7 @@
           :key="index"
         >
           <b-card class="card-list" v-b-modal="`modalPopover${task.errId}`">
-            <b-card-title class="font-gen ">{{ task.errDetail }}</b-card-title>
+            <b-card-title class="font-gen">{{ task.errDetail }}</b-card-title>
             <b-card-text class="cut-text font-weight-light font-detail">
               {{ task.errParameter }}
             </b-card-text>
@@ -113,7 +126,7 @@
                 class="status-waiting rounded-pill"
                 v-if="task.errStatus == status[0].text"
               >
-                <p class="fw-bold m-0 text-center white-space ">
+                <p class="fw-bold m-0 text-center white-space">
                   {{ task.errStatus }}
                   <font-awesome-icon
                     class="font-status"
@@ -155,7 +168,7 @@
                     class="font-status"
                     :icon="['fas', 'tag']"
                   />
-                </p> 
+                </p>
               </div>
               <div
                 class="status-done rounded-pill"
@@ -170,11 +183,12 @@
                 </p>
               </div>
             </div>
-            <b-modal 
-            :ref="`errorModal-${task.errId}`" 
-            :id="`modalPopover${task.errId}`" 
-            title="Error Something" size="xl"
-            @hidden="doSomethingOnHidden"
+            <b-modal
+              :ref="`errorModal-${task.errId}`"
+              :id="`modalPopover${task.errId}`"
+              title="Error Something"
+              size="xl"
+              @hidden="doSomethingOnHidden"
             >
               <ModalForTask :indexError="task.errId"></ModalForTask>
             </b-modal>
@@ -186,10 +200,10 @@
 </template>
 <script>
 import ModalForTask from "./ModalForTask.vue";
-import ServiceService from '@/services/api/service.service';
-import ProjectService from '@/services/api/project.service';
-import ErrorService from '@/services/api/error.service';
-import ErrorStatusService from '@/services/api/errorStatus.service';
+import ServiceService from "@/services/api/service.service";
+import ProjectService from "@/services/api/project.service";
+import ErrorService from "@/services/api/error.service";
+import ErrorStatusService from "@/services/api/errorStatus.service";
 import { mapState } from "vuex";
 
 export default {
@@ -197,7 +211,7 @@ export default {
   computed: {
     ...mapState({
       dataUser: (store) => store.user.users,
-      status: (store) => store.errorStatus.status
+      status: (store) => store.errorStatus.status,
     }),
     filteredRows() {
       return this.listError.filter((row) => {
@@ -206,104 +220,100 @@ export default {
       });
     },
   },
-  components:{
-    ModalForTask
+  components: {
+    ModalForTask,
   },
   methods: {
-    getService(servId){
-      ServiceService.getService(servId).then(result => {
-        console.log('service : ', result);
+    getService(servId) {
+      ServiceService.getService(servId).then((result) => {
+        console.log("service : ", result);
         this.serviceDetail.serviceId = result.serviceId;
         this.serviceDetail.serviceName = result.serviceName;
 
-        ProjectService.getProject(result.projectId).then(res => {
-          console.log('project get by Id : ',res);
+        this.projectId = result.projectId;
+        this.$store.dispatch("header/setQueryLinkHeader", `Task ${this.projectId}`);
+        
+        ProjectService.getProject(result.projectId).then((res) => {
+          console.log("project get by Id : ", res);
           this.serviceDetail.projectName = res.projectName;
           this.serviceDetail.projectOwner = res.userOwner;
           this.serviceDetail.userMainten = res.userMaintenance;
-        })
+        });
         this.getListError(result.serviceId);
-        
-      })
+      });
     },
-    getNameUser(userId){
-      let name = '';
-      this.dataUser.forEach(user => {
-        if(user.id === userId){
-          name =  `${user.firstName} ${user.lastName}`;
+    getNameUser(userId) {
+      let name = "";
+      this.dataUser.forEach((user) => {
+        if (user.id === userId) {
+          name = `${user.firstName} ${user.lastName}`;
         }
       });
       return name;
     },
-    getListError(serviceId){
-      ErrorService.getListError(serviceId).then(result => {
-        console.log('error list : ',result);
-        result.forEach(res => {
+    getListError(serviceId) {
+      ErrorService.getListError(serviceId).then((result) => {
+        console.log("error list : ", result);
+        result.forEach((res) => {
           let err = {
             errId: res.errorId,
             errDetail: res.errorDetail,
             errParameter: res.errorParameter,
-            errStatus: res.errorStatusName
-          }
+            errStatus: res.errorStatusName,
+          };
           this.listError.push(err);
         });
-        console.log('listError : ',this.listError);
-        
-      })
+        console.log("listError : ", this.listError);
+      });
     },
-    setOptions(){
-      
-        this.options = [];
-        this.selected = [];
+    setOptions() {
+      this.options = [];
+      this.selected = [];
 
-        ErrorStatusService.getListErrorStatus().then(res => {
-          console.log('response: ',res);
-          res.forEach(re => {
-            let errStatus = {
-              value: re.errorStatusName,
-              text: re.errorStatusName
-            }
-            this.options.push(errStatus);
-            this.selected.push(re.errorStatusName);
-          });
+      ErrorStatusService.getListErrorStatus().then((res) => {
+        console.log("response: ", res);
+        res.forEach((re) => {
+          let errStatus = {
+            value: re.errorStatusName,
+            text: re.errorStatusName,
+          };
+          this.options.push(errStatus);
+          this.selected.push(re.errorStatusName);
         });
-        console.log('option : ',this.options);
-        console.log('selected : ',this.selected);
+      });
+      console.log("option : ", this.options);
+      console.log("selected : ", this.selected);
     },
-    doSomethingOnHidden(){
-      console.log('testtttttttttttttttttttttttttttttttttttttttttttttt');
+    doSomethingOnHidden() {
+      console.log("testtttttttttttttttttttttttttttttttttttttttttttttt");
       this.listError = [];
-      this.getService(this.$route.query.serviceId)
-    }
-    
+      this.getService(this.$route.query.serviceId);
+    },
   },
-  updated() {
-  },
-  created(){
-  },
-  mounted(){
-    this.$store.dispatch("header/setAllLinkHeader", "Task");
-    this.getService(this.$route.query.serviceId)
+  updated() {},
+  created() {},
+  mounted() {
+    this.getService(this.$route.query.serviceId);
+    // this.$store.dispatch("header/setQueryLinkHeader", `Task ${this.projectId}`);
     // this.getService(4);
     // console.log('status : ',this.status);
     this.setOptions();
-    console.log('options mounted: ',this.options);
-    console.log('test mounted when refresh');
-
+    console.log("options mounted: ", this.options);
+    console.log("test mounted when refresh");
   },
   data() {
     return {
+      projectId: 0,
       serviceDetail: {
-        projectName : '',
-        projectOwner : [],
-        serviceId : null,
-        serviceName : '',
-        userMainten : []
+        projectName: "",
+        projectOwner: [],
+        serviceId: null,
+        serviceName: "",
+        userMainten: [],
       },
       listError: [],
       selected: [], // Must be an array reference!
       options: [],
-      
     };
   },
 };
@@ -331,10 +341,10 @@ export default {
 .textareabackgrou {
   background-color: #f4f9ff;
 }
-.fontColor-comment{
-  color: #96A1AE;
+.fontColor-comment {
+  color: #96a1ae;
 }
-.comment-size-buttom{
+.comment-size-buttom {
   width: 100px;
 }
 </style>
