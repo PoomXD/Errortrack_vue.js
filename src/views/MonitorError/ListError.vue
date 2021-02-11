@@ -208,7 +208,7 @@ export default {
   mounted(){
     this.getListProject(localStorage.getItem("userId"));
     this.$store.dispatch("header/setAllLinkHeader", "ListProject");
-    
+    this.$store.dispatch("sidebar/setActiveNav", "monitor");
   },
   
   computed: {

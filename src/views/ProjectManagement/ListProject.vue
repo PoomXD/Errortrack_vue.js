@@ -208,7 +208,7 @@ export default {
   async mounted(){
     await this.getListProject(localStorage.getItem("userId"));
     this.$store.dispatch("header/setAllLinkHeader", "ListProject");
-    
+    this.$store.dispatch("sidebar/setActiveNav", "project");
   },
   
   computed: {
