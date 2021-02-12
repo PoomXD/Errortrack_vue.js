@@ -190,7 +190,7 @@
               size="xl"
               @hidden="doSomethingOnHidden"
             >
-              <ModalForTask :indexError="task.errId"></ModalForTask>
+              <ModalForTask :indexError="task.errId" :projectId="projectId"></ModalForTask>
             </b-modal>
           </b-card>
         </div>

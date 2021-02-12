@@ -424,6 +424,7 @@ import { mapState } from "vuex";
 import Swal from "sweetalert2";
 import ErrorService from "@/services/api/error.service";
 import FileService from "@/services/api/file.service";
+import ProjectService from '@/services/api/project.service';
 import moment from "moment";
 import axios from "axios";
 export default {
@@ -661,34 +662,50 @@ export default {
       })
     },
     addPickUsers() {
-      console.log("userAssignment", this.errorDetail.userAssignment);
-      console.log("dataUsers : ", this.dataUser);
-      this.dataUser.forEach((user) => {
-        let text = "";
-        if (user.firstName != "" && user.lastName != "") {
-          text = `${user.firstName[0]}${user.lastName[0]}`;
-        } else if (user.firstName != "" && user.lastName == "") {
-          text = `${user.firstName[0]}`;
-        } else {
-          text = `Un`;
-        }
-        let addToPick = {
-          userId: user.id,
-          userName: `${user.firstName} ${user.lastName}`,
-          text: text,
-          selected: false,
-        };
-        this.pickUsers.push(addToPick);
-      });
-      console.log("pickUsers : ", this.pickUsers);
+      this.users = [];
+      ProjectService.getProject(this.projectId).then(result => {
+        result.userOwner.forEach((user) => {
+          // console.log(user)
+          this.users.push(user);
+        })
+        result.userMaintenance.forEach((user) => {
+          // console.log(user)
+          this.users.push(user);
+        })
 
-      this.errorDetail.userAssignment.forEach((userAss) => {
-        this.pickUsers.forEach((pUser) => {
-          if (userAss.userId == pUser.userId) {
-            pUser.selected = true;
-          }
+        this.dataUser.forEach((user) => {
+          this.users.forEach(us => {
+            if(user.id === us.userId){
+              let text = "";
+              if (user.firstName != "" && user.lastName != "") {
+                text = `${user.firstName[0]}${user.lastName[0]}`;
+              } else if (user.firstName != "" && user.lastName == "") {
+                text = `${user.firstName[0]}`;
+              } else {
+                text = `Un`;
+              }
+              let addToPick = {
+                userId: user.id,
+                userName: `${user.firstName} ${user.lastName}`,
+                text: text,
+                selected: false,
+              };
+              this.pickUsers.push(addToPick);
+            }
+          });
+          
         });
-      });
+        console.log("pickUsers : ", this.pickUsers);
+
+        this.errorDetail.userAssignment.forEach((userAss) => {
+          this.pickUsers.forEach((pUser) => {
+            if (userAss.userId == pUser.userId) {
+              pUser.selected = true;
+            }
+          });
+        });
+
+      })
     },
     updateUserAndStatus(upParam) {
       return ErrorService.updateUsersAndErrorStatus(upParam);
@@ -772,6 +789,9 @@ export default {
     indexError: {
       type: [Number],
     },
+    projectId: {
+      type: [Number],
+    }
   },
   // updated() {this.getListFile(this.indexError)},
   name: "modal-task",
