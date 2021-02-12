@@ -3,25 +3,19 @@
     <div class="row px-1 mb-2">
       <div class="col-xl-7 col-lg-12">
         <div class="row">
-          <div class="col-3 font-gen text-right">
-            Error ID :
-          </div>
+          <div class="col-3 font-gen text-right">Error ID :</div>
           <div class="col-9 font-detail text-left">
             {{ errorDetail.errorId }}
           </div>
         </div>
         <div class="row">
-          <div class="col-3 font-gen text-right">
-            Error Detail :
-          </div>
+          <div class="col-3 font-gen text-right">Error Detail :</div>
           <div class="col-9 font-detail text-left">
             {{ errorDetail.errorDetail }}
           </div>
         </div>
         <div class="row mt-3">
-          <div class="col-3 font-gen text-right">
-            User Assign :
-          </div>
+          <div class="col-3 font-gen text-right">User Assign :</div>
           <div class="col-9 font-detail text-left">
             <div
               class="wrap"
@@ -54,9 +48,7 @@
               </template>
               <b-dropdown-header href="#">
                 <div class="row">
-                  <div class="col font-topic">
-                    Add User Assign
-                  </div>
+                  <div class="col font-topic">Add User Assign</div>
                   <div class="col text-right">
                     <b-button class="no-color" @click="closeDropDown()">
                       x
@@ -75,9 +67,7 @@
                     placeholder="Search Member"
                   ></b-form-input>
 
-                  <b-dropdown-item disabled>
-                    User Assign
-                  </b-dropdown-item>
+                  <b-dropdown-item disabled> User Assign </b-dropdown-item>
                   <div class="menu-width">
                     <b-dropdown-item
                       href="#"
@@ -106,9 +96,7 @@
       </div>
       <div class="col-xl-5 col-lg-12">
         <div class="row">
-          <div class="col-xl-4 col-lg-12 font-gen">
-            Error Status :
-          </div>
+          <div class="col-xl-4 col-lg-12 font-gen">Error Status :</div>
           <div class="col-xl-8 col-lg-12 font-detail">
             <b-form-select
               v-model="selected"
@@ -144,8 +132,34 @@
         </form>
         <hr />
         <div class="px-5">
-          <b-card
+          <!-- <b-card
             v-for="(item, index) in file"
+            :key="index"
+            class="my-3 shadow-sm"
+          >
+            <div class="d-flex justify-content-start">
+              <font-awesome-icon
+                :icon="['far', 'file-alt']"
+                class="icon-file mr-3"
+              />
+              <div class="w-100 mr-2">
+                <label class="font-gen m-0"> file name </label> <br />
+
+                <b-progress
+                  :value="uploadPercentage[index].value"
+                  variant=""
+                  class="progress-green rounded-pill"
+                ></b-progress>
+
+                <label class="font-detail m-0">
+                  2.5KB of 25KB
+                </label>
+              </div>
+              <label class="font-gen-green m-0 align-middle">{{ uploadPercentage[index].value }}%</label>
+            </div>
+          </b-card> -->
+          <b-card
+            v-for="(item, index) in fileDB"
             :key="index"
             class="my-3 shadow-sm"
           >
@@ -334,7 +348,7 @@
             {{ message.commentDetail }}
           </div>
           <div
-            class="d-flex justify-content-start ml-5 "
+            class="d-flex justify-content-start ml-5"
             v-if="message.userId === userLogin"
           >
             <a
@@ -409,41 +423,51 @@
 import { mapState } from "vuex";
 import Swal from "sweetalert2";
 import ErrorService from "@/services/api/error.service";
+import FileService from "@/services/api/file.service";
 import moment from "moment";
 import axios from "axios";
 export default {
-   methods: {
-     onFilePicked(event) {
-      var i = 0;
+  methods: {
+    onFilePicked(event) {
+      // var i = uploadPercentage.length;
       event.target.files.forEach((e) => {
-        this.uploadPercentage.push({value: 0 });
+        // this.uploadPercentage.push({ value: 0 });
         this.file.push(e);
-        this.submitFile(e, i);
-        i++;
+        this.submitFile(e);
+        // i++;
       });
+      
     },
-    submitFile(file, i) {
+    submitFile(file) {
       const formData = new FormData();
-      formData.append("files",file)
+      formData.append("files", file);
+      formData.append("errorId", this.indexError);
       console.log("files", formData);
-      axios
-        .post("https://localhost:5001/File/uploadFile", formData, {
-          headers: { "Content-Type": "multipart/form-data" },
-          onUploadProgress: function(progressEvent) {
-            console.log("total : ", parseInt(
-              Math.round((progressEvent.loaded / progressEvent.total) * 100)
-            ));
-            this.uploadPercentage[i].value = parseInt(
-              Math.round((progressEvent.loaded / progressEvent.total) * 100)
-            );
-          }.bind(this),
-        })
-        .then(function() {
-          console.log("SUCCESS!!");
-        })
-        .catch(function() {
-          console.log("FAILURE!!");
-        });
+      FileService.addFile(formData).then((result) => {
+        console.log("result", result);
+        this.getListFile(this.indexError)
+      });
+      // axios
+      //   .post("https://localhost:5001/File/uploadFile", formData, {
+      //     headers: { "Content-Type": "multipart/form-data" },
+      //     onUploadProgress: function (progressEvent) {
+      //       console.log(
+      //         "total : ",
+      //         parseInt(
+      //           Math.round((progressEvent.loaded / progressEvent.total) * 100)
+      //         )
+      //       );
+      //       this.uploadPercentage[i].value = parseInt(
+      //         Math.round((progressEvent.loaded / progressEvent.total) * 100)
+      //       );
+      //     }.bind(this),
+      //   })
+      //   .then(function () {
+      //     console.log("SUCCESS!!");
+      //   })
+      //   .catch(function () {
+      //     console.log("FAILURE!!");
+      //   });
     },
     getError(errId) {
       ErrorService.getErrorById(errId).then((result) => {
@@ -605,7 +629,7 @@ export default {
     },
 
     // ################################### file upload method ####################
-   
+
     del(index) {
       // delby index
       this.$refs["dropdownDel" + index][0].hide(true);
@@ -622,6 +646,19 @@ export default {
         }
       });
       return name;
+    },
+    getListFile(errorId){
+      
+      FileService.getListFile(errorId).then(result => {
+        this.fileDB = []
+        result.forEach(data => {
+          this.fileDB.push({
+            name: data.fileName,
+            size: data.fileSize,
+            id: data.fileId
+          })
+        })
+      })
     },
     addPickUsers() {
       console.log("userAssignment", this.errorDetail.userAssignment);
@@ -729,13 +766,14 @@ export default {
     getDateTimeForShow(strDateTime) {
       return moment(strDateTime).format("MM/DD/YYYY hh:mm");
     },
+    
   },
   props: {
     indexError: {
       type: [Number],
     },
   },
-  updated() {},
+  // updated() {this.getListFile(this.indexError)},
   name: "modal-task",
   data() {
     return {
@@ -743,6 +781,7 @@ export default {
       rename: "",
       uploadPercentage: [],
       file: [],
+      fileDB:[],
       errorDetail: {
         errorId: 0,
         errorDetail: "",
@@ -757,7 +796,6 @@ export default {
       commentInput: "",
     };
   },
- 
 
   computed: {
     filteredUsers() {
@@ -776,6 +814,7 @@ export default {
   mounted() {
     //call service get error by id
     this.getError(this.indexError);
+    this.getListFile(this.indexError)
     this.userLogin = localStorage.getItem("userId");
     // console.log('errorDetail (mounted): ',this.errorDetail);
 
@@ -785,7 +824,7 @@ export default {
 };
 </script>
 
-<style>
+<style lang="scss">
 .menu-width {
   width: 350px;
   max-height: 200px;
@@ -891,5 +930,10 @@ export default {
 }
 .comment-size-buttom {
   width: 100px;
+}
+.progress-green {
+  div {
+    background-color: #2fbc70 !important;
+  }
 }
 </style>
