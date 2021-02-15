@@ -847,7 +847,7 @@ export default {
 };
 </script>
 
-<style lang="scss">
+<style>
 .menu-width {
   width: 350px;
   max-height: 200px;
@@ -953,10 +953,5 @@ export default {
 }
 .comment-size-buttom {
   width: 100px;
-}
-.progress-green {
-  div {
-    background-color: #2fbc70 !important;
-  }
 }
 </style>

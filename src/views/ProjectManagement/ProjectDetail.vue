@@ -17,12 +17,12 @@
     <br />
     <br />
     <div class="card-list row" id="cardlist">
-      <div class="col-xl-6 col-md-12 ">
+      <div class="col-xl-6 col-md-12">
         <div class="row mb-3 mt-3">
           <div
             class="col-xl-4 col-md-3 font-gen text-right"
             :class="{ move: mobileView }"
-            style="font-weight: bold;"
+            style="font-weight: bold"
           >
             Project ID :
           </div>
@@ -163,6 +163,7 @@ export default {
       this.$store.dispatch("header/setAllLinkHeader", "Detail");
     }
     // console.log('id = ',this.$route.query.projectId);
+    this.getListUser()
     this.getDetail(this.$route.query.projectId);
   },
   mounted() {
@@ -174,7 +175,7 @@ export default {
       document.getElementById("cardlist").style.marginTop = "-3%";
 
       this.$store.dispatch("sidebar/setActiveNav", "monitor");
-    }else{
+    } else {
       this.$store.dispatch("sidebar/setActiveNav", "project");
     }
   },
@@ -200,37 +201,26 @@ export default {
   },
   computed: {
     items() {
-      // return this.dataArray.filter((row) => {
-      //   return row.Service_ID.includes(this.keyword)
-      // })
       return this.keyword
-        ? this.dataArray.filter(
-            (item) => {
-              const serviceId = item.Service_ID.toString().toLowerCase();
-              const serviceName = item.Service_Name.toString().toLowerCase();
+        ? this.dataArray.filter((item) => {
+            const serviceId = item.Service_ID.toString().toLowerCase();
+            const serviceName = item.Service_Name.toString().toLowerCase();
 
-              return serviceId.includes(this.keyword) ||
+            return (
+              serviceId.includes(this.keyword) ||
               serviceName.includes(this.keyword)
-            })
+            );
+          })
         : this.dataArray;
     },
-    // filteredRows() {
-    //   return this.dataArray.filter((row) => {
-    //     console.log(row)
-    //     const serviceId = row.Service_ID.toLowerCase();
-    //     const serviceName = row.Service_Name.toString().toLowerCase();
-    //     const searchTerm = this.keyword.toLowerCase();
-
-    //     return (
-    //       serviceId.includes(searchTerm) || serviceName.includes(searchTerm)
-    //     );
-    //   });
-    // }, 
     ...mapState({
       dataUser: (store) => store.user.users,
     }),
   },
   methods: {
+    async getListUser() {
+      await this.$store.dispatch("user/getUser");
+    },
     handleView() {
       this.mobileView = window.innerWidth <= 770;
     },
@@ -242,6 +232,7 @@ export default {
         this.Project_Name = result.projectName;
         result.userMaintenance.forEach((e) => {
           var user = this.dataUser.filter((data) => data.id === e.userId);
+          console.log("user : ", user);
           this.User_Maintenance.push({
             name: `${user[0].firstName} ${user[0].lastName}`,
           });
@@ -252,7 +243,6 @@ export default {
             name: `${user[0].firstName} ${user[0].lastName}`,
           });
         }); // this.dataArray.push()
-        
       });
       ServiceService.getListService(projectId).then((result) => {
         console.log("service", result);

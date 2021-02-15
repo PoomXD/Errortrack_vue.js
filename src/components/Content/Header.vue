@@ -105,9 +105,13 @@ import { mapState } from "vuex";
 
 export default {
   name: "component-header",
+  async created(){
+    await this.getListUser();
+    await this.getErrorStatus();
+  },
   mounted() {
-    this.getListUser();
-    this.getErrorStatus();
+    // this.getListUser();
+    // this.getErrorStatus();
   },
   data() {
     return {
@@ -155,8 +159,8 @@ export default {
         this.userName = user[0].firstName
       }
     },
-    getErrorStatus() {
-      this.$store.dispatch("errorStatus/getErrorStatus");
+    async getErrorStatus() {
+      await this.$store.dispatch("errorStatus/getErrorStatus");
     },
   },
 };
