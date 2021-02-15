@@ -205,7 +205,7 @@
                       <hr />
                       <b-form-input
                         :id="`input${item.id}`"
-                        @keydown.enter.prevent="update(item.id,this)"
+                        @keydown.enter.prevent="update(item.id)"
                       ></b-form-input>
                       <br />
                       <div class="row">
@@ -220,7 +220,7 @@
                         </div>
                         <div class="col">
                           <b-button
-                            @click="update(item.id, this)"
+                            @click="update(item.id)"
                             class="w-100 bt-green py-1"
                             >Update</b-button
                           >
@@ -638,7 +638,7 @@ export default {
       this.getListFile(this.indexError);
       this.$refs["dropdownDel" + index][0].hide(true);
     },
-    async update(index, e) {
+    async update(index) {
       console.log(document.getElementById("input" + index).value, index);
       let params = {
         fileId: index,
