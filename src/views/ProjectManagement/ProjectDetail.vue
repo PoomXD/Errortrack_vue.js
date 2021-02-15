@@ -126,7 +126,6 @@
         hover
         :items="items"
         :fields="fields"
-        :keyword="keyword"
       >
         <template v-slot:cell(Service_ID)="data">
           <router-link
@@ -201,14 +200,32 @@ export default {
   },
   computed: {
     items() {
+      // return this.dataArray.filter((row) => {
+      //   return row.Service_ID.includes(this.keyword)
+      // })
       return this.keyword
         ? this.dataArray.filter(
-            (item) =>
-              item.Service_ID.includes(this.keyword) ||
-              item.Service_Name.includes(this.keyword)
-          )
+            (item) => {
+              const serviceId = item.Service_ID.toString().toLowerCase();
+              const serviceName = item.Service_Name.toString().toLowerCase();
+
+              return serviceId.includes(this.keyword) ||
+              serviceName.includes(this.keyword)
+            })
         : this.dataArray;
     },
+    // filteredRows() {
+    //   return this.dataArray.filter((row) => {
+    //     console.log(row)
+    //     const serviceId = row.Service_ID.toLowerCase();
+    //     const serviceName = row.Service_Name.toString().toLowerCase();
+    //     const searchTerm = this.keyword.toLowerCase();
+
+    //     return (
+    //       serviceId.includes(searchTerm) || serviceName.includes(searchTerm)
+    //     );
+    //   });
+    // }, 
     ...mapState({
       dataUser: (store) => store.user.users,
     }),
@@ -235,6 +252,7 @@ export default {
             name: `${user[0].firstName} ${user[0].lastName}`,
           });
         }); // this.dataArray.push()
+        
       });
       ServiceService.getListService(projectId).then((result) => {
         console.log("service", result);
@@ -248,6 +266,7 @@ export default {
           });
           i++;
         });
+        console.log(this.dataArray);
       });
     },
   },
