@@ -479,7 +479,6 @@ export default {
       document.getElementById(index2).style.display = "block";
     },
     cancelEditComment(index, index2) {
-      document.getElementById(ind).value = str;
       document.getElementById(index).style.display = "block";
       document.getElementById(index2).style.display = "none";
     },
