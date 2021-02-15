@@ -311,7 +311,7 @@
             placeholder="Write a commet..."
           ></b-form-textarea>
           <div class="d-flex justify-content-end">
-            <b-button class="m-2 comment-size-buttom bt-cancel-grey"
+            <b-button class="m-2 comment-size-buttom bt-cancel-grey" @click="commentInput = ''"
               >Cancel</b-button
             >
             <b-button
@@ -439,18 +439,23 @@ export default {
   methods: {
     onFilePicked(event) {
       // var i = uploadPercentage.length;
+      const formData = new FormData();
       event.target.files.forEach((e) => {
         // this.uploadPercentage.push({ value: 0 });
         this.file.push(e);
-        this.submitFile(e);
+        // this.submitFile(e);
+        formData.append("Files", e);
         // i++;
       });
-    },
-    async submitFile(file) {
-      const formData = new FormData();
-      formData.append("files", file);
       formData.append("errorId", this.indexError);
       console.log("files", formData);
+      this.submitFile(formData);
+    },
+    async submitFile(formData) {
+      // const formData = new FormData();
+      // formData.append("files", file);
+      // formData.append("errorId", this.indexError);
+      
       await FileService.addFile(formData).then((result) => {
         console.log("result", result);
         this.getListFile(this.indexError);
