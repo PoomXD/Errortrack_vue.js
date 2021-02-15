@@ -3,9 +3,10 @@ const END_POINT = "/File";
 
 class FileService{
     async addFile(formData) {
+      console.log(formData)
         const config = {
           method: "post",
-          url: `${END_POINT}/addFiles`,
+          url: `${END_POINT}/addFilesList`,
           data: formData,
           headers: {
             "Content-Type": "multipart/form-data"
