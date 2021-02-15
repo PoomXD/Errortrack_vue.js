@@ -158,7 +158,11 @@
               <label class="font-gen-green m-0 align-middle">{{ uploadPercentage[index].value }}%</label>
             </div>
           </b-card> -->
-          <b-card v-for="item in fileDB" :key="item.id" class="my-3 shadow-sm">
+          <b-card
+            v-for="(item) in fileDB"
+            :key="item.id"
+            class="my-3 shadow-sm"
+          >
             <div class="d-flex justify-content-between">
               <div class="d-flex justify-content-start">
                 <font-awesome-icon
@@ -203,10 +207,7 @@
                     <div>
                       <label class="font-gen m-0">File Rename</label>
                       <hr />
-                      <b-form-input
-                        :id="`input${item.id}`"
-                        @keydown.enter.prevent="update(item.id)"
-                      ></b-form-input>
+                      <b-form-input :id="`input${item.id}`" @keydown.enter="update(item.id)"></b-form-input>
                       <br />
                       <div class="row">
                         <div class="col">
@@ -261,11 +262,7 @@
                           >
                         </div>
                         <div class="col">
-                          <b-button
-                            class="w-100 bt-red py-1"
-                            @click="del(item.id)"
-                            >Delete</b-button
-                          >
+                          <b-button class="w-100 bt-red py-1" @click="del(item.id)">Delete</b-button>
                         </div>
                       </div>
                     </div>
@@ -314,9 +311,7 @@
             placeholder="Write a commet..."
           ></b-form-textarea>
           <div class="d-flex justify-content-end">
-            <b-button
-              class="m-2 comment-size-buttom bt-cancel-grey"
-              @click="cancelComment()"
+            <b-button class="m-2 comment-size-buttom bt-cancel-grey"
               >Cancel</b-button
             >
             <b-button
@@ -402,10 +397,10 @@
               :id="`EditComment${message.commentId}`"
               no-resize
               class="border-0 textaera"
-              v-model="message.commentDetail"
             >
+            
             </b-form-textarea>
-
+            
             <div class="d-flex justify-content-end">
               <b-button
                 class="m-2 comment-size-buttom bt-cancel-grey"
@@ -442,26 +437,18 @@ export default {
   methods: {
     onFilePicked(event) {
       // var i = uploadPercentage.length;
-      // let listFile = []
-      const formData = new FormData();
       event.target.files.forEach((e) => {
         // this.uploadPercentage.push({ value: 0 });
         this.file.push(e);
-        // listFile.push(e)
-        // this.submitFile(e);
-        formData.append("Files", e);
+        this.submitFile(e);
         // i++;
       });
+    },
+    async submitFile(file) {
+      const formData = new FormData();
+      formData.append("files", file);
       formData.append("errorId", this.indexError);
       console.log("files", formData);
-      this.submitFile(formData);
-      // this.submitFile(listFile);
-    },
-    async submitFile(formData) {
-      // const formData = new FormData();
-      // formData.append("Files", file);
-      // formData.append("errorId", this.indexError);
-      // console.log("files", formData);
       await FileService.addFile(formData).then((result) => {
         console.log("result", result);
         this.getListFile(this.indexError);
@@ -492,6 +479,7 @@ export default {
       document.getElementById(index2).style.display = "block";
     },
     cancelEditComment(index, index2) {
+      document.getElementById(ind).value = str;
       document.getElementById(index).style.display = "block";
       document.getElementById(index2).style.display = "none";
     },
@@ -648,7 +636,6 @@ export default {
       this.getListFile(this.indexError);
       document.getElementById("input" + index).value = "";
       this.$refs["dropdownEdit" + index][0].hide(true);
-      
     },
     getNameUser(userId) {
       let name = "";
@@ -739,9 +726,6 @@ export default {
           });
         }
       });
-    },
-    cancelComment() {
-      this.commentInput = "";
     },
     editMyComment(ind) {
       console.log("comment id:", ind);
