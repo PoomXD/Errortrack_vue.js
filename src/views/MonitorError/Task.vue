@@ -186,8 +186,9 @@
             <b-modal
               :ref="`errorModal-${task.errId}`"
               :id="`modalPopover${task.errId}`"
-              title="Error Something"
+              :title="task.errDetail"
               size="xl"
+              class="font-gen"
               hide-footer
               @hidden="doSomethingOnHidden"
             >
