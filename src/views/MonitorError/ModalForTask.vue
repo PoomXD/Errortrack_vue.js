@@ -159,8 +159,8 @@
             </div>
           </b-card> -->
           <b-card
-            v-for="(item, index) in fileDB"
-            :key="index"
+            v-for="(item) in fileDB"
+            :key="item.id"
             class="my-3 shadow-sm"
           >
             <div class="d-flex justify-content-between">
@@ -195,7 +195,7 @@
                   class="dropdown-edit"
                   right
                   variant="link"
-                  :ref="`dropdownEdit${index}`"
+                  :ref="`dropdownEdit${item.id}`"
                   no-caret
                 >
                   <template #button-content>
@@ -207,19 +207,21 @@
                     <div>
                       <label class="font-gen m-0">File Rename</label>
                       <hr />
-                      <b-form-input :id="`input${index}`"></b-form-input>
+                      <b-form-input :id="`input${item.id}`"></b-form-input>
                       <br />
                       <div class="row">
                         <div class="col">
                           <b-button
                             class="w-100 bt-cancel-grey py-1"
-                            @click="$refs['dropdownEdit' + index][0].hide(true)"
+                            @click="
+                              $refs['dropdownEdit' + item.id][0].hide(true)
+                            "
                             >Cancel</b-button
                           >
                         </div>
                         <div class="col">
                           <b-button
-                            @click="update(index)"
+                            @click="update(item.id)"
                             class="w-100 bt-green py-1"
                             >Update</b-button
                           >
@@ -233,7 +235,7 @@
                   class="dropdown-del"
                   right
                   variant="link"
-                  :ref="`dropdownDel${index}`"
+                  :ref="`dropdownDel${item.id}`"
                   no-caret
                 >
                   <template #button-content>
@@ -253,12 +255,14 @@
                         <div class="col">
                           <b-button
                             class="w-100 bt-cancel-grey py-1"
-                            @click="$refs['dropdownDel' + index][0].hide(true)"
+                            @click="
+                              $refs['dropdownDel' + item.id][0].hide(true)
+                            "
                             >Cancel</b-button
                           >
                         </div>
                         <div class="col">
-                          <b-button class="w-100 bt-red py-1">Delete</b-button>
+                          <b-button class="w-100 bt-red py-1" @click="del(item.id)">Delete</b-button>
                         </div>
                       </div>
                     </div>
@@ -424,7 +428,7 @@ import { mapState } from "vuex";
 import Swal from "sweetalert2";
 import ErrorService from "@/services/api/error.service";
 import FileService from "@/services/api/file.service";
-import ProjectService from '@/services/api/project.service';
+import ProjectService from "@/services/api/project.service";
 import moment from "moment";
 import axios from "axios";
 export default {
@@ -437,16 +441,15 @@ export default {
         this.submitFile(e);
         // i++;
       });
-      
     },
-    submitFile(file) {
+    async submitFile(file) {
       const formData = new FormData();
       formData.append("files", file);
       formData.append("errorId", this.indexError);
       console.log("files", formData);
-      FileService.addFile(formData).then((result) => {
+      await FileService.addFile(formData).then((result) => {
         console.log("result", result);
-        this.getListFile(this.indexError)
+        this.getListFile(this.indexError);
       });
       // axios
       //   .post("https://localhost:5001/File/uploadFile", formData, {
@@ -631,11 +634,24 @@ export default {
 
     // ################################### file upload method ####################
 
-    del(index) {
+    async del(index) {
       // delby index
+      console.log(index);
+      let param = {
+        fileId: index,
+      };
+      await FileService.deleteFile(param);
+      this.getListFile(this.indexError);
       this.$refs["dropdownDel" + index][0].hide(true);
     },
-    update(index) {
+    async update(index) {
+      console.log(document.getElementById("input" + index).value, index);
+      let params = {
+        fileId: index,
+        fileName: document.getElementById("input" + index).value,
+      };
+      await FileService.renameFile(params);
+      this.getListFile(this.indexError);
       document.getElementById("input" + index).value = "";
       this.$refs["dropdownEdit" + index][0].hide(true);
     },
@@ -648,34 +664,33 @@ export default {
       });
       return name;
     },
-    getListFile(errorId){
-      
-      FileService.getListFile(errorId).then(result => {
-        this.fileDB = []
-        result.forEach(data => {
+    getListFile(errorId) {
+      FileService.getListFile(errorId).then((result) => {
+        this.fileDB = [];
+        result.forEach((data) => {
           this.fileDB.push({
             name: data.fileName,
             size: data.fileSize,
-            id: data.fileId
-          })
-        })
-      })
+            id: data.fileId,
+          });
+        });
+      });
     },
     addPickUsers() {
       this.users = [];
-      ProjectService.getProject(this.projectId).then(result => {
+      ProjectService.getProject(this.projectId).then((result) => {
         result.userOwner.forEach((user) => {
           // console.log(user)
           this.users.push(user);
-        })
+        });
         result.userMaintenance.forEach((user) => {
           // console.log(user)
           this.users.push(user);
-        })
+        });
 
         this.dataUser.forEach((user) => {
-          this.users.forEach(us => {
-            if(user.id === us.userId){
+          this.users.forEach((us) => {
+            if (user.id === us.userId) {
               let text = "";
               if (user.firstName != "" && user.lastName != "") {
                 text = `${user.firstName[0]}${user.lastName[0]}`;
@@ -693,7 +708,6 @@ export default {
               this.pickUsers.push(addToPick);
             }
           });
-          
         });
         console.log("pickUsers : ", this.pickUsers);
 
@@ -704,8 +718,7 @@ export default {
             }
           });
         });
-
-      })
+      });
     },
     updateUserAndStatus(upParam) {
       return ErrorService.updateUsersAndErrorStatus(upParam);
@@ -783,7 +796,6 @@ export default {
     getDateTimeForShow(strDateTime) {
       return moment(strDateTime).format("MM/DD/YYYY hh:mm");
     },
-    
   },
   props: {
     indexError: {
@@ -791,7 +803,7 @@ export default {
     },
     projectId: {
       type: [Number],
-    }
+    },
   },
   // updated() {this.getListFile(this.indexError)},
   name: "modal-task",
@@ -801,7 +813,7 @@ export default {
       rename: "",
       uploadPercentage: [],
       file: [],
-      fileDB:[],
+      fileDB: [],
       errorDetail: {
         errorId: 0,
         errorDetail: "",
@@ -834,7 +846,7 @@ export default {
   mounted() {
     //call service get error by id
     this.getError(this.indexError);
-    this.getListFile(this.indexError)
+    this.getListFile(this.indexError);
     this.userLogin = localStorage.getItem("userId");
     // console.log('errorDetail (mounted): ',this.errorDetail);
 

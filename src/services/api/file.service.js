@@ -3,7 +3,6 @@ const END_POINT = "/File";
 
 class FileService{
     async addFile(formData) {
-        console.log("in api");
         const config = {
           method: "post",
           url: `${END_POINT}/addFiles`,
@@ -40,6 +39,32 @@ class FileService{
           },
         };
         const response = await httpClient(config);
+        return response.data;
+      }
+      async renameFile(param) {
+        const config = {
+          method: "put",
+          url: `${END_POINT}/rename`,
+          data: param,
+          headers: {
+            "content-type": "application/json",
+          },
+        };
+        const response = await httpClient(config);
+        // console.log(response.data)
+        return response.data;
+      }
+      async deleteFile(param) {
+        const config = {
+          method: "put",
+          url: `${END_POINT}/delete`,
+          data: param,
+          headers: {
+            "content-type": "application/json",
+          },
+        };
+        const response = await httpClient(config);
+        // console.log(response.data)
         return response.data;
       }
 }
