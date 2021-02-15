@@ -372,7 +372,7 @@
             >
               Delete
             </a>
-          </div>
+          </div> 
         </div>
         <!-- Edit comment -->
         <div
