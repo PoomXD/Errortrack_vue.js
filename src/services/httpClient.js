@@ -6,7 +6,8 @@ import { interceptorResponse, interceptorResponseError } from './interceptors/re
 const headers = {
   // 'Access-Control-Allow-Origin': '*',
   "api-version": null,
-  "header-version" : '1.0.0'
+  "header-version" : '1.0.0',
+  Authorization: `Bearer ${localStorage.getItem('access_token')}`,
 };
 
 const httpClient = axios.create({
