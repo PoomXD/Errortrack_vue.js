@@ -207,7 +207,7 @@
                     <div>
                       <label class="font-gen m-0">File Rename</label>
                       <hr />
-                      <b-form-input :id="`input${item.id}`" @keydown.enter="update(item.id)"></b-form-input>
+                      <b-form-input :id="`input${item.id}`" @keydown.enter.prevent="update(item.id)"></b-form-input>
                       <br />
                       <div class="row">
                         <div class="col">
