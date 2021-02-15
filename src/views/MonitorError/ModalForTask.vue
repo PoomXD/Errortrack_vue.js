@@ -359,6 +359,7 @@
               class="fontColor-comment mr-4 cursor-pointer font-detail"
               @click="
                 editComment(
+                  message.commentDetail,
                   `comment${message.commentId}`,
                   `editComment${message.commentId}`
                 )
@@ -397,6 +398,7 @@
               :id="`EditComment${message.commentId}`"
               no-resize
               class="border-0 textaera"
+              v-model="commentEdit"
             >
             
             </b-form-textarea>
@@ -474,7 +476,10 @@ export default {
         this.addPickUsers();
       });
     },
-    editComment(index, index2) {
+    editComment(str, index, index2) {
+      console.log(str);
+      this.commentEdit = str;
+      console.log(this.commentEdit);
       document.getElementById(index).style.display = "none";
       document.getElementById(index2).style.display = "block";
     },
@@ -806,6 +811,7 @@ export default {
       filterText: "",
       userLogin: null,
       commentInput: "",
+      commentEdit: ""
     };
   },
 
