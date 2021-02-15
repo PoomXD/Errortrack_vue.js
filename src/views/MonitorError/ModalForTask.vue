@@ -397,8 +397,10 @@
               :id="`EditComment${message.commentId}`"
               no-resize
               class="border-0 textaera"
-              placeholder="Write a commet..."
-            ></b-form-textarea>
+              v-model="message.commentDetail"
+            >
+            </b-form-textarea>
+            
             <div class="d-flex justify-content-end">
               <b-button
                 class="m-2 comment-size-buttom bt-cancel-grey"
@@ -451,27 +453,6 @@ export default {
         console.log("result", result);
         this.getListFile(this.indexError);
       });
-      // axios
-      //   .post("https://localhost:5001/File/uploadFile", formData, {
-      //     headers: { "Content-Type": "multipart/form-data" },
-      //     onUploadProgress: function (progressEvent) {
-      //       console.log(
-      //         "total : ",
-      //         parseInt(
-      //           Math.round((progressEvent.loaded / progressEvent.total) * 100)
-      //         )
-      //       );
-      //       this.uploadPercentage[i].value = parseInt(
-      //         Math.round((progressEvent.loaded / progressEvent.total) * 100)
-      //       );
-      //     }.bind(this),
-      //   })
-      //   .then(function () {
-      //     console.log("SUCCESS!!");
-      //   })
-      //   .catch(function () {
-      //     console.log("FAILURE!!");
-      //   });
     },
     getError(errId) {
       ErrorService.getErrorById(errId).then((result) => {
@@ -770,10 +751,10 @@ export default {
     },
     delComment(commentId) {
       Swal.fire({
-        title: "Edit Status",
-        text: "Do you want to change this error status?",
+        title: "Delete Comment",
+        text: "Do you want to delete this comment?",
         icon: "warning",
-        confirmButtonText: "OK",
+        confirmButtonText: "Yes",
         showCancelButton: true,
       }).then((result) => {
         if (result.isConfirmed) {
@@ -805,7 +786,6 @@ export default {
       type: [Number],
     },
   },
-  // updated() {this.getListFile(this.indexError)},
   name: "modal-task",
   data() {
     return {

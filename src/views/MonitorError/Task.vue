@@ -188,6 +188,7 @@
               :id="`modalPopover${task.errId}`"
               title="Error Something"
               size="xl"
+              hide-footer
               @hidden="doSomethingOnHidden"
             >
               <ModalForTask :indexError="task.errId" :projectId="projectId"></ModalForTask>
