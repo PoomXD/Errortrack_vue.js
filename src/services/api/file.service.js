@@ -1,4 +1,5 @@
 import httpClient from "../httpClient";
+import AccountService from "./account.service";
 const END_POINT = "/File";
 
 class FileService{
@@ -25,7 +26,18 @@ class FileService{
         };
     
         const response = await httpClient(config);
-        return response.data;
+
+        if (response.status === 200) {
+          return response.data;
+        } else if (response.request.status === 401) {
+          let data = await AccountService.refreshToken();
+          console.log("data", data.status);
+          if (data.status === 200) {
+            return this.addFile(formData);
+          }else{
+            location.replace('http://localhost:8080/login')
+          }
+        }
       }
       async getListFile(errorId) {
         // console.log(userId);
@@ -40,7 +52,17 @@ class FileService{
           },
         };
         const response = await httpClient(config);
-        return response.data;
+        if (response.status === 200) {
+          return response.data;
+        } else if (response.request.status === 401) {
+          let data = await AccountService.refreshToken();
+          console.log("data", data.status);
+          if (data.status === 200) {
+            return this.getListFile(errorId);
+          }else{
+            location.replace('http://localhost:8080/login')
+          }
+        }
       }
       async renameFile(param) {
         const config = {
@@ -53,7 +75,17 @@ class FileService{
         };
         const response = await httpClient(config);
         // console.log(response.data)
-        return response.data;
+        if (response.status === 200) {
+          return response.data;
+        } else if (response.request.status === 401) {
+          let data = await AccountService.refreshToken();
+          console.log("data", data.status);
+          if (data.status === 200) {
+            return this.renameFile(param);
+          }else{
+            location.replace('http://localhost:8080/login')
+          }
+        }
       }
       async deleteFile(param) {
         const config = {
@@ -66,7 +98,17 @@ class FileService{
         };
         const response = await httpClient(config);
         // console.log(response.data)
-        return response.data;
+        if (response.status === 200) {
+          return response.data;
+        } else if (response.request.status === 401) {
+          let data = await AccountService.refreshToken();
+          console.log("data", data.status);
+          if (data.status === 200) {
+            return this.deleteFile(param);
+          }else{
+            location.replace('http://localhost:8080/login')
+          }
+        }
       }
 }
 

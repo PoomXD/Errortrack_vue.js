@@ -191,7 +191,7 @@ export default {
         // this.projects = result;
 
       }).catch(err => {
-
+        console.log('error : ', err)
       });
     }
   },

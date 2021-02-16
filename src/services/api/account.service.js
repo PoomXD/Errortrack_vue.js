@@ -101,7 +101,7 @@ class AccountService {
         TokenService.saveRefreshToken(refreshToken);
       }
     }
-    return response.data;
+    return response;
   }
 
   async changepassword(param) {
