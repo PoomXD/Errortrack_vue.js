@@ -87,8 +87,8 @@
                 href="#"
                 >{{ userName }}</b-dropdown-item
               >
-              <b-dropdown-item>
-                <a class="h-100 w-100" @click="clickLogOut()">Log Out</a>
+              <b-dropdown-item @click="clickLogOut()">
+                <span class="h-100 w-100">Log Out</span>
               </b-dropdown-item>
             </b-dropdown>
           </div>

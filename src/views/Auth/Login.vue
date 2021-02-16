@@ -54,7 +54,6 @@
               </tr>
             </table>
           </b-button>
-          <p class="mt-3 mb-5 forgot-font">Forgot password?</p>
         </div>
       </div>
     </div>
