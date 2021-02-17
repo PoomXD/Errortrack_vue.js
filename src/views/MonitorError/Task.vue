@@ -228,7 +228,6 @@ export default {
   methods: {
     getService(servId) {
       ServiceService.getService(servId).then((result) => {
-        console.log("service : ", result);
         this.serviceDetail.serviceId = result.serviceId;
         this.serviceDetail.serviceName = result.serviceName;
 
@@ -236,7 +235,6 @@ export default {
         this.$store.dispatch("header/setQueryLinkHeader", `Task ${this.projectId}`);
         
         ProjectService.getProject(result.projectId).then((res) => {
-          console.log("project get by Id : ", res);
           this.serviceDetail.projectName = res.projectName;
           this.serviceDetail.projectOwner = res.userOwner;
           this.serviceDetail.userMainten = res.userMaintenance;
@@ -255,7 +253,6 @@ export default {
     },
     getListError(serviceId) {
       ErrorService.getListError(serviceId).then((result) => {
-        console.log("error list : ", result);
         result.forEach((res) => {
           let err = {
             errId: res.errorId,
@@ -265,7 +262,6 @@ export default {
           };
           this.listError.push(err);
         });
-        console.log("listError : ", this.listError);
       });
     },
     setOptions() {
@@ -273,7 +269,6 @@ export default {
       this.selected = [];
 
       ErrorStatusService.getListErrorStatus().then((res) => {
-        console.log("response: ", res);
         res.forEach((re) => {
           let errStatus = {
             value: re.errorStatusName,
@@ -283,11 +278,9 @@ export default {
           this.selected.push(re.errorStatusName);
         });
       });
-      console.log("option : ", this.options);
-      console.log("selected : ", this.selected);
+  
     },
     doSomethingOnHidden() {
-      console.log("testtttttttttttttttttttttttttttttttttttttttttttttt");
       this.listError = [];
       this.getService(this.$route.query.serviceId);
     },
@@ -296,12 +289,7 @@ export default {
   created() {},
   mounted() {
     this.getService(this.$route.query.serviceId);
-    // this.$store.dispatch("header/setQueryLinkHeader", `Task ${this.projectId}`);
-    // this.getService(4);
-    // console.log('status : ',this.status);
     this.setOptions();
-    // console.log("options mounted: ", this.options);
-    // console.log("test mounted when refresh");
     this.$store.dispatch("sidebar/setActiveNav", "monitor");
   },
   data() {

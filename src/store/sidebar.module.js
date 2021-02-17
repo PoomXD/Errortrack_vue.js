@@ -5,8 +5,6 @@ const state = {
 
 const actions = {
     setActiveNav({ commit }, str) {
-        console.log('Nav Active : ', str);
-
         commit('SET_ACTIVE', str);
 
     }
@@ -21,8 +19,7 @@ const mutations = {
             state.sidebarProject = false;
             state.sidebarMonitor = true;
         }
-        console.log('project = ', state.sidebarProject);
-        console.log('monitor = ', state.sidebarMonitor);
+
     }
 }
 
