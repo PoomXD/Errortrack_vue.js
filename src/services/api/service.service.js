@@ -16,44 +16,24 @@ class ServiceService {
       },
     };
     const response = await httpClient(config);
-    
-    if (response.status === 200) {
-      return response.data;
-    } else if (response.request.status === 401) {
-      let data = await AccountService.refreshToken();
-      console.log("data", data.status);
-      if (data.status === 200) {
-        return this.getListService(projectId);
-      }else{
-        location.replace('http://localhost:8080/login')
-      }
-    }
+
+    return response.data;
   }
 
   async getService(serviceId) {
     const config = {
-        method: "get",
-        url: `${END_POINT}/getService`,
-        params: {
-            serviceId: serviceId,
-        },
-        headers: {
-          "content-type": "application/json",
-        },
-      };
-      const response = await httpClient(config);
+      method: "get",
+      url: `${END_POINT}/getService`,
+      params: {
+        serviceId: serviceId,
+      },
+      headers: {
+        "content-type": "application/json",
+      },
+    };
+    const response = await httpClient(config);
 
-      if (response.status === 200) {
-        return response.data;
-      } else if (response.request.status === 401) {
-        let data = await AccountService.refreshToken();
-        console.log("data", data.status);
-        if (data.status === 200) {
-          return this.getService(serviceId);
-        }else{
-          location.replace('http://localhost:8080/login')
-        }
-      }
+    return response.data;
   }
 }
 

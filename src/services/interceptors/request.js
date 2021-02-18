@@ -10,5 +10,6 @@ export const interceptorRequest = (request) => {
 }
 
 export const interceptorRequestError = (error) => {
+  console.log('request error')
   return Promise.reject(error)
 }

@@ -1,5 +1,4 @@
 import httpClient from "../httpClient";
-import AccountService from "./account.service";
 
 const END_POINT = "/Project";
 
@@ -17,17 +16,7 @@ class ProjectService {
 
     const response = await httpClient(config);
 
-    if (response.status === 200) {
-      return response.data;
-    } else if (response.request.status === 401) {
-      let data = await AccountService.refreshToken();
-      console.log("data", data.status);
-      if (data.status === 200) {
-        return this.addProject(param);
-      }else{
-        location.replace('http://localhost:8080/login')
-      }
-    }
+    return response.data;
   }
   async getListProject(userId) {
     const config = {
@@ -41,17 +30,7 @@ class ProjectService {
       },
     };
     const response = await httpClient(config);
-    if (response.status === 200) {
-      return response.data;
-    } else if (response.request.status === 401) {
-      let data = await AccountService.refreshToken();
-      console.log("data", data.status);
-      if (data.status === 200) {
-        return this.getListProject(userId);
-      }else{
-        location.replace('http://localhost:8080/login')
-      }
-    }
+    return response.data;
   }
   async getListProjectByOwner(userId) {
     // console.log(userId);
@@ -66,18 +45,7 @@ class ProjectService {
       },
     };
     const response = await httpClient(config);
-    
-    if (response.status === 200) {
-      return response.data;
-    } else if (response.request.status === 401) {
-      let data = await AccountService.refreshToken();
-      console.log("data", data.status);
-      if (data.status === 200) {
-        return this.getListProjectByOwner(userId);
-      }else{
-        location.replace('http://localhost:8080/login')
-      }
-    }
+    return response.data;
   }
   async getProject(projectId) {
     // console.log(projectId);
@@ -93,17 +61,7 @@ class ProjectService {
     };
     const response = await httpClient(config);
 
-    if (response.status === 200) {
-      return response.data;
-    } else if (response.request.status === 401) {
-      let data = await AccountService.refreshToken();
-      console.log("data", data.status);
-      if (data.status === 200) {
-        return this.getProject(projectId);
-      }else{
-        location.replace('http://localhost:8080/login')
-      }
-    }
+    return response.data;
   }
   async updateProject(param) {
     console.log("update api", param);
@@ -117,18 +75,8 @@ class ProjectService {
     };
     console.log("update api", config);
     const response = await httpClient(config);
-    
-    if (response.status === 200) {
-      return response.data;
-    } else if (response.request.status === 401) {
-      let data = await AccountService.refreshToken();
-      console.log("data", data.status);
-      if (data.status === 200) {
-        return this.updateProject(param);
-      }else{
-        location.replace('http://localhost:8080/login')
-      }
-    }
+
+    return response.data;
   }
 }
 

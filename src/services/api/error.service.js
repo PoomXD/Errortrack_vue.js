@@ -17,42 +17,23 @@ class ErrorService {
     };
     const response = await httpClient(config);
 
-    if (response.status === 200) {
-      return response.data;
-    } else if (response.request.status === 401) {
-      let data = await AccountService.refreshToken();
-      console.log("data", data.status);
-      if (data.status === 200) {
-        return this.getListError(serviceId);
-      }else{
-        location.replace('http://localhost:8080/login')
-      }
-    }
+    return response.data;
   }
 
-  async getErrorById(errorId){
+  async getErrorById(errorId) {
     const config = {
-        method: "get",
-        url: `${END_POINT}/getError`,
-        params: {
-            errorId: errorId,
-        },
-        headers: {
-          "content-type": "application/json",
-        },
-      };
-      const response = await httpClient(config);
-      if (response.status === 200) {
-        return response.data;
-      } else if (response.request.status === 401) {
-        let data = await AccountService.refreshToken();
-        console.log("data", data.status);
-        if (data.status === 200) {
-          return this.getErrorById(errorId);
-        }else{
-          location.replace('http://localhost:8080/login')
-        }
-      }
+      method: "get",
+      url: `${END_POINT}/getError`,
+      params: {
+        errorId: errorId,
+      },
+      headers: {
+        "content-type": "application/json",
+      },
+    };
+    const response = await httpClient(config);
+
+    return response.data;
   }
   async updateUsersAndErrorStatus(param) {
     console.log("update users");
@@ -66,17 +47,8 @@ class ErrorService {
     };
 
     const response = await httpClient(config);
-    if (response.status === 200) {
-      return response.data;
-    } else if (response.request.status === 401) {
-      let data = await AccountService.refreshToken();
-      console.log("data", data.status);
-      if (data.status === 200) {
-        return this.updateUsersAndErrorStatus(param);
-      }else{
-        location.replace('http://localhost:8080/login')
-      }
-    }
+
+    return response.data;
   }
   async addNewComment(param) {
     console.log("update Comment");
@@ -90,20 +62,11 @@ class ErrorService {
     };
 
     const response = await httpClient(config);
-    if (response.status === 200) {
-      return response.data;
-    } else if (response.request.status === 401) {
-      let data = await AccountService.refreshToken();
-      console.log("data", data.status);
-      if (data.status === 200) {
-        return this.addNewComment(param);
-      }else{
-        location.replace('http://localhost:8080/login')
-      }
-    }
+
+    return response.data;
   }
 
-  async getComment(errorId){
+  async getComment(errorId) {
     const config = {
       method: "get",
       url: `${END_POINT}/getComment`,
@@ -115,17 +78,8 @@ class ErrorService {
       },
     };
     const response = await httpClient(config);
-    if (response.status === 200) {
-      return response.data;
-    } else if (response.request.status === 401) {
-      let data = await AccountService.refreshToken();
-      console.log("data", data.status);
-      if (data.status === 200) {
-        return this.getComment(errorId);
-      }else{
-        location.replace('http://localhost:8080/login')
-      }
-    }
+
+    return response.data;
   }
 
   async editComment(param) {
@@ -140,17 +94,8 @@ class ErrorService {
     };
 
     const response = await httpClient(config);
-    if (response.status === 200) {
-      return response.data;
-    } else if (response.request.status === 401) {
-      let data = await AccountService.refreshToken();
-      console.log("data", data.status);
-      if (data.status === 200) {
-        return this.editComment(param);
-      }else{
-        location.replace('http://localhost:8080/login')
-      }
-    }
+
+    return response.data;
   }
 
   async deleteComment(param) {
@@ -165,17 +110,8 @@ class ErrorService {
     };
 
     const response = await httpClient(config);
-    if (response.status === 200) {
-      return response.data;
-    } else if (response.request.status === 401) {
-      let data = await AccountService.refreshToken();
-      console.log("data", data.status);
-      if (data.status === 200) {
-        return this.deleteComment(param);
-      }else{
-        location.replace('http://localhost:8080/login')
-      }
-    }
+
+    return response.data;
   }
 }
 
