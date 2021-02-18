@@ -158,14 +158,16 @@
                 </div>
               </div>
               <div class="d-flex justify-content-end">
-                <div class="text-center bt-download">
-                  <font-awesome-icon
-                    :icon="['fas', 'download']"
-                    class="icon-size-18"
-                  />
-                  <br />
-                  Download
-                </div>
+                
+                  <div class="text-center bt-download" @click="NewTab(item.path)">
+                    <font-awesome-icon
+                      :icon="['fas', 'download']"
+                      class="icon-size-18"
+                    />
+                    <br />
+                    Download
+                  </div>
+                
 
                 <b-dropdown
                   class="dropdown-edit"
@@ -421,6 +423,9 @@ import moment from "moment";
 import axios from "axios";
 export default {
   methods: {
+    NewTab(path) {
+      window.open("https://localhost:5001/file/"+path, "_blank");
+    },
     onFilePicked(event) {
       const formData = new FormData();
       var typecheck = true;
@@ -486,7 +491,6 @@ export default {
       let text = "";
       this.dataUser.forEach((user) => {
         if (user.id === id) {
-         
           if (user.firstName != "" && user.lastName != "") {
             text = `${user.firstName[0]}${user.lastName[0]}`;
           } else if (user.firstName != "" && user.lastName == "") {
@@ -510,7 +514,6 @@ export default {
             let res = this.errorDetail.userAssignment;
 
             res = res.filter((data) => data.userId !== id);
-           
 
             //=================== call service ===================
             let updateParam = {
@@ -520,7 +523,6 @@ export default {
             };
 
             this.updateUserAndStatus(updateParam).then((re) => {
-            
               if (re.status) {
                 this.errorDetail.userAssignment = res;
               }
@@ -530,7 +532,7 @@ export default {
             let addUser = {
               userId: p.userId,
             };
-         
+
             let addNewUser = this.errorDetail.userAssignment;
             addNewUser.push(addUser);
 
@@ -542,7 +544,6 @@ export default {
             };
 
             this.updateUserAndStatus(updateParam).then((re) => {
-            
               if (re.status) {
                 this.errorDetail.userAssignment = addNewUser;
               }
@@ -560,7 +561,7 @@ export default {
           let res = this.errorDetail.userAssignment;
 
           res = res.filter((data) => data.userId !== id);
-      
+
           this.errorDetail.userAssignment = res;
 
           //=================== call service ===================
@@ -571,7 +572,6 @@ export default {
           };
 
           this.updateUserAndStatus(updateParam).then((re) => {
-     
             if (re.status) {
               this.errorDetail.userAssignment = res;
             }
@@ -601,7 +601,6 @@ export default {
         showCancelButton: true,
       }).then((result) => {
         if (result.isConfirmed) {
-    
           let updateParam = {
             errorId: this.errorDetail.errorId,
             userAssigns: this.errorDetail.userAssignment,
@@ -657,6 +656,7 @@ export default {
             name: data.fileName,
             size: data.fileSize,
             id: data.fileId,
+            path: data.fileRename
           });
         });
       });
@@ -822,7 +822,6 @@ export default {
     this.getError(this.indexError);
     this.getListFile(this.indexError);
     this.userLogin = localStorage.getItem("userId");
-
   },
 };
 </script>
