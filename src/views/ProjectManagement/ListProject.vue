@@ -146,7 +146,7 @@ export default {
       let text = "";
       this.dataUser.forEach((user) => {
         if (user.id === id) {
-          // console.log(user)
+
           if (user.firstName != "" && user.lastName != "" && user.lastName != null) {
             text = `${user.firstName[0]}${user.lastName[0]}`;
           } else if (user.firstName != "" && (user.lastName == '' || user.lastName == null)) {
@@ -160,7 +160,7 @@ export default {
     },
     async getListProject(userID){
       await ProjectService.getListProjectByOwner(userID).then(result => {
-        console.log('result',result)
+  
         result.forEach(data => {
           var projectUser = []
           data.userOwner.forEach(owner => {

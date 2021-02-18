@@ -146,7 +146,6 @@ export default {
       let text = "";
       this.dataUser.forEach((user) => {
         if (user.id === id) {
-          // console.log(user)
           if (user.firstName != "" && user.lastName != "") {
             text = `${user.firstName[0]}${user.lastName[0]}`;
           } else if (user.firstName != "" && user.lastName == "") {
@@ -160,7 +159,6 @@ export default {
     },
     getListProject(userID){
       ProjectService.getListProject(userID).then(result => {
-        console.log('result',result)
         result.forEach(data => {
           var projectUser = []
           data.userOwner.forEach(owner => {

@@ -127,42 +127,19 @@
             multiple
             type="file"
             ref="fileInput"
+            accept="image/png,
+             image/jpeg,
+              image/jpg,
+               text/plain,
+                application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,
+                 application/msword,
+                  application/vnd.openxmlformats-officedocument.wordprocessingml.document"
             @change="onFilePicked"
           />
         </form>
         <hr />
         <div class="px-5">
-          <!-- <b-card
-            v-for="(item, index) in file"
-            :key="index"
-            class="my-3 shadow-sm"
-          >
-            <div class="d-flex justify-content-start">
-              <font-awesome-icon
-                :icon="['far', 'file-alt']"
-                class="icon-file mr-3"
-              />
-              <div class="w-100 mr-2">
-                <label class="font-gen m-0"> file name </label> <br />
-
-                <b-progress
-                  :value="uploadPercentage[index].value"
-                  variant=""
-                  class="progress-green rounded-pill"
-                ></b-progress>
-
-                <label class="font-detail m-0">
-                  2.5KB of 25KB
-                </label>
-              </div>
-              <label class="font-gen-green m-0 align-middle">{{ uploadPercentage[index].value }}%</label>
-            </div>
-          </b-card> -->
-          <b-card
-            v-for="(item) in fileDB"
-            :key="item.id"
-            class="my-3 shadow-sm"
-          >
+          <b-card v-for="item in fileDB" :key="item.id" class="my-3 shadow-sm">
             <div class="d-flex justify-content-between">
               <div class="d-flex justify-content-start">
                 <font-awesome-icon
@@ -171,7 +148,6 @@
                 />
                 <div class="">
                   <label class="font-gen m-0"> {{ item.name }} </label> <br />
-                  <!-- <b-progress :value="uploadPercentage[index].value" show-progress animated></b-progress> -->
                   <label class="font-detail m-0">
                     {{
                       item.size / 1024 >= 1024
@@ -182,14 +158,16 @@
                 </div>
               </div>
               <div class="d-flex justify-content-end">
-                <div class="text-center bt-download">
-                  <font-awesome-icon
-                    :icon="['fas', 'download']"
-                    class="icon-size-18"
-                  />
-                  <br />
-                  Download
-                </div>
+                
+                  <div class="text-center bt-download" @click="NewTab(item.path)">
+                    <font-awesome-icon
+                      :icon="['fas', 'download']"
+                      class="icon-size-18"
+                    />
+                    <br />
+                    Download
+                  </div>
+                
 
                 <b-dropdown
                   class="dropdown-edit"
@@ -207,7 +185,10 @@
                     <div>
                       <label class="font-gen m-0">File Rename</label>
                       <hr />
-                      <b-form-input :id="`input${item.id}`" @keydown.enter.prevent="update(item.id)"></b-form-input>
+                      <b-form-input
+                        :id="`input${item.id}`"
+                        @keydown.enter.prevent="update(item.id)"
+                      ></b-form-input>
                       <br />
                       <div class="row">
                         <div class="col">
@@ -262,7 +243,11 @@
                           >
                         </div>
                         <div class="col">
-                          <b-button class="w-100 bt-red py-1" @click="del(item.id)">Delete</b-button>
+                          <b-button
+                            class="w-100 bt-red py-1"
+                            @click="del(item.id)"
+                            >Delete</b-button
+                          >
                         </div>
                       </div>
                     </div>
@@ -311,7 +296,9 @@
             placeholder="Write a commet..."
           ></b-form-textarea>
           <div class="d-flex justify-content-end">
-            <b-button class="m-2 comment-size-buttom bt-cancel-grey" @click="commentInput = ''"
+            <b-button
+              class="m-2 comment-size-buttom bt-cancel-grey"
+              @click="commentInput = ''"
               >Cancel</b-button
             >
             <b-button
@@ -373,7 +360,7 @@
             >
               Delete
             </a>
-          </div> 
+          </div>
         </div>
         <!-- Edit comment -->
         <div
@@ -400,9 +387,8 @@
               class="border-0 textaera"
               v-model="commentEdit"
             >
-            
             </b-form-textarea>
-            
+
             <div class="d-flex justify-content-end">
               <b-button
                 class="m-2 comment-size-buttom bt-cancel-grey"
@@ -437,27 +423,38 @@ import moment from "moment";
 import axios from "axios";
 export default {
   methods: {
+    NewTab(path) {
+      window.open("https://localhost:5001/file/"+path, "_blank");
+    },
     onFilePicked(event) {
-      // var i = uploadPercentage.length;
       const formData = new FormData();
+      var typecheck = true;
+      var type = [
+        "image/png",
+        "image/jpeg",
+        "image/jpg",
+        "text/plain",
+        "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+        "application/msword",
+        "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+      ];
       event.target.files.forEach((e) => {
-        // this.uploadPercentage.push({ value: 0 });
+        if (!type.includes(e.type)) {
+          typecheck = false;
+        }
+
         this.file.push(e);
-        // this.submitFile(e);
         formData.append("Files", e);
-        // i++;
       });
-      formData.append("errorId", this.indexError);
-      console.log("files", formData);
-      this.submitFile(formData);
+      if (typecheck) {
+        formData.append("errorId", this.indexError);
+        this.submitFile(formData);
+      } else {
+        this.alertForUploadFile();
+      }
     },
     async submitFile(formData) {
-      // const formData = new FormData();
-      // formData.append("files", file);
-      // formData.append("errorId", this.indexError);
-      
       await FileService.addFile(formData).then((result) => {
-        console.log("result", result);
         this.getListFile(this.indexError);
       });
     },
@@ -482,9 +479,7 @@ export default {
       });
     },
     editComment(str, index, index2) {
-      console.log(str);
       this.commentEdit = str;
-      console.log(this.commentEdit);
       document.getElementById(index).style.display = "none";
       document.getElementById(index2).style.display = "block";
     },
@@ -496,7 +491,6 @@ export default {
       let text = "";
       this.dataUser.forEach((user) => {
         if (user.id === id) {
-          // console.log(user)
           if (user.firstName != "" && user.lastName != "") {
             text = `${user.firstName[0]}${user.lastName[0]}`;
           } else if (user.firstName != "" && user.lastName == "") {
@@ -520,7 +514,6 @@ export default {
             let res = this.errorDetail.userAssignment;
 
             res = res.filter((data) => data.userId !== id);
-            console.log("res : ", res);
 
             //=================== call service ===================
             let updateParam = {
@@ -530,7 +523,6 @@ export default {
             };
 
             this.updateUserAndStatus(updateParam).then((re) => {
-              console.log("re: ", re);
               if (re.status) {
                 this.errorDetail.userAssignment = res;
               }
@@ -540,7 +532,7 @@ export default {
             let addUser = {
               userId: p.userId,
             };
-            console.log("print something");
+
             let addNewUser = this.errorDetail.userAssignment;
             addNewUser.push(addUser);
 
@@ -552,7 +544,6 @@ export default {
             };
 
             this.updateUserAndStatus(updateParam).then((re) => {
-              console.log("re: ", re);
               if (re.status) {
                 this.errorDetail.userAssignment = addNewUser;
               }
@@ -570,7 +561,7 @@ export default {
           let res = this.errorDetail.userAssignment;
 
           res = res.filter((data) => data.userId !== id);
-          console.log("res : ", res);
+
           this.errorDetail.userAssignment = res;
 
           //=================== call service ===================
@@ -581,7 +572,6 @@ export default {
           };
 
           this.updateUserAndStatus(updateParam).then((re) => {
-            console.log("re: ", re);
             if (re.status) {
               this.errorDetail.userAssignment = res;
             }
@@ -595,6 +585,13 @@ export default {
     closeDropDown() {
       this.showDropdown = false;
     },
+    alertForUploadFile() {
+      Swal.fire({
+        icon: "error",
+        title: "Type of file don't support",
+        text: "please select .png, .jpg, ,jpeg, .txt, .xlsx, .doc, .docx",
+      });
+    },
     confirmChange() {
       Swal.fire({
         title: "Edit Status",
@@ -604,7 +601,6 @@ export default {
         showCancelButton: true,
       }).then((result) => {
         if (result.isConfirmed) {
-          console.log("selected : ", this.selected);
           let updateParam = {
             errorId: this.errorDetail.errorId,
             userAssigns: this.errorDetail.userAssignment,
@@ -612,7 +608,6 @@ export default {
           };
 
           this.updateUserAndStatus(updateParam).then((re) => {
-            console.log("update status: ", re);
             if (re.status) {
               this.errorDetail.errorStatusId = this.selected;
             }
@@ -627,7 +622,6 @@ export default {
 
     async del(index) {
       // delby index
-      console.log(index);
       let param = {
         fileId: index,
       };
@@ -636,7 +630,6 @@ export default {
       this.$refs["dropdownDel" + index][0].hide(true);
     },
     async update(index) {
-      console.log(document.getElementById("input" + index).value, index);
       let params = {
         fileId: index,
         fileName: document.getElementById("input" + index).value,
@@ -663,6 +656,7 @@ export default {
             name: data.fileName,
             size: data.fileSize,
             id: data.fileId,
+            path: data.fileRename
           });
         });
       });
@@ -671,11 +665,9 @@ export default {
       this.users = [];
       ProjectService.getProject(this.projectId).then((result) => {
         result.userOwner.forEach((user) => {
-          // console.log(user)
           this.users.push(user);
         });
         result.userMaintenance.forEach((user) => {
-          // console.log(user)
           this.users.push(user);
         });
 
@@ -700,7 +692,6 @@ export default {
             }
           });
         });
-        console.log("pickUsers : ", this.pickUsers);
 
         this.errorDetail.userAssignment.forEach((userAss) => {
           this.pickUsers.forEach((pUser) => {
@@ -715,7 +706,6 @@ export default {
       return ErrorService.updateUsersAndErrorStatus(upParam);
     },
     addComment(param) {
-      console.log("param comment: ", param);
       return ErrorService.addNewComment(param);
     },
     saveComment() {
@@ -726,10 +716,8 @@ export default {
       };
 
       this.addComment(commentParam).then((res) => {
-        console.log(res);
         if (res.status) {
           ErrorService.getComment(this.errorDetail.errorId).then((com) => {
-            console.log("new comment: ", com);
             this.errorDetail.comment = com;
             this.commentInput = "";
           });
@@ -737,20 +725,16 @@ export default {
       });
     },
     editMyComment(ind) {
-      console.log("comment id:", ind);
       let com = document.getElementById("EditComment" + ind).value;
       let editCommentParam = {
         errorId: this.errorDetail.errorId,
         commentId: ind,
         comment: com,
       };
-      console.log("edit com param: ", editCommentParam);
 
       ErrorService.editComment(editCommentParam).then((result) => {
-        console.log("result edit: ", result);
         if (result.status) {
           ErrorService.getComment(this.errorDetail.errorId).then((com) => {
-            console.log("new comment: ", com);
             this.errorDetail.comment = com;
             this.commentInput = "";
 
@@ -774,7 +758,6 @@ export default {
           };
 
           ErrorService.deleteComment(delParam).then((result) => {
-            console.log("result del: ", result);
             if (result.status) {
               ErrorService.getComment(this.errorDetail.errorId).then((com) => {
                 this.errorDetail.comment = com;
@@ -816,7 +799,7 @@ export default {
       filterText: "",
       userLogin: null,
       commentInput: "",
-      commentEdit: ""
+      commentEdit: "",
     };
   },
 
@@ -839,10 +822,6 @@ export default {
     this.getError(this.indexError);
     this.getListFile(this.indexError);
     this.userLogin = localStorage.getItem("userId");
-    // console.log('errorDetail (mounted): ',this.errorDetail);
-
-    // console.log('index : ',this.indexError);
-    console.log("options : ", this.options);
   },
 };
 </script>

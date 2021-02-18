@@ -7,7 +7,7 @@ const actions = {
   getUser({ commit }) {
     return UserService.getListUser().then(
         res => {
-            // console.log("get list user", res);
+        
             commit("setUser", res);
             return Promise.resolve(res);
         }
@@ -22,7 +22,7 @@ const mutations = {
       }
     });
     state.users = list;
-    console.log(state.users);
+
   },
 };
 
