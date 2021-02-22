@@ -221,7 +221,7 @@ export default {
     async getListUser() {
       await this.$store.dispatch("user/getUser");
     },
-    handleView() {
+    handleView() {                                                                                                                                                                                            
       this.mobileView = window.innerWidth <= 770;
     },
     getDetail(projectId) {
