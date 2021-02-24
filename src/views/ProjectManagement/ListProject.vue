@@ -41,6 +41,7 @@
           class="col-lg-6 col-xl-4 col-12"
           v-for="(project, index) in filteredRows"
           :key="`project-${index}`"
+          :id="`project-${index}`"
         >
           <router-link
             :to="{
