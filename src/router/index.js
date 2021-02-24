@@ -6,7 +6,7 @@ import AppContent from "@/components/Content/AppContent.vue";
 Vue.use(VueRouter);
 
 const EmptyParentComponent = {
-  template: "<router-view></router-view>"
+  template: "<router-view></router-view>",
 };
 
 const routes = [
@@ -18,9 +18,10 @@ const routes = [
   //   path: "*",
   //   redirect: { name: "Login" }
   // },
-  { 
-    path: '/', 
-    redirect: '/login' },
+  {
+    path: "/",
+    redirect: "/login",
+  },
   {
     path: "/login",
     component: AuthLogin,
@@ -31,9 +32,9 @@ const routes = [
       {
         name: "Login",
         path: "",
-        component: () => import("../views/Auth/Login.vue")
-      }
-    ]
+        component: () => import("../views/Auth/Login.vue"),
+      },
+    ],
   },
   {
     path: "/home",
@@ -44,18 +45,16 @@ const routes = [
         path: "monitor",
         name: "Monitor",
         component: EmptyParentComponent,
-        children : [
+        children: [
           {
             path: "list",
             name: "MonitorList",
-            component: () =>
-              import("../views/MonitorError/ListError.vue"),
+            component: () => import("../views/MonitorError/ListError.vue"),
           },
           {
             path: "add",
             name: "MonitorAdd",
-            component: () =>
-              import("../views/MonitorError/AddList.vue"),
+            component: () => import("../views/MonitorError/AddList.vue"),
           },
           // {
           //   path: "detail",
@@ -66,9 +65,9 @@ const routes = [
           {
             path: "detail",
             name: "Detail",
-            meta :{
-              showEdit : false,
-              name: "Detail"
+            meta: {
+              showEdit: false,
+              name: "Detail",
             },
             component: () =>
               import("../views/ProjectManagement/ProjectDetail.vue"),
@@ -76,28 +75,25 @@ const routes = [
           {
             path: "task",
             name: "TaskError",
-            component: () =>
-              import("../views/MonitorError/Task.vue"),
+            component: () => import("../views/MonitorError/Task.vue"),
           },
           {
             path: "modal",
             name: "ModalTest",
-            component: () =>
-              import("../views/MonitorError/ModalForTask.vue"),
+            component: () => import("../views/MonitorError/ModalForTask.vue"),
           },
           {
             path: "fileUpload",
             name: "fileUploadTest",
-            component: () =>
-              import("../views/MonitorError/FileUpload.vue"),
-          }
-        ]
+            component: () => import("../views/MonitorError/FileUpload.vue"),
+          },
+        ],
       },
       {
         path: "project",
         name: "ProjectManagement",
         component: EmptyParentComponent,
-        children : [
+        children: [
           {
             path: "list",
             name: "ListProject",
@@ -113,7 +109,7 @@ const routes = [
           {
             path: "detail",
             name: "ProjectDetail",
-            meta:{name: "ProjectDetail"},
+            meta: { name: "ProjectDetail" },
             component: () =>
               import("../views/ProjectManagement/ProjectDetail.vue"),
           },
@@ -122,8 +118,8 @@ const routes = [
             name: "ProjectEdit",
             component: () =>
               import("../views/ProjectManagement/ProjectEdit.vue"),
-          }
-        ]
+          },
+        ],
       },
       {
         path: "about",
@@ -144,23 +140,32 @@ const router = new VueRouter({
   routes,
 });
 
-// router.beforeEach(async (to, from, next) => {
-  
-// });
+router.beforeEach(async (to, from, next) => {
+  if (to.name !== 'Login') {
+    if (!localStorage.getItem("userId")) {
+      console.log("BEFORE IF");
+      next({ name: "Login" });
+    } else {
+      console.log("BEFORE ELSE");
+      next();
+    }
+  }else{
+    next();
+  }
+});
 
 // router.afterEach(async (to, from, next) => {
- 
+
 // });
 
 const VueRouterPush = VueRouter.prototype.push;
 VueRouter.prototype.push = function push(to) {
-  return VueRouterPush.call(this, to).catch(err => err);
+  return VueRouterPush.call(this, to).catch((err) => err);
 };
 
 const VueRouterReplace = VueRouter.prototype.replace;
 VueRouter.prototype.replace = function replace(to) {
-  return VueRouterReplace.call(this, to).catch(err => err);
+  return VueRouterReplace.call(this, to).catch((err) => err);
 };
-
 
 export default router;
