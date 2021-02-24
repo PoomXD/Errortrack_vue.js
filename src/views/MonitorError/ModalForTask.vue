@@ -187,6 +187,7 @@
                       <hr />
                       <b-form-input
                         :id="`input${item.id}`"
+                        :value="item.name"
                         @keydown.enter.prevent="update(item.id)"
                       ></b-form-input>
                       <br />
@@ -424,7 +425,7 @@ import axios from "axios";
 export default {
   methods: {
     NewTab(path) {
-      window.open("https://localhost:5001/file/"+path, "_blank");
+      window.open(`${process.env.VUE_APP_BASE_API}file/${path}`, "_blank");
     },
     onFilePicked(event) {
       const formData = new FormData();
