@@ -37,7 +37,7 @@
             value="true"
             unchecked-value="false"
           >
-            Keep me signed in
+            Keep me sign in
           </b-form-checkbox>
           <b-button
             class="rounded-pill button-font"
