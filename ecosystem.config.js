@@ -1,14 +1,15 @@
 module.exports = {
-    apps : [{
+  apps: [
+    {
       name: "app",
       script: "serve -l 8080 -s dist",
       autorestart: true,
       env: {
-          NODE_ENV: "development",
+        NODE_ENV: "development"
       },
       env_production: {
-          NODE_ENV: "production",
+        NODE_ENV: "production"
       }
-    }]
-  }
-  
+    }
+  ]
+};
