@@ -22,11 +22,21 @@
               v-for="(user, index) in errorDetail.userAssignment"
               :key="`user-${index}`"
             >
-              <b-avatar class="avatar-owner" :text="getTextAvatar(user.userId)">
+              <b-avatar 
+                :id="`popover-${index}-${user.userId}`"
+                class="avatar-owner" 
+                :text="getTextAvatar(user.userId)"
+              >
               </b-avatar>
               <span class="wrap-span" @click="delUser(user.userId)">
                 <font-awesome-icon :icon="['fas', 'times']" />
               </span>
+              <b-popover
+                :target="`popover-${index}-${user.userId}`"
+                :placement="'bottom'"
+                triggers="hover focus"
+                :content="getNameAvatar(user.userId)"
+              ></b-popover>
             </div>
 
             <b-dropdown
@@ -158,16 +168,14 @@
                 </div>
               </div>
               <div class="d-flex justify-content-end">
-                
-                  <div class="text-center bt-download" @click="NewTab(item.path)">
-                    <font-awesome-icon
-                      :icon="['fas', 'download']"
-                      class="icon-size-18"
-                    />
-                    <br />
-                    Download
-                  </div>
-                
+                <div class="text-center bt-download" @click="NewTab(item.path)">
+                  <font-awesome-icon
+                    :icon="['fas', 'download']"
+                    class="icon-size-18"
+                  />
+                  <br />
+                  Download
+                </div>
 
                 <b-dropdown
                   class="dropdown-edit"
@@ -289,11 +297,11 @@
             </div>
           </b-col>
         </b-row>
-        <div class="card-list ml-5 p-1">
-          <b-form-textarea
+        <div class="card-list ml-5 p-1 ">
+          <b-form-textarea 
             v-model="commentInput"
             no-resize
-            class="border-0 textaera font-detail"
+            class="border-0 textaera font-detail diseble-box-shadow"
             placeholder="Write a commet..."
           ></b-form-textarea>
           <div class="d-flex justify-content-end">
@@ -381,7 +389,7 @@
               </div>
             </b-col>
           </b-row>
-          <div class="card-list ml-5 p-1">
+          <div class="card-list ml-5 p-1 ">
             <b-form-textarea
               :id="`EditComment${message.commentId}`"
               no-resize
@@ -425,8 +433,12 @@ import axios from "axios";
 export default {
   methods: {
     NewTab(path) {
+<<<<<<< HEAD
+      window.open("https://localhost:5001/file/" + path, "_blank");
+=======
       console.log(`${process.env.VUE_APP_BASE_API}file/${path}`)
       window.open(`${process.env.VUE_APP_BASE_API}file/${path}`, "_blank");
+>>>>>>> b308329ea366ff17dc096affc3af976cbb17ba1a
     },
     onFilePicked(event) {
       const formData = new FormData();
@@ -503,6 +515,21 @@ export default {
         }
       });
       return text;
+    },
+    getNameAvatar(id) {
+      let name = "";
+      this.dataUser.forEach((user) => {
+        if (user.id === id) {
+          if (user.firstName != "" && user.lastName != "") {
+            name = `${user.firstName} ${user.lastName}`;
+          } else if (user.firstName != "" && user.lastName == "") {
+            name = `${user.firstName}`;
+          } else {
+            name = `Unknow`;
+          }
+        }
+      });
+      return name;
     },
     pick(id) {
       this.showDropdown = true;
@@ -658,7 +685,7 @@ export default {
             name: data.fileName,
             size: data.fileSize,
             id: data.fileId,
-            path: data.fileRename
+            path: data.fileRename,
           });
         });
       });
@@ -711,20 +738,22 @@ export default {
       return ErrorService.addNewComment(param);
     },
     saveComment() {
-      let commentParam = {
-        errorId: this.errorDetail.errorId,
-        userId: this.userLogin,
-        comment: this.commentInput,
-      };
+      if (!this.commentInput == "") {
+        let commentParam = {
+          errorId: this.errorDetail.errorId,
+          userId: this.userLogin,
+          comment: this.commentInput,
+        };
 
-      this.addComment(commentParam).then((res) => {
-        if (res.status) {
-          ErrorService.getComment(this.errorDetail.errorId).then((com) => {
-            this.errorDetail.comment = com;
-            this.commentInput = "";
-          });
-        }
-      });
+        this.addComment(commentParam).then((res) => {
+          if (res.status) {
+            ErrorService.getComment(this.errorDetail.errorId).then((com) => {
+              this.errorDetail.comment = com;
+              this.commentInput = "";
+            });
+          }
+        });
+      }
     },
     editMyComment(ind) {
       let com = document.getElementById("EditComment" + ind).value;
@@ -934,5 +963,8 @@ export default {
 }
 .comment-size-buttom {
   width: 100px;
+}
+.diseble-box-shadow:focus{
+  box-shadow :0 0 0 0.2rem rgb(0 0 0 / 0%);
 }
 </style>
