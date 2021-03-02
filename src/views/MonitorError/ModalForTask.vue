@@ -22,11 +22,21 @@
               v-for="(user, index) in errorDetail.userAssignment"
               :key="`user-${index}`"
             >
-              <b-avatar class="avatar-owner" :text="getTextAvatar(user.userId)">
+              <b-avatar 
+                :id="`popover-${index}-${user.userId}`"
+                class="avatar-owner" 
+                :text="getTextAvatar(user.userId)"
+              >
               </b-avatar>
               <span class="wrap-span" @click="delUser(user.userId)">
                 <font-awesome-icon :icon="['fas', 'times']" />
               </span>
+              <b-popover
+                :target="`popover-${index}-${user.userId}`"
+                :placement="'bottom'"
+                triggers="hover focus"
+                :content="getNameAvatar(user.userId)"
+              ></b-popover>
             </div>
 
             <b-dropdown
@@ -503,6 +513,21 @@ export default {
         }
       });
       return text;
+    },
+    getNameAvatar(id) {
+      let name = "";
+      this.dataUser.forEach((user) => {
+        if (user.id === id) {
+          if (user.firstName != "" && user.lastName != "") {
+            name = `${user.firstName} ${user.lastName}`;
+          } else if (user.firstName != "" && user.lastName == "") {
+            name = `${user.firstName}`;
+          } else {
+            name = `Unknow`;
+          }
+        }
+      });
+      return name;
     },
     pick(id) {
       this.showDropdown = true;
