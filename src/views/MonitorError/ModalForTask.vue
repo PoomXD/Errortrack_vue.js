@@ -22,11 +22,21 @@
               v-for="(user, index) in errorDetail.userAssignment"
               :key="`user-${index}`"
             >
-              <b-avatar class="avatar-owner" :text="getTextAvatar(user.userId)">
+              <b-avatar 
+                :id="`popover-${index}-${user.userId}`"
+                class="avatar-owner" 
+                :text="getTextAvatar(user.userId)"
+              >
               </b-avatar>
               <span class="wrap-span" @click="delUser(user.userId)">
                 <font-awesome-icon :icon="['fas', 'times']" />
               </span>
+              <b-popover
+                :target="`popover-${index}-${user.userId}`"
+                :placement="'bottom'"
+                triggers="hover focus"
+                :content="getNameAvatar(user.userId)"
+              ></b-popover>
             </div>
 
             <b-dropdown
@@ -185,6 +195,7 @@
                       <hr />
                       <b-form-input
                         :id="`input${item.id}`"
+                        :value="item.name"
                         @keydown.enter.prevent="update(item.id)"
                       ></b-form-input>
                       <br />
@@ -422,7 +433,12 @@ import axios from "axios";
 export default {
   methods: {
     NewTab(path) {
+<<<<<<< HEAD
       window.open("https://localhost:5001/file/" + path, "_blank");
+=======
+      console.log(`${process.env.VUE_APP_BASE_API}file/${path}`)
+      window.open(`${process.env.VUE_APP_BASE_API}file/${path}`, "_blank");
+>>>>>>> b308329ea366ff17dc096affc3af976cbb17ba1a
     },
     onFilePicked(event) {
       const formData = new FormData();
@@ -499,6 +515,21 @@ export default {
         }
       });
       return text;
+    },
+    getNameAvatar(id) {
+      let name = "";
+      this.dataUser.forEach((user) => {
+        if (user.id === id) {
+          if (user.firstName != "" && user.lastName != "") {
+            name = `${user.firstName} ${user.lastName}`;
+          } else if (user.firstName != "" && user.lastName == "") {
+            name = `${user.firstName}`;
+          } else {
+            name = `Unknow`;
+          }
+        }
+      });
+      return name;
     },
     pick(id) {
       this.showDropdown = true;
