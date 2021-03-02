@@ -158,16 +158,14 @@
                 </div>
               </div>
               <div class="d-flex justify-content-end">
-                
-                  <div class="text-center bt-download" @click="NewTab(item.path)">
-                    <font-awesome-icon
-                      :icon="['fas', 'download']"
-                      class="icon-size-18"
-                    />
-                    <br />
-                    Download
-                  </div>
-                
+                <div class="text-center bt-download" @click="NewTab(item.path)">
+                  <font-awesome-icon
+                    :icon="['fas', 'download']"
+                    class="icon-size-18"
+                  />
+                  <br />
+                  Download
+                </div>
 
                 <b-dropdown
                   class="dropdown-edit"
@@ -288,11 +286,11 @@
             </div>
           </b-col>
         </b-row>
-        <div class="card-list ml-5 p-1">
-          <b-form-textarea
+        <div class="card-list ml-5 p-1 ">
+          <b-form-textarea 
             v-model="commentInput"
             no-resize
-            class="border-0 textaera font-detail"
+            class="border-0 textaera font-detail diseble-box-shadow"
             placeholder="Write a commet..."
           ></b-form-textarea>
           <div class="d-flex justify-content-end">
@@ -380,7 +378,7 @@
               </div>
             </b-col>
           </b-row>
-          <div class="card-list ml-5 p-1">
+          <div class="card-list ml-5 p-1 ">
             <b-form-textarea
               :id="`EditComment${message.commentId}`"
               no-resize
@@ -424,7 +422,7 @@ import axios from "axios";
 export default {
   methods: {
     NewTab(path) {
-      window.open("https://localhost:5001/file/"+path, "_blank");
+      window.open("https://localhost:5001/file/" + path, "_blank");
     },
     onFilePicked(event) {
       const formData = new FormData();
@@ -656,7 +654,7 @@ export default {
             name: data.fileName,
             size: data.fileSize,
             id: data.fileId,
-            path: data.fileRename
+            path: data.fileRename,
           });
         });
       });
@@ -709,20 +707,22 @@ export default {
       return ErrorService.addNewComment(param);
     },
     saveComment() {
-      let commentParam = {
-        errorId: this.errorDetail.errorId,
-        userId: this.userLogin,
-        comment: this.commentInput,
-      };
+      if (!this.commentInput == "") {
+        let commentParam = {
+          errorId: this.errorDetail.errorId,
+          userId: this.userLogin,
+          comment: this.commentInput,
+        };
 
-      this.addComment(commentParam).then((res) => {
-        if (res.status) {
-          ErrorService.getComment(this.errorDetail.errorId).then((com) => {
-            this.errorDetail.comment = com;
-            this.commentInput = "";
-          });
-        }
-      });
+        this.addComment(commentParam).then((res) => {
+          if (res.status) {
+            ErrorService.getComment(this.errorDetail.errorId).then((com) => {
+              this.errorDetail.comment = com;
+              this.commentInput = "";
+            });
+          }
+        });
+      }
     },
     editMyComment(ind) {
       let com = document.getElementById("EditComment" + ind).value;
@@ -932,5 +932,8 @@ export default {
 }
 .comment-size-buttom {
   width: 100px;
+}
+.diseble-box-shadow:focus{
+  box-shadow :0 0 0 0.2rem rgb(0 0 0 / 0%);
 }
 </style>
