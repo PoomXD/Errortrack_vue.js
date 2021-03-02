@@ -425,6 +425,7 @@ import axios from "axios";
 export default {
   methods: {
     NewTab(path) {
+      console.log(`${process.env.VUE_APP_BASE_API}file/${path}`)
       window.open(`${process.env.VUE_APP_BASE_API}file/${path}`, "_blank");
     },
     onFilePicked(event) {
