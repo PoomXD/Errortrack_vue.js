@@ -25,6 +25,7 @@
                 <div class="col-3 text-right font-gen">Project Name* :</div>
                 <div class="col-8">
                   <b-form-input
+                    id='Project_Name'
                     v-model.trim="$v.projectName.$model"
                     placeholder="Project Name"
                     type="text"
@@ -49,6 +50,7 @@
                 <div class="col-3 text-right font-gen">Project Owner* :</div>
                 <div class="col-8 font-detail">
                   <multiselect
+                    id='Project_Owner'
                     class="shadow-sm multiselect"
                     :class="{
                       'multiselect-invalid': !$v.valueOwner.required && save,
@@ -75,6 +77,7 @@
                 <div class="col-3 text-right font-gen">Project Details :</div>
                 <div class="col-8 font-detail">
                   <b-form-textarea
+                    id='ProjectDetail'
                     type="text"
                     class="shadow-sm"
                     v-model="ProjectDetail"

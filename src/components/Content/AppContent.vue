@@ -1,5 +1,5 @@
 <template>
-  <div class="content-wrapper background" style="overflow: auto;"> 
+  <div class="content-wrapper background" style="overflow: auto;" id="info"> 
     
     <div v-if="!mobileView">
       <app-header class="col" style="position: fixed;"/>
@@ -19,7 +19,7 @@
       </div>
     </div>
 
-    <main  class="content-wrapper" :class="{'new-main':mobileView,'main':!mobileView}">
+    <main class="content-wrapper" :class="{'new-main':mobileView,'main':!mobileView}">
       <div class="content-wrapper" :class="{'openNav2':showNav,'closeNav2':!showNav}">
         <router-view/>
       </div>

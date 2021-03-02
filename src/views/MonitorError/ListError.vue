@@ -36,7 +36,7 @@
           </router-link>
         </div> -->
       </div>
-      <div class="row margin-btw-content">
+      <div class="row margin-btw-content" id="card_contrain">
         <div
           class="col-lg-6 col-xl-4 col-12"
           v-for="(project, index) in filteredRows"
