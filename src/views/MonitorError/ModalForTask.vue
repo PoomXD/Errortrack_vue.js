@@ -433,12 +433,8 @@ import axios from "axios";
 export default {
   methods: {
     NewTab(path) {
-<<<<<<< HEAD
-      window.open("https://localhost:5001/file/" + path, "_blank");
-=======
       console.log(`${process.env.VUE_APP_BASE_API}file/${path}`)
       window.open(`${process.env.VUE_APP_BASE_API}file/${path}`, "_blank");
->>>>>>> b308329ea366ff17dc096affc3af976cbb17ba1a
     },
     onFilePicked(event) {
       const formData = new FormData();
