@@ -142,7 +142,7 @@
           <!-- <div class="col"></div> -->
           <div class="col text-right pr-4">
             <router-link
-              :to="{ name: 'ProjectDetail' }"
+              :to="{ name: 'ListProject' }"
               class="btn bt-cancel-blue font-no-size-color"
             >
               Cancel
