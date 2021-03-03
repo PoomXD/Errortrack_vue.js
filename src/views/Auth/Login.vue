@@ -6,7 +6,7 @@
           <img src="/img/image1.png" style="height: 100%; width: 100%;" />
         </div>
         <div class="col pr-5">
-          <h1 class="title-font text-center mt-5 mb-5">Sing In</h1>
+          <h1 class="title-font text-center mt-5 mb-5">Sign In</h1>
           <b-form-input
             @keyup.enter="clickLogin()"
             id="username"

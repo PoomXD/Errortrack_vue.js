@@ -15,7 +15,7 @@
                 <!-- </b-form-input> -->
               </td>
               <td>
-                <b-button class="icon-search"
+                <b-button class="icon-search" 
                   ><font-awesome-icon :icon="['fas', 'search']"
                 /></b-button>
               </td>
@@ -29,14 +29,15 @@
         </div>
         <div class="col-3" v-if="true">
           <router-link :to="{ name: 'ProjectAdd' }">
-            <b-button class="w-100 bt-blue font-no-size-color"
+            <b-button class="w-100 bt-blue font-no-size-color" id="ProjectAdd_btn"
               ><font-awesome-icon :icon="['fas', 'plus']" /> Add New
               Project</b-button
             >
           </router-link>
         </div>
       </div>
-      <div class="row margin-btw-content">
+      
+      <div class="row margin-btw-content" id="card_contrain">
         <div
           class="col-lg-6 col-xl-4 col-12"
           v-for="(project, index) in filteredRows"
