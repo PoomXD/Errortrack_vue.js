@@ -36,6 +36,7 @@
                   ></b-form-input>
                   <div
                     class="error font-invalid"
+                    id="Name_required"
                     v-if="!$v.projectName.required && save"
                   >
                     Project Name is required
@@ -64,6 +65,7 @@
                   ></multiselect>
                   <div
                     class="error font-invalid"
+                    id="Owner_required"
                     v-if="!$v.valueOwner.required && save"
                   >
                     Project Owner is required

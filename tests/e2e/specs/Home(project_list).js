@@ -6,16 +6,24 @@ describe("Project_list", () => {
    cy.get('#password').type('Bb@2541')
    cy.get('#checkbox-1').check({force: true})
    cy.get('.pl-5').click().wait(1000)
-   // cy.visit('http://localhost:8080/home/monitor/list')
+   cy.url().should('eq','http://localhost:8080/home/project/list')
+   //-------------Check_Card------------//
+   for (i = 0; i < 6; i++) {
+    cy.get('#card_contrain').then($card => {
 
-   cy.get('#card_contrain').then($card => {
-
-    if($card.is(':visible')){
-        cy.log('GET!')
-    }else{
-        cy.reload().log('reload').wait(1000)
+      if($card.is(':visible')){
+          visible = true;
+      }else{
+          cy.reload().log('reload').wait(1000)
+          visible = false;
+        }     
+      });
+      if(visible = true){
+        break; 
+     }else{
+        continue;
+     }
     }
-   })
 
    cy.get('.input-search').type('2')
    cy.get('#project-2').should('not.exist')
@@ -24,9 +32,6 @@ describe("Project_list", () => {
    cy.get('.input-search').clear().type('project 1')
    cy.get('#project-2').should('not.exist')
    cy.get('#project-0').click()
- 
-   cy.get('.navigation-icon').should('not.visible')
-   cy.viewport(1000, 660).wait(1000)
    
    cy.get('#info').scrollTo('bottom').wait(500)
    cy.get('.navigation-icon').should('be.visible').click().click()

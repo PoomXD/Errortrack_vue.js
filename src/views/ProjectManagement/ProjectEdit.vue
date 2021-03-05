@@ -31,6 +31,7 @@
                   ></b-form-input>
                   <div
                     class="error font-invalid"
+                    id="error-invalid"
                     v-if="!$v.projectName.required && save"
                   >
                     Project Name is required

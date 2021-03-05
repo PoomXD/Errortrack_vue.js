@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div class="container" id="ModalForTask">
     <div class="row px-1 mb-2">
       <div class="col-xl-7 col-lg-12">
         <div class="row">
@@ -433,12 +433,8 @@ import axios from "axios";
 export default {
   methods: {
     NewTab(path) {
-<<<<<<< HEAD
-      window.open("https://localhost:5001/file/" + path, "_blank");
-=======
       console.log(`${process.env.VUE_APP_BASE_API}file/${path}`)
       window.open(`${process.env.VUE_APP_BASE_API}file/${path}`, "_blank");
->>>>>>> b308329ea366ff17dc096affc3af976cbb17ba1a
     },
     onFilePicked(event) {
       const formData = new FormData();
