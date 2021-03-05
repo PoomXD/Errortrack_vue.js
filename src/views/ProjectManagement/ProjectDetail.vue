@@ -127,15 +127,21 @@
         :items="items"
         :fields="fields"
       >
-        <template v-slot:cell(Service_ID)="data">
+        <template v-slot:cell(Service_Detail)="data">
           <router-link
             :to="{
               name: 'TaskError',
               query: { serviceId: data.item.Service_ID },
             }"
             style="text-decoration: underline"
-            >{{ data.item.Service_ID }}</router-link
+            class="icon-list"
           >
+            
+                <font-awesome-icon :icon="['fas', 'search']" />
+                <!-- <i class="fas fa-search"></i> -->
+              
+            
+          </router-link>
         </template>
       </b-table>
     </div>
@@ -163,7 +169,7 @@ export default {
       this.$store.dispatch("header/setAllLinkHeader", "Detail");
     }
     // console.log('id = ',this.$route.query.projectId);
-    this.getListUser()
+    this.getListUser();
     this.getDetail(this.$route.query.projectId);
   },
   mounted() {
@@ -183,12 +189,22 @@ export default {
     return {
       mobileView: true,
       keyword: "",
+      // fields: [
+      //   { key: "No", thStyle: { width: "5%" } },
+      //   { key: "Service_ID", thStyle: { width: "20%" } },
+      //   { key: "Service_Name", thStyle: { width: "65%" } },
+      //   //  {key:' ',thStyle: {width: '35%'}},
+      //   { key: "Create_Date", thStyle: { width: "10%" } },
+      // ],
       fields: [
         { key: "No", thStyle: { width: "5%" } },
-        { key: "Service_ID", thStyle: { width: "20%" } },
         { key: "Service_Name", thStyle: { width: "65%" } },
-        //  {key:' ',thStyle: {width: '35%'}},
         { key: "Create_Date", thStyle: { width: "10%" } },
+        {
+          key: "Service_Detail",
+          thStyle: { width: "20%" },
+          class: 'text-center'
+        },
       ],
       dataArray: [],
       Project_ID: "",
@@ -221,7 +237,7 @@ export default {
     async getListUser() {
       await this.$store.dispatch("user/getUser");
     },
-    handleView() {                                                                                                                                                                                            
+    handleView() {
       this.mobileView = window.innerWidth <= 770;
     },
     getDetail(projectId) {
@@ -264,6 +280,10 @@ export default {
 </script>
 
 <style scoped>
+.icon-list {
+  font-size: 25px;
+  text-align: center;
+}
 .ProjectDetail {
   padding: 1rem;
 }
