@@ -8,6 +8,7 @@ describe("Project_Edit", () => {
    cy.get('.pl-5').click().wait(2000)
  
    //-------------Check_Card------------//
+   visible = false;
    for (i = 0; i < 6; i++) {
     cy.get('#card_contrain').then($card => {
 
