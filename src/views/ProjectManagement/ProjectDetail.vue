@@ -16,83 +16,120 @@
 
     <br />
     <br />
-    <div class="card-list row" id="cardlist">
-      <div class="col-xl-6 col-md-12">
-        <div class="row mb-3 mt-3">
-          <div
-            class="col-xl-4 col-md-3 font-gen text-right"
-            :class="{ move: mobileView }"
-            style="font-weight: bold"
-          >
-            Project ID :
-          </div>
-          <div class="col-xl-6 col-md-7 font-detail" align="left">
-            {{ Project_ID }}
-          </div>
-        </div>
-        <div class="row mb-3 mt-3">
-          <div
-            class="col-xl-4 col-md-3 font-gen text-right"
-            :class="{ move: mobileView }"
-            style="font-weight: bold"
-          >
-            Project Name :
-          </div>
-          <div class="col-xl-5 col-md-7 font-detail" align="left">
-            {{ Project_Name }}
-          </div>
-        </div>
-        <div class="row mb-3 mt-3">
-          <div
-            class="col-xl-4 col-md-3 font-gen mt-0 text-right"
-            :class="{ move: mobileView }"
-            style="font-weight: bold"
-            a
-          >
-            Project Details :
-          </div>
-          <div
-            class="col-xl-6 col-md-7 font-detail"
-            :class="{ go_up: mobileView }"
-            align="left"
-          >
-            {{ Project_Detail }}
+    <div class="card-list" id="cardlist">
+      <div class="row">
+        <!-- <div class="col"></div> -->
+        <div class="col">
+          <div class="row mb-3 mt-3">
+            <div
+              class="col-xl-2 col-md-3 font-gen text-right"
+              :class="{ move: mobileView }"
+              style="font-weight: bold"
+            >
+              Token :
+            </div>
+            <div class="col-xl-4 col-md-7 font-detail" align="left">
+              <b-input-group>
+                <b-form-input
+                  type="text"
+                  data-autoselect
+                  class="form-control"
+                  v-model="token"
+                  ref="copyText"
+                  readonly
+                ></b-form-input>
+                <b-input-group-append>
+                  <b-button class="bt-cancel-blue-no-size" @click="copy()">
+                    <font-awesome-icon :icon="['fas', 'copy']" />
+                  </b-button>
+                  <b-button class="bt-blue-no-size" @click="refresh(Project_ID)">
+                    <font-awesome-icon :icon="['fas', 'sync']" />
+                  </b-button>
+                </b-input-group-append>
+              </b-input-group>
+            </div>
           </div>
         </div>
       </div>
-      <div class="col-xl-6 col-md-12">
-        <div class="row mb-3 mt-3">
-          <div
-            class="col-xl-4 col-md-3 font-gen text-right"
-            :class="{ move: mobileView }"
-            style="font-weight: bold"
-          >
-            Project Owner :
-          </div>
-          <div class="col-xl-8 col-md-7 font-detail" align="left">
-            <tr
-              v-for="(Project_Owner, index) in Project_Owner"
-              :key="`Project_Owner-${index}`"
+      <div class="row">
+        <div class="col-xl-6 col-md-12">
+          <div class="row mb-3 mt-3">
+            <div
+              class="col-xl-4 col-md-3 font-gen text-right"
+              :class="{ move: mobileView }"
+              style="font-weight: bold"
             >
-              <td>{{ Project_Owner.name }}</td>
-            </tr>
+              Project ID :
+            </div>
+            <div class="col-xl-6 col-md-7 font-detail" align="left">
+              {{ Project_ID }}
+            </div>
+          </div>
+          <div class="row mb-3 mt-3">
+            <div
+              class="col-xl-4 col-md-3 font-gen text-right"
+              :class="{ move: mobileView }"
+              style="font-weight: bold"
+            >
+              Project Name :
+            </div>
+            <div class="col-xl-5 col-md-7 font-detail" align="left">
+              {{ Project_Name }}
+            </div>
+          </div>
+          <div class="row mb-3 mt-3">
+            <div
+              class="col-xl-4 col-md-3 font-gen mt-0 text-right"
+              :class="{ move: mobileView }"
+              style="font-weight: bold"
+              a
+            >
+              Project Details :
+            </div>
+            <div
+              class="col-xl-6 col-md-7 font-detail"
+              :class="{ go_up: mobileView }"
+              align="left"
+            >
+              {{ Project_Detail }}
+            </div>
           </div>
         </div>
-        <div class="row mb-3 mt-3">
-          <div
-            class="col-xl-4 col-md-3 font-gen text-right"
-            :class="{ move: mobileView }"
-            style="font-weight: bold"
-          >
-            User Maintenance :
-          </div>
-          <div class="col-xl-5 col-md-7 font-detail" align="left">
-            <tr
-              v-for="(Member, index) in User_Maintenance"
-              :key="`Member-${index}`"
+
+        <div class="col-xl-6 col-md-12">
+          <div class="row mb-3 mt-3">
+            <div
+              class="col-xl-4 col-md-3 font-gen text-right"
+              :class="{ move: mobileView }"
+              style="font-weight: bold"
             >
-              <td>{{ Member.name }}</td>
-            </tr>
+              Project Owner :
+            </div>
+            <div class="col-xl-8 col-md-7 font-detail" align="left">
+              <tr
+                v-for="(Project_Owner, index) in Project_Owner"
+                :key="`Project_Owner-${index}`"
+              >
+                <td>{{ Project_Owner.name }}</td>
+              </tr>
+            </div>
+          </div>
+          <div class="row mb-3 mt-3">
+            <div
+              class="col-xl-4 col-md-3 font-gen text-right"
+              :class="{ move: mobileView }"
+              style="font-weight: bold"
+            >
+              User Maintenance :
+            </div>
+            <div class="col-xl-5 col-md-7 font-detail" align="left">
+              <tr
+                v-for="(Member, index) in User_Maintenance"
+                :key="`Member-${index}`"
+              >
+                <td>{{ Member.name }}</td>
+              </tr>
+            </div>
           </div>
         </div>
       </div>
@@ -136,11 +173,8 @@
             style="text-decoration: underline"
             class="icon-list"
           >
-            
-                <font-awesome-icon :icon="['fas', 'search']" />
-                <!-- <i class="fas fa-search"></i> -->
-              
-            
+            <font-awesome-icon :icon="['fas', 'search']" />
+            <!-- <i class="fas fa-search"></i> -->
           </router-link>
         </template>
       </b-table>
@@ -187,6 +221,7 @@ export default {
   },
   data() {
     return {
+      token: "",
       mobileView: true,
       keyword: "",
       // fields: [
@@ -203,7 +238,7 @@ export default {
         {
           key: "Service_Detail",
           thStyle: { width: "20%" },
-          class: 'text-center'
+          class: "text-center",
         },
       ],
       dataArray: [],
@@ -234,6 +269,18 @@ export default {
     }),
   },
   methods: {
+    async refresh(projectId){
+      console.log('refresh token PID :',projectId)
+      await ProjectService.refreshToken({'projectId': projectId})
+      this.getDetail(projectId)
+    },
+    copy() {
+      var copyText  = this.$refs.copyText
+      console.log(copyText)
+      copyText.select();
+      copyText.setSelectionRange(0, 99999); 
+      document.execCommand("copy");
+    },
     async getListUser() {
       await this.$store.dispatch("user/getUser");
     },
@@ -246,6 +293,7 @@ export default {
         this.Project_ID = result.projectId;
         this.Project_Detail = result.projectDetail;
         this.Project_Name = result.projectName;
+        this.token = result.token;
         result.userMaintenance.forEach((e) => {
           var user = this.dataUser.filter((data) => data.id === e.userId);
           console.log("user : ", user);
