@@ -1,0 +1,32 @@
+[
+    {
+        "projectId": 1,
+        "projectName": "project 1",
+        "projectDetail": "project detail test",
+        "userOwner": [
+            {
+                "userId": "08d8c9bc-ee3c-43e2-8d32-7c9a7f452dbc"
+            },
+            {
+                "userId": "08d8cc12-9f7b-49a2-89bb-e95e3d5b1f5b"
+            }
+        ],
+        "userMaintenance": [
+            {
+                "userId": "08d8cc1b-fde6-46b3-81db-298842160b83"
+            },
+            {
+                "userId": "08d8cd8d-1095-441a-8301-423df2412be8"
+            },
+            {
+                "userId": "08d8cd8c-ffe7-497f-80ad-efc875448f84"
+            },
+            {
+                "userId": "08d8cc12-bda1-4d3c-83e9-32e013e46b0b"
+            },
+            {
+                "userId": "08d8c9a8-6a9f-40a3-8d16-436a8e1b36ab"
+            }
+        ]
+    }   
+]
