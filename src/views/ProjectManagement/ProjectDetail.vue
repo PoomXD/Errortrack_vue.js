@@ -42,11 +42,15 @@
                   <b-button class="bt-cancel-blue-no-size" @click="copy()">
                     <font-awesome-icon :icon="['fas', 'copy']" />
                   </b-button>
-                  <b-button class="bt-blue-no-size" @click="refresh(Project_ID)">
+                  <b-button
+                    class="bt-blue-no-size"
+                    @click="refresh(Project_ID)"
+                  >
                     <font-awesome-icon :icon="['fas', 'sync']" />
                   </b-button>
                 </b-input-group-append>
               </b-input-group>
+              exp : {{ this.exp }}
             </div>
           </div>
         </div>
@@ -186,6 +190,7 @@
 import ProjectService from "@/services/api/project.service";
 import ServiceService from "@/services/api/service.service";
 import { mapState } from "vuex";
+import moment from "moment";
 
 export default {
   name: "ProjectDetail",
@@ -222,6 +227,7 @@ export default {
   data() {
     return {
       token: "",
+      exp: null,
       mobileView: true,
       keyword: "",
       // fields: [
@@ -269,16 +275,29 @@ export default {
     }),
   },
   methods: {
-    async refresh(projectId){
-      console.log('refresh token PID :',projectId)
-      await ProjectService.refreshToken({'projectId': projectId})
-      this.getDetail(projectId)
+    parseJwt(token) {
+      var base64Url = token.split(".")[1];
+      var base64 = base64Url.replace(/-/g, "+").replace(/_/g, "/");
+      var jsonPayload = decodeURIComponent(
+        atob(base64)
+          .split("")
+          .map(function (c) {
+            return "%" + ("00" + c.charCodeAt(0).toString(16)).slice(-2);
+          })
+          .join("")
+      );
+      return moment(JSON.parse(jsonPayload).exp * 1000).format("MM/DD/YYYY");
+    },
+    async refresh(projectId) {
+      console.log("refresh token PID :", projectId);
+      await ProjectService.refreshToken({ projectId: projectId });
+      this.getDetail(projectId);
     },
     copy() {
-      var copyText  = this.$refs.copyText
-      console.log(copyText)
+      var copyText = this.$refs.copyText;
+      console.log(copyText);
       copyText.select();
-      copyText.setSelectionRange(0, 99999); 
+      copyText.setSelectionRange(0, 99999);
       document.execCommand("copy");
     },
     async getListUser() {
@@ -294,6 +313,7 @@ export default {
         this.Project_Detail = result.projectDetail;
         this.Project_Name = result.projectName;
         this.token = result.token;
+        this.exp = this.parseJwt(this.token);
         result.userMaintenance.forEach((e) => {
           var user = this.dataUser.filter((data) => data.id === e.userId);
           console.log("user : ", user);

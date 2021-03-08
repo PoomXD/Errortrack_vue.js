@@ -744,6 +744,7 @@ export default {
         this.addComment(commentParam).then((res) => {
           if (res.status) {
             ErrorService.getComment(this.errorDetail.errorId).then((com) => {
+              console.log("comment ",com)
               this.errorDetail.comment = com;
               this.commentInput = "";
             });
