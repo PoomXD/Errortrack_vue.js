@@ -317,15 +317,19 @@ export default {
         result.userMaintenance.forEach((e) => {
           var user = this.dataUser.filter((data) => data.id === e.userId);
           console.log("user : ", user);
-          this.User_Maintenance.push({
-            name: `${user[0].firstName} ${user[0].lastName}`,
-          });
+          if(user.length > 0){
+            this.User_Maintenance.push({
+              name: `${user[0].firstName} ${user[0].lastName}`,
+            });
+          }
         });
         result.userOwner.forEach((e) => {
           var user = this.dataUser.filter((data) => data.id === e.userId);
-          this.Project_Owner.push({
-            name: `${user[0].firstName} ${user[0].lastName}`,
-          });
+          if(user.length > 0){
+            this.Project_Owner.push({
+              name: `${user[0].firstName} ${user[0].lastName}`,
+            });
+          }
         }); // this.dataArray.push()
       });
       ServiceService.getListService(projectId).then((result) => {

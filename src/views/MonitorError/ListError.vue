@@ -164,21 +164,25 @@ export default {
           var projectUser = []
           data.userOwner.forEach(owner => {
            var user = this.dataUser.filter(u => u.id == owner.userId)
-           projectUser.push({
-             userId: user[0].id,
-             userName: user[0].firstName,
-             userLastName: user[0].lastName,
-             role: "owner"
-           })
+           if(user.length > 0){
+            projectUser.push({
+              userId: user[0].id,
+              userName: user[0].firstName,
+              userLastName: user[0].lastName,
+              role: "owner"
+            })
+           }
           })
           data.userMaintenance.forEach(maintenance => {
            var user = this.dataUser.filter(u => u.id == maintenance.userId)
-           projectUser.push({
-             userId: user[0].id,
-             userName: user[0].firstName,
-             userLastName: user[0].lastName,
-             role: "maintenance"
-           })
+           if(user.length > 0){
+            projectUser.push({
+              userId: user[0].id,
+              userName: user[0].firstName,
+              userLastName: user[0].lastName,
+              role: "maintenance"
+            })
+           }
           })
           this.projects.push({
              projectId: data.projectId,
