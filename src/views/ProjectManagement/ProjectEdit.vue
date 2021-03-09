@@ -221,20 +221,24 @@ export default {
         this.ProjectDetail = result.projectDetail;
         result.userMaintenance.forEach((data) => {
           var user = this.dataUser.filter((e) => e.id === data.userId);
-          this.valueMaintenance.push({
-            id: user[0].id,
-            name: `${user[0].firstName} ${user[0].lastName}`,
-          });
+          if(user.length > 0) {
+            this.valueMaintenance.push({
+              id: user[0].id,
+              name: `${user[0].firstName} ${user[0].lastName}`,
+            });
+          }
           // console.log("4545456456")
           // this.dataUser = this.dataUser.filter(e => e.id !== data.id)
           // console.log("sokdksdfkp[skf")
         });
         result.userOwner.forEach((data) => {
           var user = this.dataUser.filter((e) => e.id === data.userId);
-          this.valueOwner.push({
-            id: user[0].id,
-            name: `${user[0].firstName} ${user[0].lastName}`,
-          });
+          if(user.length > 0){
+            this.valueOwner.push({
+              id: user[0].id,
+              name: `${user[0].firstName} ${user[0].lastName}`,
+            });
+          }
         });
         console.log("set list user");
         this.dataUser.forEach((data) => {

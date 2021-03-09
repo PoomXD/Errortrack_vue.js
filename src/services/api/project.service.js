@@ -3,6 +3,21 @@ import httpClient from "../httpClient";
 const END_POINT = "/Project";
 
 class ProjectService {
+  async refreshToken(param) {
+    console.log("in api refreshToken");
+    const config = {
+      method: "post",
+      url: `${END_POINT}/refreshToken`,
+      data: param,
+      headers: {
+        "content-type": "application/json",
+      },
+    };
+
+    const response = await httpClient(config);
+
+    return response.data;
+  }
   async addProject(param) {
     console.log("in api");
     const config = {

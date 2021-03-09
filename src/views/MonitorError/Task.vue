@@ -190,6 +190,7 @@
               size="xl"
               class="font-gen"
               hide-footer
+              scrollable
               @hidden="doSomethingOnHidden"
             >
               <ModalForTask :indexError="task.errId" :projectId="projectId"></ModalForTask>

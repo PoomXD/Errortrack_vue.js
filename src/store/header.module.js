@@ -4,7 +4,7 @@ const state = {
       name: "ListProject",
       data: [
         {
-          name: "Project Managemant",
+          name: "Project Management",
           url: "#",
         },
       ],
@@ -13,7 +13,7 @@ const state = {
       name: "ProjectAdd",
       data: [
         {
-          name: "Project Managemant",
+          name: "Project Management",
           url: { name: "ListProject" },
         },
 
@@ -27,7 +27,7 @@ const state = {
       name: "ProjectEdit",
       data: [
         {
-          name: "Project Managemant",
+          name: "Project Management",
           url: { name: "ListProject" },
         },
         {
@@ -45,7 +45,7 @@ const state = {
       name: "ProjectDetail",
       data: [
         {
-          name: "Project Managemant",
+          name: "Project Management",
           url: { name: "ListProject" },
         },
         {

@@ -15,7 +15,7 @@
                 <!-- </b-form-input> -->
               </td>
               <td>
-                <b-button class="icon-search" 
+                <b-button class="icon-search"
                   ><font-awesome-icon :icon="['fas', 'search']"
                 /></b-button>
               </td>
@@ -29,14 +29,16 @@
         </div>
         <div class="col-3" v-if="true">
           <router-link :to="{ name: 'ProjectAdd' }">
-            <b-button class="w-100 bt-blue font-no-size-color" id="ProjectAdd_btn"
+            <b-button
+              class="w-100 bt-blue font-no-size-color"
+              id="ProjectAdd_btn"
               ><font-awesome-icon :icon="['fas', 'plus']" /> Add New
               Project</b-button
             >
           </router-link>
         </div>
       </div>
-      
+
       <div class="row margin-btw-content" id="card_contrain">
         <div
           class="col-lg-6 col-xl-4 col-12"
@@ -47,7 +49,7 @@
           <router-link
             :to="{
               name: 'ProjectDetail',
-              query:{ projectId: project.projectId },
+              query: { projectId: project.projectId },
             }"
           >
             <div class="card-list">
@@ -81,8 +83,7 @@
                               :size="30"
                               class="mr-left avatar-owner"
                               :text="getTextAvatar(user.userId)"
-                              ></b-avatar
-                            >
+                            ></b-avatar>
 
                             <b-popover
                               :target="`popover2-${index}-${user.userId}`"
@@ -97,8 +98,7 @@
                               :size="30"
                               class="mr-left avatar-user"
                               :text="getTextAvatar(user.userId)"
-                              ></b-avatar
-                            >
+                            ></b-avatar>
 
                             <b-popover
                               :target="`popover2-${index}-${user.userId}`"
@@ -139,20 +139,26 @@
 </template>
 
 <script>
-import ProjectService from '@/services/api/project.service';
+import ProjectService from "@/services/api/project.service";
 import { mapState } from "vuex";
 
 export default {
   name: "ListProject",
-  methods:{
+  methods: {
     getTextAvatar(id) {
       let text = "";
       this.dataUser.forEach((user) => {
         if (user.id === id) {
-
-          if (user.firstName != "" && user.lastName != "" && user.lastName != null) {
+          if (
+            user.firstName != "" &&
+            user.lastName != "" &&
+            user.lastName != null
+          ) {
             text = `${user.firstName[0]}${user.lastName[0]}`;
-          } else if (user.firstName != "" && (user.lastName == '' || user.lastName == null)) {
+          } else if (
+            user.firstName != "" &&
+            (user.lastName == "" || user.lastName == null)
+          ) {
             text = `${user.firstName[0]}`;
           } else {
             text = `Un`;
@@ -161,61 +167,60 @@ export default {
       });
       return text;
     },
-    async getListProject(userID){
-      await ProjectService.getListProjectByOwner(userID).then(result => {
-        this.ProjectList = result
-        console.log(result)
-        result.forEach(data => {
-          var projectUser = []
-          data.userOwner.forEach(owner => {
-           var user = this.dataUser.filter(u => u.id == owner.userId)
-           projectUser.push({
-             userId: user[0].id,
-             userName: user[0].firstName,
-             userLastName: user[0].lastName,
-             role: "owner"
-           })
-          })
-          data.userMaintenance.forEach(maintenance => {
-           var user = this.dataUser.filter(u => u.id == maintenance.userId)
-           projectUser.push({
-             userId: user[0].id,
-             userName: user[0].firstName,
-             userLastName: user[0].lastName,
-             role: "maintenance"
-           })
-          })
-          this.projects.push({
-             projectId: data.projectId,
-             projectName: data.projectName,
-             projectUser: projectUser,
-             
-           })
+    async getListProject(userID) {
+      await ProjectService.getListProjectByOwner(userID)
+        .then((result) => {
+          result.forEach((data) => {
+            var projectUser = [];
+            data.userOwner.forEach((owner) => {
+              var user = this.dataUser.filter((u) => u.id == owner.userId);
+              if (user.length > 0) {
+                projectUser.push({
+                  userId: user[0].id,
+                  userName: user[0].firstName,
+                  userLastName: user[0].lastName,
+                  role: "owner",
+                });
+              }
+            });
+            data.userMaintenance.forEach((maintenance) => {
+              var user = this.dataUser.filter((u) => u.id == maintenance.userId);
+              if (user.length > 0) {
+                projectUser.push({
+                  userId: user[0].id,
+                  userName: user[0].firstName,
+                  userLastName: user[0].lastName,
+                  role: "maintenance",
+                });
+              }
+            });
+            this.projects.push({
+              projectId: data.projectId,
+              projectName: data.projectName,
+              projectUser: projectUser,
+            });
+          });
+          // this.projects = result;
         })
-        // this.projects = result;
-
-      }).catch(err => {
-
-      });
-    }
+        .catch((err) => {});
+    },
   },
   data() {
     return {
       Id: null,
       projects: [],
-       user: [],
+      user: [],
       filter: "",
       users: [],
-      userMoreThan3: '',
-      ProjectList:null,
+      userMoreThan3: "",
     };
   },
-  async mounted(){
+  async mounted() {
     await this.getListProject(localStorage.getItem("userId"));
     this.$store.dispatch("header/setAllLinkHeader", "ListProject");
     this.$store.dispatch("sidebar/setActiveNav", "project");
   },
-  
+
   computed: {
     ...mapState({
       dataUser: (store) => store.user.users,

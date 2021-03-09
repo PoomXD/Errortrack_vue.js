@@ -278,8 +278,12 @@
           :icon="['fas', 'comment-dots']"
         />
       </div>
-      <div class="p-2 font-gen2 mx-2">Comment</div>
-      <div class="p-2 font-detail">
+      <div v-if="errorDetail.comment.length > 1" class="p-2 font-gen2 mx-2">Comments</div>
+      <div v-else class="p-2 font-gen2 mx-2">Comment</div>
+      <div v-if="errorDetail.comment.length > 1" class="p-2 font-detail">
+        ( {{ errorDetail.comment.length }} Comments )
+      </div>
+      <div v-else class="p-2 font-detail">
         ( {{ errorDetail.comment.length }} Comment )
       </div>
     </div>
@@ -398,7 +402,7 @@
             <b-form-textarea
               :id="`EditComment${message.commentId}`"
               no-resize
-              class="border-0 textaera"
+              class="border-0 textaera font-detail"
               v-model="commentEdit"
             >
             </b-form-textarea>
@@ -481,7 +485,11 @@ export default {
         if (result.comment == null) {
           this.errorDetail.comment = [];
         } else {
-          this.errorDetail.comment = JSON.parse(result.comment);
+          // console.log("comment all",result.comment)
+          for (let index = JSON.parse(result.comment).length-1; index > 0; index--) {
+            console.log(JSON.parse(result.comment)[index]);
+            this.errorDetail.comment.push(JSON.parse(result.comment)[index])
+          }
         }
 
         if (result.userAssignment == null) {
@@ -749,7 +757,11 @@ export default {
         this.addComment(commentParam).then((res) => {
           if (res.status) {
             ErrorService.getComment(this.errorDetail.errorId).then((com) => {
-              this.errorDetail.comment = com;
+              console.log("comment ",com)
+              this.errorDetail.comment = []
+              for (let index = com.length-1; index > 0; index--) {
+                this.errorDetail.comment.push(com[index]);
+              }
               this.commentInput = "";
             });
           }
