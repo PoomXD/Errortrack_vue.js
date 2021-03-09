@@ -28,7 +28,7 @@
               </p>
             </div>
           </div>
-          <div class="row">
+          <!-- <div class="row">
             <div class="col-4 text-right">
               <p class="font-weight-bold font-gen">Service ID :</p>
             </div>
@@ -37,7 +37,7 @@
                 {{ serviceDetail.serviceId }}
               </p>
             </div>
-          </div>
+          </div> -->
         </div>
         <div class="col-xl-6 col-lg-12">
           <div class="row">

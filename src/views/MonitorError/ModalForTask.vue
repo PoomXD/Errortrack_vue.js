@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div class="container" id="ModalForTask">
     <div class="row px-1 mb-2">
       <div class="col-xl-7 col-lg-12">
         <div class="row">
@@ -744,6 +744,7 @@ export default {
         this.addComment(commentParam).then((res) => {
           if (res.status) {
             ErrorService.getComment(this.errorDetail.errorId).then((com) => {
+              console.log("comment ",com)
               this.errorDetail.comment = com;
               this.commentInput = "";
             });

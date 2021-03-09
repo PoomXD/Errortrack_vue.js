@@ -53,6 +53,17 @@
         border: 1px solid $btBorderColorGrey;
     }
 }
+.bt-cancel-blue-no-size{
+    background: $white;
+    border: 1px solid $blue;
+    border-radius: 6px;
+    color: $blue !important;
+    &:hover {
+        background: $blue;
+        color: white !important;
+        border: 1px solid $blue;
+    }
+}
 .bt-cancel-blue {
     width: 150px;
     background: $white;
