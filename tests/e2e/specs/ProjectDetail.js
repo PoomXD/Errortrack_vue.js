@@ -1,28 +1,28 @@
 describe("ProjectDetail", () => { 
     
- 
-      beforeEach(()=>{
- 
-        cy.intercept('GET','**/getListErrorStatus',{fixture: 'ErrorStatus.json'}).as('GetErrorStatus')
+  beforeEach(()=>{
+     
+    cy.intercept('GET','**/getListErrorStatus',{fixture: 'ErrorStatus.json'}).as('GetErrorStatus')
+    // cy.intercept('GET','**/getListErrorByServiceId?',{fixture: 'ErrorStatus.json'}).as('GetErrorStatusByID2')
 
-        cy.intercept('GET','**/getListErrorByServiceId?serviceId=1',{fixture: 'TaskError.json'}).as('GetErrorStatusByID2')
-        cy.intercept('GET','**/getListErrorByServiceId',{fixture: 'TaskError.json'}).as('TaskError')
+    cy.intercept('GET','**/getListErrorByServiceId*',{fixture: 'TaskError.json'}).as('TaskError')
+
+    cy.intercept('GET','**/getListProjectByOwner?*',{fixture: 'GetListProject.json'}).as('GetProjectByOwner')
+    cy.intercept('GET','**/getListProject?*',{fixture: 'GetListProjectAll.json'}).as('GetListProject')
+    // cy.intercept('GET','**/getProject',{fixture: 'GetListProject.json'}).as('GetProject')
+    cy.intercept('GET','**/getProject?*',{fixture: 'Projectid.json'}).as('GetProject2')
+
+    cy.intercept('GET','**/getListUser',{fixture: 'getlistUser.json'}).as('ListUser')
     
-        cy.intercept('GET','**/getListProjectByOwner?*',{fixture: 'GetListProject.json'}).as('GetProjectByOwner')
-        cy.intercept('GET','**/getListProject?*',{fixture: 'GetListProject.json'}).as('GetListProject')
-        cy.intercept('GET','**/getProject*',{fixture: 'GetListProject.json'}).as('GetProject')
-        //cy.intercept('GET','**/getProject*',{fixture: 'GetListProject.json'}).as('GetProject2')
-    
-        cy.intercept('GET','**/getListUser',{fixture: 'getlistUser.json'}).as('ListUser')
-        
-        cy.intercept('GET','**/getService?*',{fixture: 'Service.json'}).as('ServiceID')
-        cy.intercept('GET','**/getListService?*',{fixture: 'Service.json'}).as('ServiceByProject')
-    
-        cy.customlogin();
-      })
+    cy.intercept('GET','**/getService?*',{fixture: 'Serviceobj.json'}).as('ServiceID')
+    cy.intercept('GET','**/getListService?*',{fixture: 'Service.json'}).as('ServiceByProject')
+
+    cy.customlogin();
+  })  
       
   it("ProjectDetail", () => {
   cy.visit('http://localhost:8080/home/project/list')
+
    //-------------Check_Card------------//
    
    visible = false;
@@ -46,7 +46,6 @@ describe("ProjectDetail", () => {
    cy.get('#Edit_Button > a > .btn').click()
    cy.url().should('eq','http://localhost:8080/home/project/edit?projectId=1')
    cy.get('.row > .col-xl > .d-flex > .p-2:nth-child(2) > a:nth-child(1)').click()
-   cy.url().should('eq','http://localhost:8080/home/project/detail?projectId=1')
 
    cy.get('#info').scrollTo('bottom').wait(500)
    cy.get('#search > table > tr > td > #ServiceSearch').type('3')

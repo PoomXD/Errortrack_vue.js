@@ -1,17 +1,32 @@
 describe("Monitor_List", () => {
-  it("Error", () => {
-    cy.visit('http://localhost:8080/home/monitor/list',{
-      onBeforeLoad: function (window) {
-        window.localStorage.setItem('access_token',
-         'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiIwOGQ4YzliYy1lZTNjLTQzZTItOGQzMi03YzlhN2Y0NTJkYmMiLCJleHAiOjE2MTUxNzQ5MzIsImlzcyI6InBpZXNvZnQtZXJyb3ItdHJhY2tpbmciLCJhdWQiOiIxc2Q0c2Q1YTJjZHM0NDVhZnZkMSJ9.5-F1FTpobmPU04BCh-kFrYkRvXBatCThEaB8m3aMZuw');
-        window.localStorage.setItem('refresh_token',
-          'uT/SnzpNsM4uslr+Rb9jlb73uwOrOTKBx59HIRUgoH2/TfnI+7dxnaDVWVrp+2ZWrjq4j8bmcdVHDeEGqQp3bA==');
-        window.localStorage.setItem('userId', '08d8c9bc-ee3c-43e2-8d32-7c9a7f452dbc');
-      }
-     }).wait(1000)
+      beforeEach(()=>{
+     
+        cy.intercept('GET','**/getListErrorStatus',{fixture: 'ErrorStatus.json'}).as('GetErrorStatus')
+        // cy.intercept('GET','**/getListErrorByServiceId?',{fixture: 'ErrorStatus.json'}).as('GetErrorStatusByID2')
+    
+        cy.intercept('GET','**/getListErrorByServiceId*',{fixture: 'TaskError.json'}).as('TaskError')
+    
+        // cy.intercept('GET','**/getListProjectByOwner?*',{fixture: 'GetListProject.json'}).as('GetProjectByOwner')
+        cy.intercept('GET','**/getListProject?*',{fixture: 'GetListProjectAll.json'}).as('GetListProject')
+        // cy.intercept('GET','**/getProject',{fixture: 'GetListProject.json'}).as('GetProject')
+        cy.intercept('GET','**/getProject?*',{fixture: 'Projectid.json'}).as('GetProject2')
+    
+        cy.intercept('GET','**/getListUser',{fixture: 'getlistUser.json'}).as('ListUser')
+        
+        cy.intercept('GET','**/getService?*',{fixture: 'Serviceobj.json'}).as('ServiceID')
+        cy.intercept('GET','**/getListService?*',{fixture: 'Service.json'}).as('ServiceByProject')
+    
+        cy.customlogin();
+      })  
+
+    it("Error", () => {
+
+    cy.visit('http://localhost:8080/home/monitor/list')
+  
     cy.url().should('eq','http://localhost:8080/home/monitor/list')
 
     //-------------Check_Card------------//
+
     visible = false;
     for (i = 0; i < 6; i++) {
     cy.get('#card_contrain').then($card => {
@@ -30,8 +45,8 @@ describe("Monitor_List", () => {
     }
   
     cy.get('.input-search').type('4')
-    cy.get('#project-1').should('not.exist')
     cy.get('#project-2').should('not.exist')
+    cy.get('#project-3').should('not.exist')
 
     cy.get('.input-search').clear().type('project 1')
     cy.get('#project-0').click()

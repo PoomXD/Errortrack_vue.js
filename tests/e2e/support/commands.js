@@ -28,6 +28,8 @@ Cypress.Commands.add('customlogin', () => {
     //console.log('data',data);
     window.localStorage.setItem('refresh_token', 'refresh_token_data')
     window.localStorage.setItem('access_token', 'access_token_data')
+    window.localStorage.setItem('password', 'Bb@2541')
+    window.localStorage.setItem('username', 'GameKanna')
     window.localStorage.setItem('userId', '08d8c9bc-ee3c-43e2-8d32-7c9a7f452dbc')
 
 });

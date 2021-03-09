@@ -7,7 +7,7 @@ describe("Project_list", () => {
     cy.intercept('GET','**/getListErrorByServiceId*',{fixture: 'TaskError.json'}).as('TaskError')
 
     cy.intercept('GET','**/getListProjectByOwner?*',{fixture: 'GetListProject.json'}).as('GetProjectByOwner')
-    // cy.intercept('GET','**/getListProject?*',{fixture: 'GetListProject.json'}).as('GetListProject')
+    cy.intercept('GET','**/getListProject?*',{fixture: 'GetListProjectAll.json'}).as('GetListProject')
     // cy.intercept('GET','**/getProject',{fixture: 'GetListProject.json'}).as('GetProject')
     cy.intercept('GET','**/getProject?*',{fixture: 'Projectid.json'}).as('GetProject2')
 
@@ -52,6 +52,6 @@ describe("Project_list", () => {
    
    cy.get('#info').scrollTo('bottom').wait(500)
    cy.get('tbody > tr:nth-child(1) > .text-center > .icon-list > .svg-inline--fa').click().wait(2000)
-  //  cy.get('.row > .col-xl > .d-flex > .p-2 > a:nth-child(2)').first().click()
+   cy.get('.row > .col-xl > .d-flex > .p-2 > a:nth-child(2)').first().click()
     });
  });
