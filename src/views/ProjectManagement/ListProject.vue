@@ -134,6 +134,7 @@
     </div>
     <!-- {{projects}} -->
     <!-- {{ dataUser }} -->
+    <!-- {{ProjectList}} -->
   </div>
 </template>
 
@@ -162,7 +163,8 @@ export default {
     },
     async getListProject(userID){
       await ProjectService.getListProjectByOwner(userID).then(result => {
-  
+        this.ProjectList = result
+        console.log(result)
         result.forEach(data => {
           var projectUser = []
           data.userOwner.forEach(owner => {
@@ -205,6 +207,7 @@ export default {
       filter: "",
       users: [],
       userMoreThan3: '',
+      ProjectList:null,
     };
   },
   async mounted(){
