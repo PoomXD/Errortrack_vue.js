@@ -1,5 +1,4 @@
-[
-    {
+ {
         "projectId": 1,
         "projectName": "project 1",
         "projectDetail": "project detail test",
@@ -28,5 +27,5 @@
                 "userId": "08d8c9a8-6a9f-40a3-8d16-436a8e1b36ab"
             }
         ]
-    }   
-]
+    }
+   

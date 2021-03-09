@@ -47,5 +47,12 @@
         "firstName": "Aristeaz",
         "lastName": "",
         "passwordHash": "AQAAAAEAACcQAAAAEMWLjLh6kk6HAV5Mezldrwhhe+HebE05arDygj/GSpgc5Ilr03WoBaA4TPQ1Z/5D7w=="
+    },
+    {
+        "id": "08d8cd8d-1095-441a-8301-423df2412be8",
+        "userName": "test",
+        "firstName": "test",
+        "lastName": null,
+        "passwordHash": "AQAAAAEAACcQAAAAEHEmlGv6ldLujc9Wb/kRBowc9pIFplJpGd8UDPIxuwjNg0++aR0Az9Mz5AvdFy1U+Q=="
     }
 ]

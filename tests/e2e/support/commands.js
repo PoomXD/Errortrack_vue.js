@@ -23,6 +23,7 @@
 //
 // -- This is will overwrite an existing command --
 // Cypress.Commands.overwrite("visit", (originalFn, url, options) => { ... })
+
 Cypress.Commands.add('customlogin', () => { 
     //console.log('data',data);
     window.localStorage.setItem('refresh_token', 'refresh_token_data')
