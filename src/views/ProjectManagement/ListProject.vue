@@ -134,6 +134,7 @@
     </div>
     <!-- {{projects}} -->
     <!-- {{ dataUser }} -->
+    <!-- {{ProjectList}} -->
   </div>
 </template>
 

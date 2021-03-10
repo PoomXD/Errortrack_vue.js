@@ -190,6 +190,7 @@
               size="xl"
               class="font-gen"
               hide-footer
+              scrollable
               @hidden="doSomethingOnHidden"
             >
               <ModalForTask :indexError="task.errId" :projectId="projectId"></ModalForTask>
@@ -240,6 +241,7 @@ export default {
           this.serviceDetail.userMainten = res.userMaintenance;
         });
         this.getListError(result.serviceId);
+        console.log(this.serviceDetail)
       });
     },
     getNameUser(userId) {

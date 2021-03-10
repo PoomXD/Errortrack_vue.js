@@ -1,0 +1,22 @@
+[
+    {
+        "errorStatusId": 1,
+        "errorStatusName": "Waiting"
+    },
+    {
+        "errorStatusId": 2,
+        "errorStatusName": "To Do"
+    },
+    {
+        "errorStatusId": 3,
+        "errorStatusName": "Doing"
+    },
+    {
+        "errorStatusId": 4,
+        "errorStatusName": "Testing"
+    },
+    {
+        "errorStatusId": 5,
+        "errorStatusName": "Done"
+    }
+]
