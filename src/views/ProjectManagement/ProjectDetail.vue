@@ -1,14 +1,14 @@
 <template>
   <div class="ProjectDetail">
     <!-- {{ Project_ID }} -->
-    <div id="Edit_Button">
+    <div>
       <router-link
         :to="{
           name: 'ProjectEdit',
           query: { projectId: Project_ID },
         }"
       >
-        <b-button class="bt-blue float-right" style="width: 90px">
+        <b-button class="bt-blue float-right" style="width: 90px" data-testid="Edit_Button">
           <font-awesome-icon :icon="['fas', 'edit']" /> Edit</b-button
         ></router-link
       >

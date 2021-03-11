@@ -7,7 +7,7 @@ describe("Header_Sidebar", () => {
       cy.intercept('GET','**/getListErrorByServiceId*',{fixture: 'TaskError.json'}).as('TaskError')
   
       cy.intercept('GET','**/getListProjectByOwner?*',{fixture: 'listproject-project.json'}).as('GetProjectByOwner')
-      cy.intercept('GET','**/getListProject?*',{fixture: 'GetListProjectAll.json'}).as('GetListProject')
+      cy.intercept('GET','**/getListProject?*',{fixture: 'listproject-project.json'}).as('GetListProject')
       // cy.intercept('GET','**/getProject',{fixture: 'GetListProject.json'}).as('GetProject')
       cy.intercept('GET','**/getProject?*',{fixture: 'Projectid.json'}).as('GetProject2')
   
@@ -18,20 +18,21 @@ describe("Header_Sidebar", () => {
   
       cy.customlogin();
     })
+
     it("Header_Sidebar", () => {
      cy.visit('http://localhost:8080/home/project/list')
 
     //------------------Sidebar-----------------//
 
-     cy.get('.navigation-icon').should('not.visible')
+     cy.get('[data-testid="navigation-icon"]').should('not.visible')
      cy.viewport(1000, 660).wait(1000)
-     cy.get('.sidebar').should('not.visible')
-     cy.get('.navigation-icon').should('be.visible').wait(500).click()
-     cy.get('.sidebar').should('be.visible')
+     cy.get('[data-testid="sidebar"]').should('not.visible')
+     cy.get('[data-testid="navigation-icon"]').should('be.visible').wait(500).click()
+     cy.get('[data-testid="sidebar"]').should('be.visible')
 
      cy.get('.sidebar > .mt-4 > .nav > li:nth-child(1) > a').click()
      cy.url().should('eq','http://localhost:8080/home/monitor/list')
-     cy.get('.sidebar > .mt-4 > .nav > li:nth-child(2) > a').click()
+     cy.get('.sidebar > .mt-4 > .nav > li:nth-child(2) > a').click().wait(500)
      cy.url().should('eq','http://localhost:8080/home/project/list')
 
      //------------------header-----------------//
@@ -41,10 +42,10 @@ describe("Header_Sidebar", () => {
       cy.url().should('eq','http://localhost:8080/home/monitor/list')
 
       cy.visit('http://localhost:8080/home/project/detail?projectId=1').wait(800)
-      cy.get('.row > .col-xl > .d-flex > .p-2 > a:nth-child(1)').first().click()
+      cy.get('.row > .col-xl > .d-flex > .p-2 > a:nth-child(2)').first().click()
       cy.url().should('eq','http://localhost:8080/home/project/list')
 
-      cy.get('#dropdown').click()
+      cy.get('[data-testid="dropdown"]').click()
       cy.get('.dropdown-menu > li > .dropdown-item > .h-100').click()
       cy.url().should('eq','http://localhost:8080/login/')
 

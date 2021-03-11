@@ -7,7 +7,7 @@ describe("Monitor_List", () => {
         cy.intercept('GET','**/getListErrorByServiceId*',{fixture: 'TaskError.json'}).as('TaskError')
     
         // cy.intercept('GET','**/getListProjectByOwner?*',{fixture: 'listproject-project.json'}).as('GetProjectByOwner')
-        cy.intercept('GET','**/getListProject?*',{fixture: 'listproject-project.json'}).as('GetListProject')
+        cy.intercept('GET','**/getListProject?*',{fixture: 'listproject-error.json'}).as('GetListProject')
         // cy.intercept('GET','**/getProject',{fixture: 'GetListProject.json'}).as('GetProject')
         cy.intercept('GET','**/getProject?*',{fixture: 'Projectid.json'}).as('GetProject2')
     
@@ -29,7 +29,7 @@ describe("Monitor_List", () => {
 
     visible = false;
     for (i = 0; i < 6; i++) {
-    cy.get('#card_contrain').then($card => {
+    cy.get('[data-testid="card_contrain"]').then($card => {
 
       if($card.is(':visible')){
           visible = true;
@@ -44,14 +44,12 @@ describe("Monitor_List", () => {
      }
     }
   
-    cy.get('#ProjectAdd_btn').should('not.exist')
-
-    cy.get('.input-search').type('4')
+    cy.get('[data-testid="searchBox"]').type('4')
     cy.get('#project-2').should('not.exist')
     cy.get('#project-3').should('not.exist')
 
-    cy.get('.input-search').clear().type('project 1')
-    cy.get('#project-0 > a > .card-list > .table-grid > tr > .float-left > .row > div').should('have.length','7')
+    cy.get('[data-testid="searchBox"]').clear().type('project 1')
+    cy.get('#project-0 > a > .card-list > .table-grid > tr > .float-left > .row > [data-testid="Member"]').should('have.length','8')
     cy.get('#project-0').click()
    
     cy.get('tbody > tr:nth-child(1) > .text-center > .icon-list > .svg-inline--fa').click().wait(2000)

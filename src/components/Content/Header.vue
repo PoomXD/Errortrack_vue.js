@@ -66,7 +66,7 @@
               toggle-class="text-decoration-none"
               no-caret
               class="no-focus"
-              id="dropdown"
+              data-testid="dropdown"
             >
               <template #button-content>
                 <font-awesome-icon :icon="['fas', 'angle-down']" />

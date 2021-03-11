@@ -9,6 +9,7 @@
           <h1 class="title-font text-center mt-5 mb-5">Sign In</h1>
           <b-form-input
             @keyup.enter="clickLogin()"
+            data-testid="username"
             id="username"
             v-model="username"
             placeholder="Username"
@@ -16,6 +17,7 @@
           ></b-form-input>
           <b-form-input
             @keyup.enter="clickLogin()"
+            data-testid="password"
             id="password"
             v-model="password"
             type="password"
@@ -24,6 +26,7 @@
           ></b-form-input>
           <div
             class="alert-incorrect"
+            data-testid="alert-incorrect"
             id="alert-incorrect"
             :style="{ display: 'none' }"
           >
@@ -32,7 +35,7 @@
           <b-form-checkbox
             class="mt-3 float-left"
             v-model="checkBoxKeepMeSingnedIn"
-            id="checkbox-1"
+            data-testid="checkbox-1"
             name="checkbox-1"
             value="true"
             unchecked-value="false"

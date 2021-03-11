@@ -104,7 +104,7 @@
                 <div class="col-3 text-right font-gen">Project Details :</div>
                 <div class="col-8 font-detail">
                   <b-form-textarea
-                    id="ProjectDetail"
+                    data-testid="ProjectDetail"
                     type="text"
                     class="shadow-sm"
                     v-model="ProjectDetail"
