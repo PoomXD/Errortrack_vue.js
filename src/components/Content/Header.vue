@@ -13,7 +13,7 @@
               :icon="['fas', 'desktop']"
             />
             <font-awesome-icon
-              v-if="val.name == 'Project Managemant' && index == 0"
+              v-if="val.name == 'Project Management' && index == 0"
               :icon="['far', 'check-square']"
             />
             <font-awesome-icon

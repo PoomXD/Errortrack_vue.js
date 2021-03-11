@@ -4,10 +4,25 @@ const END_POINT = "/Project";
 
 class ProjectService {
   async refreshToken(param) {
-    console.log("in api refreshToken");
+    console.log("in api refreshToken",param);
     const config = {
       method: "post",
       url: `${END_POINT}/refreshToken`,
+      data: param,
+      headers: {
+        "content-type": "application/json",
+      },
+    };
+
+    const response = await httpClient(config);
+
+    return response.data;
+  }
+  async revokeToken(param) {
+    console.log("in api revokeToken",param);
+    const config = {
+      method: "post",
+      url: `${END_POINT}/revokeToken`,
       data: param,
       headers: {
         "content-type": "application/json",
