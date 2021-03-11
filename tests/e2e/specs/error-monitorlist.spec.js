@@ -44,11 +44,14 @@ describe("Monitor_List", () => {
      }
     }
   
+    cy.get('#ProjectAdd_btn').should('not.exist')
+
     cy.get('.input-search').type('4')
     cy.get('#project-2').should('not.exist')
     cy.get('#project-3').should('not.exist')
 
     cy.get('.input-search').clear().type('project 1')
+    cy.get('#project-0 > a > .card-list > .table-grid > tr > .float-left > .row > div').should('have.length','7')
     cy.get('#project-0').click()
    
     cy.get('tbody > tr:nth-child(1) > .text-center > .icon-list > .svg-inline--fa').click().wait(2000)
