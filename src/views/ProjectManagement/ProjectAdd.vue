@@ -25,7 +25,7 @@
                 <div class="col-3 text-right font-gen">Project Name* :</div>
                 <div class="col-8">
                   <b-form-input
-                    id='Project_Name'
+                    id="Project_Name"
                     v-model.trim="$v.projectName.$model"
                     placeholder="Project Name"
                     type="text"
@@ -51,7 +51,7 @@
                 <div class="col-3 text-right font-gen">Project Owner* :</div>
                 <div class="col-8 font-detail">
                   <multiselect
-                    id='Project_Owner'
+                    id="Project_Owner"
                     class="shadow-sm multiselect"
                     :class="{
                       'multiselect-invalid': !$v.valueOwner.required && save,
@@ -72,6 +72,31 @@
                   </div>
                 </div>
               </div>
+
+              <div
+                class="row mb-3 form-group"
+                
+              >
+                <div class="col-3 text-right font-gen">Expires Date* :</div>
+                <div class="col-8 font-detail">
+                  <b-form-datepicker
+                  class="font-detail shadow-sm"
+                    :class="{
+                      'input-invalid': !$v.exp.required && save,
+                    }"
+                    
+                    v-model.trim="$v.exp.$model"
+                    :min="min"
+                  ></b-form-datepicker>
+                  <div
+                    class="error font-invalid"
+                    id="exp_required"
+                    v-if="!$v.exp.required && save"
+                  >
+                    Expires Date is required
+                  </div>
+                </div>
+              </div>
             </div>
             <!---------------------------------------- detail ----------------------------------------->
             <div class="col-lg-12 col-xl-6">
@@ -79,7 +104,7 @@
                 <div class="col-3 text-right font-gen">Project Details :</div>
                 <div class="col-8 font-detail">
                   <b-form-textarea
-                    id='ProjectDetail'
+                    id="ProjectDetail"
                     type="text"
                     class="shadow-sm"
                     v-model="ProjectDetail"
@@ -167,13 +192,13 @@
 
 <script>
 import Multiselect from "vue-multiselect";
-import ProjectService from '@/services/api/project.service';
-import { required, minLength } from "vuelidate/lib/validators";
+import ProjectService from "@/services/api/project.service";
+import { required} from "vuelidate/lib/validators";
 import { mapState } from "vuex";
 
 export default {
   name: "ProjectAdd",
-  
+
   computed: {
     ...mapState({
       dataUser: (store) => store.user.users,
@@ -192,13 +217,25 @@ export default {
     valueOwner: {
       required,
     },
+    exp:{
+      required,
+    }
   },
   data() {
+    const now = new Date();
+    const today = new Date(
+      now.getFullYear(),
+      now.getMonth(),
+      now.getDate() + 1
+    );
+    const minDate = new Date(today);
     return {
+      min: minDate,
       save: false,
       projectName: "",
       ProjectDetail: "",
       value: null,
+      exp: "",
       listUserMaintenance: [],
       listUserOwner: [],
       valueMaintenance: [],
@@ -207,13 +244,13 @@ export default {
   },
   mounted() {
     this.$store.dispatch("header/setAllLinkHeader", "ProjectAdd");
-    this.dataUser.forEach(data => {
+    this.dataUser.forEach((data) => {
       this.listUserOwner.push({
         id: data.id,
-        name: `${data.firstName} ${data.lastName}`
-      })
-    })
-    this.listUserMaintenance = this.listUserOwner
+        name: `${data.firstName} ${data.lastName}`,
+      });
+    });
+    this.listUserMaintenance = this.listUserOwner;
 
     this.$store.dispatch("sidebar/setActiveNav", "project");
   },
@@ -262,10 +299,11 @@ export default {
           projectDetail: this.ProjectDetail,
           userOwner: ownerId,
           userMaintenance: maintenanceId,
+          expiresDate: this.exp,
         };
         console.log("param : ");
         console.log(param);
-        await ProjectService.addProject(param)
+        await ProjectService.addProject(param);
         this.$router.push({ name: "ListProject" });
       }
     },
