@@ -1,0 +1,56 @@
+[
+    {
+        "errorId": 2,
+        "errorDetail": "Error 500 Bad Request",
+        "comment": "[{\"commentId\":5,\"userId\":\"08d8c9bc-ee3c-43e2-8d32-7c9a7f452dbc\",\"commentDetail\":\"test123\",\"commentDate\":\"2021-03-08T02:25:10.2779564Z\"}]",
+        "errorStatusId": 5,
+        "errorStatusName": "Done",
+        "errorParameter": "parameter",
+        "userAssignment": null
+    },
+    {
+        "errorId": 3,
+        "errorDetail": "Error 880 Bad Request",
+        "comment": "[{\"commentId\":2,\"userId\":\"08d8c9bc-ee3c-43e2-8d32-7c9a7f452dbc\",\"commentDetail\":\"A2\",\"commentDate\":\"2021-03-08T10:24:43.2783224Z\"},{\"commentId\":3,\"userId\":\"08d8c9bc-ee3c-43e2-8d32-7c9a7f452dbc\",\"commentDetail\":\"A3 ทดทด\",\"commentDate\":\"2021-03-08T11:01:40.7793606+00:00\"},{\"commentId\":4,\"userId\":\"08d8c9a8-6a71-4e25-8aeb-89a0a292779f\",\"commentDetail\":\"ทดสอบคอมเมนท์\",\"commentDate\":\"2021-03-08T10:56:32.4092855Z\"},{\"commentId\":5,\"userId\":\"08d8c9bc-ee3c-43e2-8d32-7c9a7f452dbc\",\"commentDetail\":\"1234\",\"commentDate\":\"2021-03-08T10:58:15.2916512Z\"}]",
+        "errorStatusId": 3,
+        "errorStatusName": "Doing",
+        "errorParameter": "parameter",
+        "userAssignment": null
+    },
+    {
+        "errorId": 4,
+        "errorDetail": "Error 501 Bad Request",
+        "comment": "[]",
+        "errorStatusId": 2,
+        "errorStatusName": "To Do",
+        "errorParameter": "parameter",
+        "userAssignment": null
+    },
+    {
+        "errorId": 5,
+        "errorDetail": "Error 500 Bad Request",
+        "comment": null,
+        "errorStatusId": 5,
+        "errorStatusName": "Done",
+        "errorParameter": "parameter",
+        "userAssignment": null
+    },
+    {
+        "errorId": 6,
+        "errorDetail": "Error 400 Bad Request",
+        "comment": null,
+        "errorStatusId": 1,
+        "errorStatusName": "Waiting",
+        "errorParameter": "parameter",
+        "userAssignment": null
+    },
+    {
+        "errorId": 8,
+        "errorDetail": "My History Error Detail 2",
+        "comment": null,
+        "errorStatusId": 2,
+        "errorStatusName": "To Do",
+        "errorParameter": "My history Error Parameter ",
+        "userAssignment": null
+    }
+]

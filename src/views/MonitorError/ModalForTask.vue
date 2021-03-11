@@ -110,6 +110,7 @@
           <div class="col-xl-8 col-lg-12 font-detail">
             <b-form-select
               v-model="selected"
+              id="Error_Status"
               :options="options"
               @change="confirmChange()"
             ></b-form-select>
@@ -310,11 +311,13 @@
           ></b-form-textarea>
           <div class="d-flex justify-content-end">
             <b-button
+              id="cancel"
               class="m-2 comment-size-buttom bt-cancel-grey"
               @click="commentInput = ''"
               >Cancel</b-button
             >
             <b-button
+              id="savecomment"
               class="m-2 comment-size-buttom bt-green"
               @click="saveComment()"
               >Save</b-button
@@ -357,6 +360,7 @@
           >
             <a
               class="fontColor-comment mr-4 cursor-pointer font-detail"
+              id="Edit"
               @click="
                 editComment(
                   message.commentDetail,
@@ -368,6 +372,7 @@
               Edit
             </a>
             <a
+              id="Delete"
               class="fontColor-comment cursor-pointer font-detail"
               @click="delComment(message.commentId)"
             >

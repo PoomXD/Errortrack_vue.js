@@ -241,6 +241,7 @@ export default {
           this.serviceDetail.userMainten = res.userMaintenance;
         });
         this.getListError(result.serviceId);
+        console.log(this.serviceDetail)
       });
     },
     getNameUser(userId) {

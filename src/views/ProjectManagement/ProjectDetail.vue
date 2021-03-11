@@ -292,8 +292,8 @@ export default {
       // ],
       fields: [
         { key: "No", thStyle: { width: "5%" } },
-        { key: "Service_Name", thStyle: { width: "65%" } },
-        { key: "Create_Date", thStyle: { width: "10%" } },
+        { key: "Service_Name", thStyle: { width: "60%" } },
+        { key: "Create_Date", thStyle: { width: "15%" } },
         {
           key: "Service_Detail",
           thStyle: { width: "20%" },
@@ -376,6 +376,7 @@ export default {
     getDetail(projectId) {
       ProjectService.getProject(projectId).then((result) => {
         console.log("detail", result);
+        console.log(result.userMaintenance)
         this.Project_ID = result.projectId;
         this.Project_Detail = result.projectDetail;
         this.Project_Name = result.projectName;

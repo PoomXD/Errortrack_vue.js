@@ -1,14 +1,33 @@
 describe("Monitor_List", () => {
-  it("Error", () => {
+      beforeEach(()=>{
+     
+        cy.intercept('GET','**/getListErrorStatus',{fixture: 'ErrorStatus.json'}).as('GetErrorStatus')
+        // cy.intercept('GET','**/getListErrorByServiceId?',{fixture: 'ErrorStatus.json'}).as('GetErrorStatusByID2')
+    
+        cy.intercept('GET','**/getListErrorByServiceId*',{fixture: 'TaskError.json'}).as('TaskError')
+    
+        // cy.intercept('GET','**/getListProjectByOwner?*',{fixture: 'GetListProject.json'}).as('GetProjectByOwner')
+        cy.intercept('GET','**/getListProject?*',{fixture: 'GetListProjectAll.json'}).as('GetListProject')
+        // cy.intercept('GET','**/getProject',{fixture: 'GetListProject.json'}).as('GetProject')
+        cy.intercept('GET','**/getProject?*',{fixture: 'Projectid.json'}).as('GetProject2')
+    
+        cy.intercept('GET','**/getListUser',{fixture: 'getlistUser.json'}).as('ListUser')
+        
+        cy.intercept('GET','**/getService?*',{fixture: 'Serviceobj.json'}).as('ServiceID')
+        cy.intercept('GET','**/getListService?*',{fixture: 'Service.json'}).as('ServiceByProject')
+    
+        cy.customlogin();
+      })  
 
-    cy.visit('http://localhost:8080/login')
-    cy.get('#username').type('GameKanna')
-    cy.get('#password').type('Bb@2541')
-    cy.get('#checkbox-1').check({force: true})
-    cy.get('.pl-5').click().wait(1000)
-    cy.visit('http://localhost:8080/home/monitor/list').wait(1000)
+    it("Error", () => {
+
+    cy.visit('http://localhost:8080/home/monitor/list')
+  
     cy.url().should('eq','http://localhost:8080/home/monitor/list')
+
     //-------------Check_Card------------//
+
+    visible = false;
     for (i = 0; i < 6; i++) {
     cy.get('#card_contrain').then($card => {
 
@@ -16,7 +35,6 @@ describe("Monitor_List", () => {
           visible = true;
       }else{
           cy.reload().log('reload').wait(1000)
-          visible = false;
         }     
       });
       if(visible = true){
@@ -27,15 +45,13 @@ describe("Monitor_List", () => {
     }
   
     cy.get('.input-search').type('4')
-    cy.get('#project-1').should('not.exist')
     cy.get('#project-2').should('not.exist')
+    cy.get('#project-3').should('not.exist')
 
     cy.get('.input-search').clear().type('project 1')
     cy.get('#project-0').click()
-  
-    cy.get('.navigation-icon').should('not.visible')
    
-    cy.get('tbody > tr:nth-child(1) > td:nth-child(2) > a').click().wait(2000)
+    cy.get('tbody > tr:nth-child(1) > .text-center > .icon-list > .svg-inline--fa').click().wait(2000)
     cy.get('.row > .col-xl > .d-flex > .p-2 > a:nth-child(2)').first().click()
      
   
