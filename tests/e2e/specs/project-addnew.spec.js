@@ -1,11 +1,25 @@
 describe("Project_Add", () => { 
-    it("Home", () => {
+    beforeEach(()=>{
  
-   cy.visit('http://localhost:8080/login')
-   cy.get('#username').type('GameKanna')
-   cy.get('#password').type('Bb@2541')
-   cy.get('#checkbox-1').check({force: true})
-   cy.get('.pl-5').click().wait(2000)
+        cy.intercept('GET','**/getListErrorStatus',{fixture: 'error-status.json'}).as('GetErrorStatus')
+        // cy.intercept('GET','**/getListErrorByServiceId?',{fixture: 'ErrorStatus.json'}).as('GetErrorStatusByID2')
+    
+        cy.intercept('GET','**/getListErrorByServiceId*',{fixture: 'TaskError.json'}).as('TaskError')
+    
+        cy.intercept('GET','**/getListProjectByOwner?*',{fixture: 'listproject-project.json'}).as('GetProjectByOwner')
+        cy.intercept('GET','**/getListProject?*',{fixture: 'listproject-project.json'}).as('GetListProject')
+        // cy.intercept('GET','**/getProject',{fixture: 'GetListProject.json'}).as('GetProject')
+        cy.intercept('GET','**/getProject?*',{fixture: 'Projectid.json'}).as('GetProject2')
+    
+        cy.intercept('GET','**/getListUser',{fixture: 'getlistUser.json'}).as('ListUser')
+        
+        cy.intercept('GET','**/getService?*',{fixture: 'Serviceobj.json'}).as('ServiceID')
+        cy.intercept('GET','**/getListService?*',{fixture: 'Service.json'}).as('ServiceByProject')
+    
+        cy.customlogin();
+      })
+      it("NewProject", () => {
+       cy.visit('http://localhost:8080/home/project/list')
  
    cy.reload()
  
@@ -55,7 +69,7 @@ describe("Project_Add", () => {
      cy.get('.col-lg-12 > .row > .col-8 > .multiselect > .multiselect__tags').click()
      cy.get('.row > .col-8 > .multiselect > .multiselect__tags > .multiselect__input').type('typeing test')
 
-     cy.get('#Name_required').should('not.visible') 
+     //cy.get('#Name_required').should('not.visible') 
      cy.get('#Owner_required').should('not.visible')
     });
  });

@@ -1,0 +1,26 @@
+[
+    {
+        "fileId": 92,
+        "fileName": "1",
+        "fileRename": "32202192555AM1.jpg",
+        "pathName": "/home/jelastic/APP/uploads/32202192555AM1.jpg",
+        "fileSize": "65886",
+        "errorId": 2
+    },
+    {
+        "fileId": 93,
+        "fileName": "2",
+        "fileRename": "32202192635AM1.jpg",
+        "pathName": "/home/jelastic/APP/uploads/32202192635AM1.jpg",
+        "fileSize": "65886",
+        "errorId": 2
+    },
+    {
+        "fileId": 96,
+        "fileName": "4",
+        "fileRename": "34202130616AM1.png",
+        "pathName": "/home/jelastic/APP/uploads/34202130616AM1.png",
+        "fileSize": "94670",
+        "errorId": 2
+    }
+]
