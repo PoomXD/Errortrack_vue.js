@@ -146,7 +146,11 @@
           </div>
           <div class="col text-left pl-4">
             <!-- <router-link :to="{ name: 'ListProject' }"> -->
-            <b-button type="submit" class="bt-blue font-no-size-color" data-testid="Save-btn">
+            <b-button
+              type="submit"
+              class="bt-blue font-no-size-color"
+              data-testid="Save-btn"
+            >
               Save
             </b-button>
             <!-- </router-link> -->
@@ -160,16 +164,17 @@
 
 <script>
 import ProjectService from "@/services/api/project.service";
+import UserService from "@/services/api/user.service";
 import Multiselect from "vue-multiselect";
 import { required, minLength } from "vuelidate/lib/validators";
-import { mapState } from "vuex";
+// import { mapState } from "vuex";
 import Swal from "sweetalert2";
 export default {
   name: "ProjectAdd",
   computed: {
-    ...mapState({
-      dataUser: (store) => store.user.users,
-    }),
+    // ...mapState({
+    //   dataUser: (store) => store.user.users,
+    // }),
   },
   component: {
     multiselect: Multiselect,
@@ -195,8 +200,9 @@ export default {
       valueOwner: [],
     };
   },
-  mounted() {
+  async mounted() {
     console.log(this.$route.query.projectId);
+    await this.getListUser();
     this.getDetailProject(this.$route.query.projectId);
     this.$store.dispatch(
       "header/setQueryLinkHeader",
@@ -206,6 +212,11 @@ export default {
   },
 
   methods: {
+    async getListUser() {
+      await UserService.getListUser().then((res) => {
+        this.users = res;
+      });
+    },
     alertOops() {
       Swal.fire({
         icon: "error",
@@ -215,39 +226,31 @@ export default {
     },
     getDetailProject(projectId) {
       ProjectService.getProject(projectId).then((result) => {
-        console.log("get for edit", result);
+        // console.log("get for edit", result);
         this.projectName = result.projectName;
         this.projectId = result.projectId;
         this.ProjectDetail = result.projectDetail;
         result.userMaintenance.forEach((data) => {
-          var user = this.dataUser.filter((e) => e.id === data.userId);
-          if(user.length > 0) {
-            this.valueMaintenance.push({
-              id: user[0].id,
-              name: `${user[0].firstName} ${user[0].lastName}`,
-            });
-          }
-          // console.log("4545456456")
-          // this.dataUser = this.dataUser.filter(e => e.id !== data.id)
-          // console.log("sokdksdfkp[skf")
-        });
-        result.userOwner.forEach((data) => {
-          var user = this.dataUser.filter((e) => e.id === data.userId);
-          if(user.length > 0){
-            this.valueOwner.push({
-              id: user[0].id,
-              name: `${user[0].firstName} ${user[0].lastName}`,
-            });
-          }
-        });
-        console.log("set list user");
-        this.dataUser.forEach((data) => {
-          this.listUserOwner.push({
-            id: data.id,
-            name: `${data.firstName} ${data.lastName}`,
+          this.valueMaintenance.push({
+            id: data.userId,
+            name: data.name,
           });
         });
-        let lm = this.listUserMaintenance;
+
+        result.userOwner.forEach((data) => {
+          this.valueOwner.push({
+            id: data.userId,
+            name: data.name,
+          });
+        });
+        console.log("set list user");
+        this.users.forEach((data) => {
+          this.listUserOwner.push({
+            id: data.userId,
+            name: data.name,
+          });
+        });
+        let lm = this.listUserOwner;
         let lo = this.listUserOwner;
         this.valueMaintenance.forEach((e) => {
           lm = lm.filter((data) => data.id !== e.id);
@@ -306,26 +309,26 @@ export default {
         // console.log(param);
         try {
           let response = await ProjectService.updateProject(param);
-          console.log('response',response)
+          console.log("response", response);
           if (response.status) {
             this.$router.push({
               name: "ProjectDetail",
               query: { projectId: this.projectId },
             });
           } else {
-            console.log(response)
+            console.log(response);
             this.alertOops();
           }
         } catch (ex) {
           this.alertOops();
-          console.log("CATCH",ex)
+          console.log("CATCH", ex);
         }
       }
     },
   },
   watch: {
     valueOwner: {
-      handler: function(val, oldVal) {
+      handler: function (val, oldVal) {
         this.value = null;
         let res = this.listUserOwner;
         val.forEach((e) => {

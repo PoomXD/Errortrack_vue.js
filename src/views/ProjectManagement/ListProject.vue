@@ -84,14 +84,14 @@
                               :id="`popover2-${index}-${user.userId}`"
                               :size="30"
                               class="mr-left avatar-owner"
-                              :text="getTextAvatar(user.userId)"
+                              :text="getTextAvatar(user.name)"
                             ></b-avatar>
 
                             <b-popover
                               :target="`popover2-${index}-${user.userId}`"
                               :placement="'bottom'"
                               triggers="hover focus"
-                              :content="`${user.userName} ${user.userLastName}`"
+                              :content="user.name"
                             ></b-popover>
                           </div>
                           <div v-else>
@@ -99,14 +99,14 @@
                               :id="`popover2-${index}-${user.userId}`"
                               :size="30"
                               class="mr-left avatar-user"
-                              :text="getTextAvatar(user.userId)"
+                              :text="getTextAvatar(user.name)"
                             ></b-avatar>
 
                             <b-popover
                               :target="`popover2-${index}-${user.userId}`"
                               :placement="'bottom'"
                               triggers="hover focus"
-                              :content="`${user.userName} ${user.userLastName}`"
+                              :content="user.name"
                             ></b-popover>
                           </div>
                         </div>
@@ -142,59 +142,56 @@
 
 <script>
 import ProjectService from "@/services/api/project.service";
-import { mapState } from "vuex";
+// import { mapState } from "vuex";
 
 export default {
   name: "ListProject",
   methods: {
-    getTextAvatar(id) {
-      let text = "";
-      this.dataUser.forEach((user) => {
-        if (user.id === id) {
-          if (
-            user.firstName != "" &&
-            user.lastName != "" &&
-            user.lastName != null
-          ) {
-            text = `${user.firstName[0]}${user.lastName[0]}`;
-          } else if (
-            user.firstName != "" &&
-            (user.lastName == "" || user.lastName == null)
-          ) {
-            text = `${user.firstName[0]}`;
-          } else {
-            text = `Un`;
-          }
-        }
-      });
-      return text;
+    getTextAvatar(name) {
+      if (name.split(" ").length === 2 && name.split(" ")[1] !== "") {
+        return `${name.split(" ")[0][0]}${name.split(" ")[1][0]}`;
+      } else if (name !== "") {
+        return name[0];
+      } else {
+        return "Un";
+      }
     },
     async getListProject(userID) {
       await ProjectService.getListProjectByOwner(userID)
         .then((result) => {
+          // console.log('list project', result)
           result.forEach((data) => {
             var projectUser = [];
             data.userOwner.forEach((owner) => {
-              var user = this.dataUser.filter((u) => u.id == owner.userId);
-              if (user.length > 0) {
-                projectUser.push({
-                  userId: user[0].id,
-                  userName: user[0].firstName,
-                  userLastName: user[0].lastName,
-                  role: "owner",
-                });
-              }
+              projectUser.push({
+                userId: owner.userId,
+                name: owner.name,
+                role: 'owner'
+              })
+              // var user = this.dataUser.filter((u) => u.id == owner.userId);
+              // if (user.length > 0) {
+              //   projectUser.push({
+              //     userId: user[0].id,
+              //     userName: user[0].firstName,
+              //     userLastName: user[0].lastName,
+              //     role: "owner",
+              //   });
+              // }
             });
             data.userMaintenance.forEach((maintenance) => {
-              var user = this.dataUser.filter((u) => u.id == maintenance.userId);
-              if (user.length > 0) {
-                projectUser.push({
-                  userId: user[0].id,
-                  userName: user[0].firstName,
-                  userLastName: user[0].lastName,
-                  role: "maintenance",
-                });
-              }
+              projectUser.push({
+                userId: maintenance.userId,
+                name: maintenance.name,
+              })
+              // var user = this.dataUser.filter((u) => u.id == maintenance.userId);
+              // if (user.length > 0) {
+              //   projectUser.push({
+              //     userId: user[0].id,
+              //     userName: user[0].firstName,
+              //     userLastName: user[0].lastName,
+              //     role: "maintenance",
+              //   });
+              // }
             });
             this.projects.push({
               projectId: data.projectId,
@@ -224,9 +221,9 @@ export default {
   },
 
   computed: {
-    ...mapState({
-      dataUser: (store) => store.user.users,
-    }),
+    // ...mapState({
+    //   dataUser: (store) => store.user.users,
+    // }),
     filteredRows() {
       return this.projects.filter((row) => {
         const projectName = row.projectName.toLowerCase();

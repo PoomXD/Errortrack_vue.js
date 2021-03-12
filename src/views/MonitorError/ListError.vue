@@ -81,15 +81,14 @@
                               :id="`popover2-${index}-${user.userId}`"
                               :size="30"
                               class="mr-left avatar-owner"
-                              :text="getTextAvatar(user.userId)"
-                              ></b-avatar
-                            >
+                              :text="getTextAvatar(user.name)"
+                            ></b-avatar>
 
                             <b-popover
                               :target="`popover2-${index}-${user.userId}`"
                               :placement="'bottom'"
                               triggers="hover focus"
-                              :content="`${user.userName} ${user.userLastName}`"
+                              :content="user.name"
                             ></b-popover>
                           </div>
                           <div v-else>
@@ -97,15 +96,14 @@
                               :id="`popover2-${index}-${user.userId}`"
                               :size="30"
                               class="mr-left avatar-user"
-                              :text="getTextAvatar(user.userId)"
-                              ></b-avatar
-                            >
+                              :text="getTextAvatar(user.name)"
+                            ></b-avatar>
 
                             <b-popover
                               :target="`popover2-${index}-${user.userId}`"
                               :placement="'bottom'"
                               triggers="hover focus"
-                              :content="`${user.userName} ${user.userLastName}`"
+                              :content="user.name"
                             ></b-popover>
                           </div>
                         </div>
@@ -139,83 +137,70 @@
 </template>
 
 <script>
-import ProjectService from '@/services/api/project.service';
+import ProjectService from "@/services/api/project.service";
 import { mapState } from "vuex";
 
 export default {
   name: "ListProject",
-  methods:{
-    getTextAvatar(id) {
-      let text = "";
-      this.dataUser.forEach((user) => {
-        if (user.id === id) {
-          if (user.firstName != "" && user.lastName != "") {
-            text = `${user.firstName[0]}${user.lastName[0]}`;
-          } else if (user.firstName != "" && user.lastName == "") {
-            text = `${user.firstName[0]}`;
-          } else {
-            text = `Un`;
-          }
-        }
-      });
-      return text;
+  methods: {
+    getTextAvatar(name) {
+      if (name.split(" ").length === 2 && name.split(" ")[1] !== "") {
+        return `${name.split(" ")[0][0]}${name.split(" ")[1][0]}`;
+      } else if (name !== "") {
+        return name[0];
+      } else {
+        return "Un";
+      }
     },
-    getListProject(userID){
-      ProjectService.getListProject(userID).then(result => {
-        result.forEach(data => {
-          var projectUser = []
-          data.userOwner.forEach(owner => {
-           var user = this.dataUser.filter(u => u.id == owner.userId)
-           if(user.length > 0){
-            projectUser.push({
-              userId: user[0].id,
-              userName: user[0].firstName,
-              userLastName: user[0].lastName,
-              role: "owner"
-            })
-           }
-          })
-          data.userMaintenance.forEach(maintenance => {
-           var user = this.dataUser.filter(u => u.id == maintenance.userId)
-           if(user.length > 0){
-            projectUser.push({
-              userId: user[0].id,
-              userName: user[0].firstName,
-              userLastName: user[0].lastName,
-              role: "maintenance"
-            })
-           }
-          })
-          this.projects.push({
-             projectId: data.projectId,
-             projectName: data.projectName,
-             projectUser: projectUser,
-             
-           })
+    getListProject(userID) {
+      ProjectService.getListProject(userID)
+        .then((result) => {
+          // console.log('list project', result)
+          result.forEach((data) => {
+            var projectUser = [];
+            data.userOwner.forEach((owner) => {
+              projectUser.push({
+                userId: owner.userId,
+                name: owner.name,
+                role: "owner",
+              });
+            });
+            data.userMaintenance.forEach((maintenance) => {
+              projectUser.push({
+                userId: maintenance.userId,
+                name: maintenance.name,
+                role: 'maintenance'
+              })
+            });
+            this.projects.push({
+              projectId: data.projectId,
+              projectName: data.projectName,
+              projectUser: projectUser,
+            });
+          });
+          // this.projects = result;
         })
-        // this.projects = result;
-
-      }).catch(err => {
-        console.log('error : ', err)
-      });
-    }
+        .catch((err) => {
+          console.log("error : ", err);
+        });
+    },
   },
   data() {
     return {
       Id: null,
       projects: [],
-       user: [],
+      user: [],
       filter: "",
       users: [],
-      userMoreThan3: '',
+      userMoreThan3: "",
     };
   },
-  mounted(){
+  mounted() {
     this.getListProject(localStorage.getItem("userId"));
     this.$store.dispatch("header/setAllLinkHeader", "MonitorList");
     this.$store.dispatch("sidebar/setActiveNav", "monitor");
   },
-  
+
   computed: {
     ...mapState({
       dataUser: (store) => store.user.users,
