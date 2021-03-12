@@ -35,7 +35,7 @@
                 :target="`popover-${index}-${user.userId}`"
                 :placement="'bottom'"
                 triggers="hover focus"
-                :content="getNameAvatar(user.userId)"
+                :content="user.name"
               ></b-popover>
             </div>
 
@@ -88,7 +88,7 @@
                       <b-avatar size="sm" class="avatar-owner">{{
                         userInList.text
                       }}</b-avatar>
-                      {{ userInList.userName }}
+                      {{ userInList.name }}
 
                       <div
                         v-if="userInList.selected == true"
@@ -298,7 +298,7 @@
               class="mr-3 font-no-size-color"
             ></b-avatar>
             <div class="align-middle font-gen">
-              {{ getNameUser(userLogin) }}
+              {{ userLogin.name }}
             </div>
           </b-col>
         </b-row>
@@ -436,9 +436,8 @@ import { mapState } from "vuex";
 import Swal from "sweetalert2";
 import ErrorService from "@/services/api/error.service";
 import FileService from "@/services/api/file.service";
-import ProjectService from "@/services/api/project.service";
+import ServiceService from "@/services/api/service.service";
 import moment from "moment";
-import axios from "axios";
 export default {
   methods: {
     NewTab(path) {
@@ -482,20 +481,22 @@ export default {
         this.errorDetail.errorId = result.errorId;
         this.errorDetail.errorDetail = result.errorDetail;
         this.selected = result.errorStatusId;
-        if (result.comment == null) {
-          this.errorDetail.comment = [];
-        } else {
-          // console.log("comment all",result.comment)
-          for (let index = JSON.parse(result.comment).length-1; index > 0; index--) {
-            console.log(JSON.parse(result.comment)[index]);
-            this.errorDetail.comment.push(JSON.parse(result.comment)[index])
-          }
-        }
-
+        // if (result.comment == null) {
+        //   this.errorDetail.comment = [];
+        // } else {
+        //   // console.log("comment all",result.comment)
+        //   for (let index = JSON.parse(result.comment).length-1; index > 0; index--) {
+        //     console.log(JSON.parse(result.comment)[index]);
+        //     this.errorDetail.comment.push(JSON.parse(result.comment)[index])
+        //   }
+        // }
+        this.errorDetail.comment = result.comment;
         if (result.userAssignment == null) {
           this.errorDetail.userAssignment = [];
         } else {
-          this.errorDetail.userAssignment = JSON.parse(result.userAssignment);
+          result.userAssignment.forEach((user) => {
+            this.errorDetail.userAssignment.push(user);
+          })
         }
 
         this.addPickUsers();
@@ -701,7 +702,9 @@ export default {
     },
     addPickUsers() {
       this.users = [];
-      ProjectService.getProject(this.projectId).then((result) => {
+      ServiceService.getService(this.servId).then((result) => {
+
+        console.log("getService ",result);
         result.userOwner.forEach((user) => {
           this.users.push(user);
         });
@@ -709,25 +712,24 @@ export default {
           this.users.push(user);
         });
 
-        this.dataUser.forEach((user) => {
-          this.users.forEach((us) => {
-            if (user.id === us.userId) {
-              let text = "";
-              if (user.firstName != "" && user.lastName != "") {
-                text = `${user.firstName[0]}${user.lastName[0]}`;
-              } else if (user.firstName != "" && user.lastName == "") {
-                text = `${user.firstName[0]}`;
-              } else {
-                text = `Un`;
-              }
-              let addToPick = {
-                userId: user.id,
-                userName: `${user.firstName} ${user.lastName}`,
-                text: text,
-                selected: false,
-              };
-              this.pickUsers.push(addToPick);
+        this.users.forEach((user) => {
+          let text = "";
+          if(user.name != ""){
+            let uName = user.name.split(" ");
+            if(uName.length == 2){
+              text = `${uName[0][0]}${uName[1][0]}`;
+            }else if(uName.length == 1){
+              text = `${uName[0][0]}`;
             }
+          }else{
+            text = "Un";
+          }
+
+          this.pickUsers.push({
+            userId: user.userId,
+            userName: user.name,
+            text: text,
+            selected: false
           });
         });
 
@@ -817,10 +819,10 @@ export default {
   },
   props: {
     indexError: {
-      type: [Number],
+      type: [String],
     },
-    projectId: {
-      type: [Number],
+    servId: {
+      type: [String],
     },
   },
   name: "modal-task",
@@ -866,6 +868,8 @@ export default {
     this.getError(this.indexError);
     this.getListFile(this.indexError);
     this.userLogin = localStorage.getItem("userId");
+
+    console.log("userLogin : ", this.userLogin);
   },
 };
 </script>
