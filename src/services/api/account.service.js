@@ -1,20 +1,15 @@
 import httpClient from "../httpClient";
 import { TokenService } from "../storage.service";
-//import * as _utils from '../utils.service';
+import Swal from "sweetalert2";
 
 const END_POINT = "Login";
 
 class AccountService {
   async login(user) {
-    console.log('login')
-    const params = {
+      const params = {
       UserName: user.username,
       Password: user.password,
     };
-
-    // const data = _utils.request.objToFormData(params);
-    // const json = JSON.stringify(params);
-
     const config = {
       method: "post",
       url: `${END_POINT}`,
@@ -23,9 +18,19 @@ class AccountService {
         "content-type": "application/json",
       },
     };
+    
+    try {
 
-    const response = await httpClient(config);
-    console.log("login():response", response);
+      const response = await httpClient(config);
+
+    } catch (error) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Server not ready',
+      })
+    }
+    
+    
     let _return;
     
 
@@ -50,8 +55,6 @@ class AccountService {
         status: response.status,
       };
     }
-    console.log("Token : ", TokenService.getToken())
-    console.log("refreshToken : ",TokenService.getRefreshToken())
     return _return;
   }
 
@@ -92,7 +95,6 @@ class AccountService {
     };
   
     const response = await httpClient(config);
-    console.log("Response : ",response)
 
     if (response && response.data && response.status === 200) {
       const { accessToken, refreshToken } = response.data.data;
@@ -119,7 +121,6 @@ class AccountService {
 
     const response = await httpClient(config);
 
-    console.log("res:changepassword", response);
 
     if (response && response.data && response.resStatusCode === 200) {
       const { status } = response.data;

@@ -111,8 +111,7 @@ export default {
     await this.getErrorStatus();
   },
   mounted() {
-    // this.getListUser();
-    // this.getErrorStatus();
+    
   },
   data() {
     return {
@@ -122,8 +121,7 @@ export default {
   computed: {
     ...mapState({
       header: (state) => state.header.allLinkHeader,
-      dataUser: (store) => store.user.users,
-    }),
+      }),
   },
   methods: {
     clickLogOut() {
@@ -133,13 +131,11 @@ export default {
       this.$router.push({ name: "Login" });
     },
     goto(url) {
-      // console.log("url", url);
+      
       this.$router.push(url);
     },
     getTextAvatar(userName) {
-      // console.log("user name = ", userName);
-      // console.log("user name = ", userName.split(" "));
-      // return 'Un'
+
       if (userName.split(" ").length === 2 && userName.split(" ")[1] !== "") {
         return `${userName.split(" ")[0][0]}${userName.split(" ")[1][0]}`;
       } else if (userName !== "") {
@@ -149,16 +145,7 @@ export default {
       }
     },
     async getListUser() {
-      await this.$store.dispatch("user/getUser");
-
-      var user = this.dataUser.filter(
-        (data) => data.id === localStorage.getItem("userId")
-      );
-      if (user[0].lastName !== null) {
-        this.userName = `${user[0].firstName} ${user[0].lastName}`;
-      }else{
-        this.userName = user[0].firstName
-      }
+      this.userName = await this.$store.dispatch("user/getUser");
     },
     async getErrorStatus() {
       await this.$store.dispatch("errorStatus/getErrorStatus");

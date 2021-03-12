@@ -50,6 +50,7 @@
                 <td class="pl-5">Log In</td>
                 <td class="float-right">
                   <font-awesome-icon :icon="['fas', 'arrow-right']" />
+                   <!-- <b-spinner variant="light" label="Spinning"></b-spinner> -->
                 </td>
               </tr>
             </table>
@@ -101,7 +102,6 @@ export default {
         password: this.password,
       };
       this.$store.dispatch("account/login", data).then((res) => {
-        console.log("Res: ", res);
         if (res.data.status) {
           this.getUserIDFromJson();
           if (this.checkBoxKeepMeSingnedIn === "true") {
