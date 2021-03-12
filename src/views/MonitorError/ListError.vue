@@ -73,6 +73,7 @@
                       <div
                         v-for="(user, i) in project.projectUser"
                         :key="`user-${index}-${i}`"
+                        data-testid="Member"
                       >
                         <div v-if="i < 3">
                           <div v-if="user.role === 'owner'">

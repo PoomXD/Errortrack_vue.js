@@ -2,7 +2,7 @@ describe("Monitor_Detail_Task", () => {
   beforeEach(()=>{
  
     cy.intercept('GET','**/getListErrorStatus',{fixture: 'error-status.json'}).as('GetErrorStatus')
-    cy.intercept('GET','**/getError?errorId=2',{fixture: 'error-object.json'}).as('GetErrorByErrorID')
+    cy.intercept('GET','**/getError?errorId=2',{fixture: 'error-get.json'}).as('GetErrorByErrorID')
     cy.intercept('GET','**/getListErrorByServiceId*',{fixture: 'TaskError.json'}).as('TaskError')
     // cy.intercept('GET','**/updateUserAndErrorStatus',{fixture: 'updateErrorStatus.json'}).as('UpdateError')
 
@@ -21,7 +21,7 @@ describe("Monitor_Detail_Task", () => {
     cy.intercept('PUT','**/updateUserAndErrorStatus',{statusCode: 200}).as('UpdateError')
     cy.intercept('PUT','**/addComment',{fixture: 'addComment.json'}).as('addcomment')
     cy.intercept('PUT','**/updateComment',{fixture: 'updateComment.json'}).as('updatecomment')
-    cy.intercept('get','**/getComment*',{fixture: 'getComment.json'}).as('getcomment')
+    cy.intercept('get','**/getComment*',{fixture: 'comment-get.json'}).as('getcomment')
     cy.intercept('PUT','**/deleteComment',{ statusCode: 200}).as('deletecomment')
 
     cy.customlogin();
@@ -34,7 +34,7 @@ describe("Monitor_Detail_Task", () => {
 
    visible = false;
    for (i = 0; i < 6; i++) {
-    cy.get('#card_contrain').then($card => {
+    cy.get('[data-testid="card_contrain"]').then($card => {
 
       if($card.is(':visible')){
           visible = true
@@ -47,14 +47,14 @@ describe("Monitor_Detail_Task", () => {
      }
     }
    
-   cy.get('.input-search').clear().type('project 1')
+   cy.get('[data-testid="input-search"]').clear().type('project 1')
    cy.get('#project-0').click()
 
-   cy.get('#info').scrollTo('bottom').wait(200)
+   cy.get('[data-testid="info"]').scrollTo('bottom').wait(200)
    
    cy.get('tbody > tr:nth-child(1) > .text-center > .icon-list > .svg-inline--fa').click()
    cy.url().should('eq','http://localhost:8080/home/monitor/task?serviceId=1')
-   cy.get('#info').scrollTo('bottom').wait(200)
+   cy.get('[data-testid="info"]').scrollTo('bottom').wait(200)
 
    var i = -1;
    cy.get('#checkbox-group-1 > .custom-control').each(()=>{
@@ -68,7 +68,7 @@ describe("Monitor_Detail_Task", () => {
    cy.get('#checkbox-group-1 > .custom-control').eq(i--).click().wait(100)
 
    })
-   cy.get('#info').scrollTo('bottom').wait(500)
+   cy.get('[data-testid="info"]').scrollTo('bottom').wait(500)
    cy.get('.row > .col-xl-3:nth-child(1) > .card > .card-body').click()
    
    cy.get('.row > .col-9 > #dropdown-member > #dropdown-member__BV_toggle_ > .no-color').scrollIntoView().click().wait(500)
@@ -91,25 +91,25 @@ describe("Monitor_Detail_Task", () => {
    cy.get('#cancel').click().wait(500)
    cy.get('#Comment > .card-list').scrollIntoView().type('test3')
    cy.get('#savecomment').click().wait(500)
-   cy.get('.pl-5 > #Comment > #comment5 > .d-flex > #Edit').scrollIntoView().click()
-   cy.get('#EditComment5').clear().type('test')
-   cy.get('#Comment > #editComment5 > .card-list > .d-flex > .bt-green').click()
+   cy.get('.pl-5 > #Comment > #comment9 > .d-flex > #Edit').scrollIntoView().click()
+   cy.get('#EditComment9').clear().type('test')
+   cy.get('#Comment > #editComment9 > .card-list > .d-flex > .bt-green').click().click()
   //  cy.get('.pl-5 > #Comment > #comment5 > .d-flex > #Edit').scrollIntoView().click().click()
   //  cy.get('#EditComment5').clear().type('test123')
   //  cy.get('#Comment > #editComment5 > .card-list > .d-flex > .bt-green').click()
-   cy.get('.pl-5 > #Comment > #comment5 > .d-flex > #Delete').scrollIntoView().first().click()
+   cy.get('.pl-5 > #Comment > #comment9 > .d-flex > #Delete').scrollIntoView().first().click()
    cy.get('.modal-open > .swal2-container > .swal2-popup > .swal2-actions > .swal2-confirm').click()
    cy.get('#modalPopover2 > .modal-dialog > #modalPopover2___BV_modal_content_ > #modalPopover2___BV_modal_header_ > .close').click()
 
-   cy.get('#info').scrollTo('bottom').wait(500)
+   cy.get('[data-testid="info"]').scrollTo('bottom').wait(500)
   
-   for( n = 1 ; n < 6 ; n++ ){
-   var num = n.toString();
-   cy.get('.row > .col-xl-3:nth-child(1) > .card > .card-body').click()
-   cy.get('.row > .col-xl-5 > .row > .col-xl-8 > #Error_Status').select(num)
-   cy.get('.modal-open > .swal2-container > .swal2-popup > .swal2-actions > .swal2-confirm').click()
-   cy.get('#modalPopover2 > .modal-dialog > #modalPopover2___BV_modal_content_ > #modalPopover2___BV_modal_header_ > .close').click()
-   cy.get('#info').scrollTo('bottom').wait(500)
-  }
+  //  for( n = 1 ; n < 6 ; n++ ){
+  //  var num = n.toString();
+  //  cy.get('.row > .col-xl-3:nth-child(1) > .card > .card-body').click()
+  //  cy.get('.row > .col-xl-5 > .row > .col-xl-8 > #Error_Status').select(num)
+  //  cy.get('.modal-open > .swal2-container > .swal2-popup > .swal2-actions > .swal2-confirm').click()
+  //  cy.get('#modalPopover2 > .modal-dialog > #modalPopover2___BV_modal_content_ > #modalPopover2___BV_modal_header_ > .close').click()
+  //  cy.get('[data-testid="info"]').scrollTo('bottom').wait(500)
+  // }
     });
  });

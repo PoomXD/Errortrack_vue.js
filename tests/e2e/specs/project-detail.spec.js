@@ -27,7 +27,7 @@ describe("ProjectDetail", () => {
    
    visible = false;
    for (i = 0; i < 6; i++) {
-    cy.get('#card_contrain').then($card => {
+    cy.get('[data-testid="card_contrain"]').then($card => {
 
       if($card.is(':visible')){
           visible = true

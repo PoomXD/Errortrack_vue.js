@@ -44,11 +44,11 @@ describe("Monitor_List", () => {
      }
     }
   
-    cy.get('[data-testid="searchBox"]').type('4')
+    cy.get('[data-testid="input-search"]').type('4')
     cy.get('#project-2').should('not.exist')
     cy.get('#project-3').should('not.exist')
 
-    cy.get('[data-testid="searchBox"]').clear().type('project 1')
+    cy.get('[data-testid="input-search"]').clear().type('project 1')
     cy.get('#project-0 > a > .card-list > .table-grid > tr > .float-left > .row > [data-testid="Member"]').should('have.length','8')
     cy.get('#project-0').click()
    

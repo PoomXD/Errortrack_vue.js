@@ -33,6 +33,7 @@
             <b-button
               class="w-100 bt-blue font-no-size-color"
               id="ProjectAdd_btn"
+              data-testid="ProjectAdd_btn"
               ><font-awesome-icon :icon="['fas', 'plus']" /> Add New
               Project</b-button
             >
