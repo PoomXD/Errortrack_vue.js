@@ -11,6 +11,7 @@
                   :placeholder="'Project Search ...'"
                   v-model="filter"
                   class="input-search font-no-size-color px-1"
+                  data-testid="input-search"
                 />
                 <!-- </b-form-input> -->
               </td>
@@ -32,6 +33,7 @@
             <b-button
               class="w-100 bt-blue font-no-size-color"
               id="ProjectAdd_btn"
+              data-testid="ProjectAdd_btn"
               ><font-awesome-icon :icon="['fas', 'plus']" /> Add New
               Project</b-button
             >
@@ -39,7 +41,7 @@
         </div>
       </div>
 
-      <div class="row margin-btw-content" id="card_contrain">
+      <div class="row margin-btw-content" data-testid="card_contrain">
         <div
           class="col-lg-6 col-xl-4 col-12"
           v-for="(project, index) in filteredRows"

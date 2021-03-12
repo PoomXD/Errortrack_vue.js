@@ -20,7 +20,7 @@
                 <div class="col-3 text-right font-gen">Project Name* :</div>
                 <div class="col-8">
                   <b-form-input
-                    id="Project_Name"
+                    data-testid="Project_Name"
                     v-model.trim="$v.projectName.$model"
                     placeholder="Project Name"
                     type="text"
@@ -31,7 +31,7 @@
                   ></b-form-input>
                   <div
                     class="error font-invalid"
-                    id="error-invalid"
+                    data-testid="error-invalid"
                     v-if="!$v.projectName.required && save"
                   >
                     Project Name is required
@@ -73,7 +73,7 @@
                 <div class="col-3 text-right font-gen">Project Details :</div>
                 <div class="col-8 font-detail">
                   <b-form-textarea
-                    id="ProjectDetail"
+                    data-testid="EditDetail"
                     type="text"
                     class="shadow-sm"
                     v-model="ProjectDetail"
@@ -146,7 +146,7 @@
           </div>
           <div class="col text-left pl-4">
             <!-- <router-link :to="{ name: 'ListProject' }"> -->
-            <b-button type="submit" class="bt-blue font-no-size-color">
+            <b-button type="submit" class="bt-blue font-no-size-color" data-testid="Save-btn">
               Save
             </b-button>
             <!-- </router-link> -->

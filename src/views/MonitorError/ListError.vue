@@ -11,6 +11,7 @@
                   :placeholder="'Project Search ...'"
                   v-model="filter"
                   class="input-search font-no-size-color px-1"
+                  data-testid="input-search"
                 />
                 <!-- </b-form-input> -->
               </td>
@@ -36,7 +37,7 @@
           </router-link>
         </div> -->
       </div>
-      <div class="row margin-btw-content" id="card_contrain">
+      <div class="row margin-btw-content" data-testid="card_contrain">
         <div
           class="col-lg-6 col-xl-4 col-12"
           v-for="(project, index) in filteredRows"
@@ -72,6 +73,7 @@
                       <div
                         v-for="(user, i) in project.projectUser"
                         :key="`user-${index}-${i}`"
+                        data-testid="Member"
                       >
                         <div v-if="i < 3">
                           <div v-if="user.role === 'owner'">

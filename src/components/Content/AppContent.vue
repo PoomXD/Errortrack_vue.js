@@ -1,5 +1,5 @@
 <template>
-  <div class="content-wrapper background" style="overflow: auto;" id="info"> 
+  <div class="content-wrapper background" style="overflow: auto;" data-testid="info"> 
     
     <div v-if="!mobileView">
       <app-header class="col" style="position: fixed;"/>
@@ -9,12 +9,12 @@
       style="position: fixed; padding-left: 3rem;"/>
     </div>
 
-    <div class="navigation-icon col" :class="{'openNav2':showNav,'closeNav2':!showNav}" @click="showNav = !showNav">
+    <div class="navigation-icon col" :class="{'openNav2':showNav,'closeNav2':!showNav}" @click="showNav = !showNav" data-testid="navigation-icon">
           <font-awesome-icon :icon="['fas', 'bars']"/>
     </div>
 
-    <div class="sidebar" :class="{'openNav':mobileView,'closeNav':!mobileView}">
-      <div class="sidebar" :class="{'openNav2':showNav,'closeNav2':!showNav}">
+    <div class="sidebar" :class="{'openNav':mobileView,'closeNav':!mobileView}" >
+      <div class="sidebar" :class="{'openNav2':showNav,'closeNav2':!showNav}" data-testid="sidebar">
         <app-sidebar style="position: fixed;"/>
       </div>
     </div>

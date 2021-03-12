@@ -1,14 +1,14 @@
 <template>
   <div class="ProjectDetail">
     <!-- {{ Project_ID }} -->
-    <div id="Edit_Button">
+    <div>
       <router-link
         :to="{
           name: 'ProjectEdit',
           query: { projectId: Project_ID },
         }"
       >
-        <b-button class="bt-blue float-right" style="width: 90px">
+        <b-button class="bt-blue float-right" style="width: 90px" data-testid="Edit_Button">
           <font-awesome-icon :icon="['fas', 'edit']" /> Edit</b-button
         ></router-link
       >
@@ -18,17 +18,16 @@
     <br />
     <div class="card-list" id="cardlist">
       <div class="row">
-        <!-- <div class="col"></div> -->
-        <div class="col">
-          <div class="row mb-3 mt-3">
+        <div class="col-xl-6 col-md-12">
+          <div class="row mt-3">
             <div
-              class="col-xl-2 col-md-3 font-gen text-right"
+              class="col-xl-4 col-md-3 font-gen text-right"
               :class="{ move: mobileView }"
               style="font-weight: bold"
             >
               Token :
             </div>
-            <div class="col-xl-4 col-md-7 font-detail" align="left">
+            <div class="font-detail" align="left">
               <b-input-group>
                 <b-form-input
                   type="text"
@@ -42,10 +41,7 @@
                   <b-button class="bt-cancel-blue-no-size" @click="copy()">
                     <font-awesome-icon :icon="['fas', 'copy']" />
                   </b-button>
-                  <b-button
-                    class="bt-blue-no-size"
-                    @click="refresh(Project_ID)"
-                  >
+                  <b-button class="bt-blue-no-size" @click="revoke(Project_ID)">
                     <font-awesome-icon :icon="['fas', 'sync']" />
                   </b-button>
                 </b-input-group-append>
@@ -54,7 +50,48 @@
             </div>
           </div>
         </div>
+        <div class="col-xl-6 col-md-12">
+          <div class="row mt-3">
+            <div
+              class="col-xl-4 col-md-3 font-gen text-right"
+              :class="{ move: mobileView }"
+              style="font-weight: bold"
+            >
+              Update Exp :
+            </div>
+            <div class="font-detail" align="left">
+              <b-input-group>
+                <b-form-datepicker
+                  class="font-detail shadow-sm"
+                  :class="{
+                    'input-invalid': !$v.date.required && save,
+                  }"
+                  v-model.trim="$v.date.$model"
+                  :min="min"
+                ></b-form-datepicker>
+                
+
+                <b-input-group-append>
+                  <b-button
+                    class="bt-blue-no-size"
+                    @click="refresh(Project_ID, date)"
+                  >
+                    <font-awesome-icon :icon="['fas', 'arrow-alt-circle-up']" />
+                  </b-button>
+                </b-input-group-append>
+              </b-input-group>
+              <div
+                  class="error font-invalid"
+                  id="exp_required"
+                  v-if="!$v.date.required && save"
+                >
+                  Expires Date is required
+                </div>
+            </div>
+          </div>
+        </div>
       </div>
+
       <div class="row">
         <div class="col-xl-6 col-md-12">
           <div class="row mb-3 mt-3">
@@ -65,7 +102,7 @@
             >
               Project ID :
             </div>
-            <div class="col-xl-6 col-md-7 font-detail" align="left">
+            <div class="font-detail" align="left">
               {{ Project_ID }}
             </div>
           </div>
@@ -77,7 +114,7 @@
             >
               Project Name :
             </div>
-            <div class="col-xl-5 col-md-7 font-detail" align="left">
+            <div class="font-detail" align="left">
               {{ Project_Name }}
             </div>
           </div>
@@ -91,7 +128,7 @@
               Project Details :
             </div>
             <div
-              class="col-xl-6 col-md-7 font-detail"
+              class="font-detail"
               :class="{ go_up: mobileView }"
               align="left"
             >
@@ -109,7 +146,7 @@
             >
               Project Owner :
             </div>
-            <div class="col-xl-8 col-md-7 font-detail" align="left">
+            <div class="font-detail" align="left">
               <tr
                 v-for="(Project_Owner, index) in Project_Owner"
                 :key="`Project_Owner-${index}`"
@@ -126,7 +163,7 @@
             >
               User Maintenance :
             </div>
-            <div class="col-xl-5 col-md-7 font-detail" align="left">
+            <div class="font-detail" align="left">
               <tr
                 v-for="(Member, index) in User_Maintenance"
                 :key="`Member-${index}`"
@@ -190,6 +227,7 @@
 import ProjectService from "@/services/api/project.service";
 import ServiceService from "@/services/api/service.service";
 import { mapState } from "vuex";
+import { required } from "vuelidate/lib/validators";
 import moment from "moment";
 
 export default {
@@ -224,8 +262,23 @@ export default {
       this.$store.dispatch("sidebar/setActiveNav", "project");
     }
   },
+  validations: {
+    date: {
+      required,
+    },
+  },
   data() {
+    const now = new Date();
+    const today = new Date(
+      now.getFullYear(),
+      now.getMonth(),
+      now.getDate() + 1
+    );
+    const minDate = new Date(today);
     return {
+      save: false,
+      min: minDate,
+      date: "",
       token: "",
       exp: null,
       mobileView: true,
@@ -288,10 +341,24 @@ export default {
       );
       return moment(JSON.parse(jsonPayload).exp * 1000).format("MM/DD/YYYY");
     },
-    async refresh(projectId) {
-      console.log("refresh token PID :", projectId);
-      await ProjectService.refreshToken({ projectId: projectId });
-      this.getDetail(projectId);
+    async revoke(projectId) {
+      await ProjectService.revokeToken({ projectId: projectId });
+    },
+    async refresh(projectId, date) {
+      this.save = true;
+      this.$v.$touch();
+      if (this.$v.$invalid) {
+        console.log("invalid field");
+      } else {
+        console.log("refresh token PID :", projectId);
+        await ProjectService.refreshToken({
+          projectId: projectId,
+          expiresDate: date,
+        });
+        this.date = ''
+        this.save = false
+        this.getDetail(projectId);
+      }
     },
     copy() {
       var copyText = this.$refs.copyText;
@@ -315,18 +382,20 @@ export default {
         this.Project_Name = result.projectName;
         this.token = result.token;
         this.exp = this.parseJwt(this.token);
+        this.User_Maintenance = []
         result.userMaintenance.forEach((e) => {
           var user = this.dataUser.filter((data) => data.id === e.userId);
           console.log("user : ", user);
-          if(user.length > 0){
+          if (user.length > 0) {
             this.User_Maintenance.push({
               name: `${user[0].firstName} ${user[0].lastName}`,
             });
           }
         });
+        this.Project_Owner = []
         result.userOwner.forEach((e) => {
           var user = this.dataUser.filter((data) => data.id === e.userId);
-          if(user.length > 0){
+          if (user.length > 0) {
             this.Project_Owner.push({
               name: `${user[0].firstName} ${user[0].lastName}`,
             });
