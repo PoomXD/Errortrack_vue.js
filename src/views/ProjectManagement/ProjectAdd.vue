@@ -193,16 +193,17 @@
 <script>
 import Multiselect from "vue-multiselect";
 import ProjectService from "@/services/api/project.service";
+import UserService from "@/services/api/user.service";
 import { required} from "vuelidate/lib/validators";
-import { mapState } from "vuex";
+// import { mapState } from "vuex"; 
 
 export default {
   name: "ProjectAdd",
 
   computed: {
-    ...mapState({
-      dataUser: (store) => store.user.users,
-    }),
+    // ...mapState({
+    //   dataUser: (store) => store.user.users,
+    // }),
     // ...mapGetters({
     //   getFullName: "project/getFullName",
     // }),
@@ -222,6 +223,7 @@ export default {
     }
   },
   data() {
+    
     const now = new Date();
     const today = new Date(
       now.getFullYear(),
@@ -230,6 +232,7 @@ export default {
     );
     const minDate = new Date(today);
     return {
+      users: [],
       min: minDate,
       save: false,
       projectName: "",
@@ -242,19 +245,26 @@ export default {
       valueOwner: [],
     };
   },
-  mounted() {
+  async mounted() {
     this.$store.dispatch("header/setAllLinkHeader", "ProjectAdd");
-    this.dataUser.forEach((data) => {
+
+    await this.getListUser();
+
+    this.users.forEach((data) => {
       this.listUserOwner.push({
-        id: data.id,
-        name: `${data.firstName} ${data.lastName}`,
+        id: data.userId,
+        name: data.name,
       });
     });
     this.listUserMaintenance = this.listUserOwner;
-
     this.$store.dispatch("sidebar/setActiveNav", "project");
   },
   methods: {
+    async getListUser(){
+      await UserService.getListUser().then(res => {
+        this.users = res
+      });
+    },
     onDelete(index) {
       this.array.splice(index, 1);
     },

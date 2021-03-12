@@ -4,6 +4,7 @@ const END_POINT = "/User";
 
 class UserService {
   async getListUser() {
+    console.log('in api get list user')
     const config = {
       method: "get",
       url: `${END_POINT}/getListUser`,
@@ -12,7 +13,7 @@ class UserService {
       },
     };
     const response = await httpClient(config);
-
+    console.log(response.data)
     return response.data;
   }
 }
