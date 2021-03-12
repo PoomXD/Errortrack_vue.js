@@ -24,7 +24,7 @@
                 :key="`userOwner-${index}`"
                 class="font-weight-light font-detail"
               >
-                {{ getNameUser(user.userId) }}
+                {{ user.name }}
               </p>
             </div>
           </div>
@@ -60,7 +60,7 @@
                 :key="`userMainten-${index}`"
                 class="font-weight-light font-detail"
               >
-                {{ getNameUser(user.userId) }}
+                {{ user.name }}
               </p>
             </div>
           </div>
@@ -193,7 +193,7 @@
               scrollable
               @hidden="doSomethingOnHidden"
             >
-              <ModalForTask :indexError="task.errId" :projectId="projectId"></ModalForTask>
+              <ModalForTask :indexError="task.errId" :servId="serviceDetail.serviceId"></ModalForTask>
             </b-modal>
           </b-card>
         </div>
@@ -204,7 +204,6 @@
 <script>
 import ModalForTask from "./ModalForTask.vue";
 import ServiceService from "@/services/api/service.service";
-import ProjectService from "@/services/api/project.service";
 import ErrorService from "@/services/api/error.service";
 import ErrorStatusService from "@/services/api/errorStatus.service";
 import { mapState } from "vuex";
@@ -231,15 +230,26 @@ export default {
       ServiceService.getService(servId).then((result) => {
         this.serviceDetail.serviceId = result.serviceId;
         this.serviceDetail.serviceName = result.serviceName;
-
-        this.projectId = result.projectId;
-        this.$store.dispatch("header/setQueryLinkHeader", `Task ${this.projectId}`);
+        this.serviceDetail.projectId = result.projectId;
+        this.serviceDetail.projectName = result.projectName;
         
-        ProjectService.getProject(result.projectId).then((res) => {
-          this.serviceDetail.projectName = res.projectName;
-          this.serviceDetail.projectOwner = res.userOwner;
-          this.serviceDetail.userMainten = res.userMaintenance;
+        this.serviceDetail.projectOwner = [];
+        result.userOwner.forEach(user => {
+          this.serviceDetail.projectOwner.push(user);
         });
+
+        this.serviceDetail.userMaintenance = [];
+        result.userMaintenance.forEach(user => {
+          this.serviceDetail.userMaintenance.push(user);
+        });
+        // this.projectId = result.projectId;
+        // this.$store.dispatch("header/setQueryLinkHeader", `Task ${this.projectId}`);
+        
+        // ProjectService.getProject(result.projectId).then((res) => {
+        //   this.serviceDetail.projectName = res.projectName;
+        //   this.serviceDetail.projectOwner = res.userOwner;
+        //   this.serviceDetail.userMainten = res.userMaintenance;
+        // });
         this.getListError(result.serviceId);
         console.log(this.serviceDetail)
       });
