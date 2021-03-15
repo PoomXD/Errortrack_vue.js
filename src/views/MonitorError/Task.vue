@@ -305,6 +305,7 @@ export default {
     this.getService(this.$route.query.serviceId);
     this.setOptions();
     this.$store.dispatch("sidebar/setActiveNav", "monitor");
+    this.$store.dispatch("header/setAllLinkHeader", "Task");
   },
   data() {
     return {
