@@ -88,7 +88,7 @@
                       <b-avatar size="sm" class="avatar-owner">{{
                         userInList.text
                       }}</b-avatar>
-                      {{ userInList.name }}
+                      {{ userInList.userName }}
 
                       <div
                         v-if="userInList.selected == true"
@@ -298,7 +298,7 @@
               class="mr-3 font-no-size-color"
             ></b-avatar>
             <div class="align-middle font-gen">
-              {{ userLogin.name }}
+              {{ currentUser.name }}
             </div>
           </b-col>
         </b-row>
@@ -340,7 +340,7 @@
                 class="mr-3 font-no-size-color"
               ></b-avatar>
               <div class="align-middle font-gen">
-                {{ getNameUser(message.userId) }}
+                {{ message.userName }}
               </div>
             </b-col>
             <b-col class="d-flex justify-content-end"
@@ -394,7 +394,7 @@
                 class="mr-3 font-no-size-color"
               ></b-avatar>
               <div class="align-middle font-gen">
-                {{ getNameUser(message.userId) }}
+                {{ message.userName }}
               </div>
             </b-col>
           </b-row>
@@ -438,6 +438,7 @@ import ErrorService from "@/services/api/error.service";
 import FileService from "@/services/api/file.service";
 import ServiceService from "@/services/api/service.service";
 import moment from "moment";
+
 export default {
   methods: {
     NewTab(path) {
@@ -513,16 +514,24 @@ export default {
     },
     getTextAvatar(id) {
       let text = "";
-      this.dataUser.forEach((user) => {
-        if (user.id === id) {
-          if (user.firstName != "" && user.lastName != "") {
-            text = `${user.firstName[0]}${user.lastName[0]}`;
-          } else if (user.firstName != "" && user.lastName == "") {
-            text = `${user.firstName[0]}`;
-          } else {
-            text = `Un`;
+      console.log("test log usersssssssssss: ",this.pickUsers)
+      this.pickUsers.forEach((user) => {
+        console.log("WTF")
+        if(user.userId == id){
+          console.log("testttttttttttttt")
+          if(user.userName != ""){
+            console.log("test 1",user)
+            let uName = user.userName.split(" ");
+            if(uName.length == 2){
+              text = `${uName[0][0]}${uName[1][0]}`;
+              console.log("test length",text)
+            }else if(uName.length == 1){
+              text = `${uName[0][0]}`;
+            }
+          }else{
+            text = "Un";
           }
-        }
+        } 
       });
       return text;
     },
@@ -570,6 +579,7 @@ export default {
             p.selected = true;
             let addUser = {
               userId: p.userId,
+              name: p.userName
             };
 
             let addNewUser = this.errorDetail.userAssignment;
@@ -712,9 +722,11 @@ export default {
           this.users.push(user);
         });
 
+        console.log("users: ",this.users);
         this.users.forEach((user) => {
           let text = "";
           if(user.name != ""){
+            console.log("test length: ",user.name)
             let uName = user.name.split(" ");
             if(uName.length == 2){
               text = `${uName[0][0]}${uName[1][0]}`;
@@ -725,12 +737,13 @@ export default {
             text = "Un";
           }
 
-          this.pickUsers.push({
+          let toAdd = {
             userId: user.userId,
             userName: user.name,
             text: text,
             selected: false
-          });
+          }
+          this.pickUsers.push(toAdd);
         });
 
         this.errorDetail.userAssignment.forEach((userAss) => {
@@ -740,6 +753,7 @@ export default {
             }
           });
         });
+        console.log("test user:", this.pickUsers)
       });
     },
     updateUserAndStatus(upParam) {
@@ -754,6 +768,7 @@ export default {
           errorId: this.errorDetail.errorId,
           userId: this.userLogin,
           comment: this.commentInput,
+          userName: this.currentUser.name
         };
 
         this.addComment(commentParam).then((res) => {
@@ -816,6 +831,13 @@ export default {
     getDateTimeForShow(strDateTime) {
       return moment(strDateTime).format("MM/DD/YYYY hh:mm");
     },
+    async getListUser() {
+      this.userName = await this.$store.dispatch("user/getUser");
+      this.currentUser = {
+        userId: this.userLogin,
+        name: this.userName
+      }
+    }
   },
   props: {
     indexError: {
@@ -846,6 +868,8 @@ export default {
       userLogin: null,
       commentInput: "",
       commentEdit: "",
+      currentUser: "",
+      userName: ""
     };
   },
 
@@ -868,7 +892,9 @@ export default {
     this.getError(this.indexError);
     this.getListFile(this.indexError);
     this.userLogin = localStorage.getItem("userId");
+    this.getListUser();
 
+    console.log("err id: ",this.indexError)
     console.log("userLogin : ", this.userLogin);
   },
 };
