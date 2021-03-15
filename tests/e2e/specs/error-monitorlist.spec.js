@@ -21,28 +21,28 @@ describe("Monitor_List", () => {
 
     it("Error", () => {
 
-    cy.visit('http://localhost:8080/home/monitor/list')
+    cy.visit('/home/monitor/list')
   
-    cy.url().should('eq','http://localhost:8080/home/monitor/list')
+    cy.url().should('include','/home/monitor/list')
 
     //-------------Check_Card------------//
 
-    visible = false;
-    for (i = 0; i < 6; i++) {
-    cy.get('[data-testid="card_contrain"]').then($card => {
+    // visible = false;
+    // for (i = 0; i < 6; i++) {
+    // cy.get('[data-testid="card_contrain"]').then($card => {
 
-      if($card.is(':visible')){
-          visible = true;
-      }else{
-          cy.reload().log('reload').wait(1000)
-        }     
-      });
-      if(visible = true){
-        break; 
-     }else{
-        continue;
-     }
-    }
+    //   if($card.is(':visible')){
+    //       visible = true;
+    //   }else{
+    //       cy.reload().log('reload').wait(1000)
+    //     }     
+    //   });
+    //   if(visible = true){
+    //     break; 
+    //  }else{
+    //     continue;
+    //  }
+    // }
   
     cy.get('[data-testid="input-search"]').type('4')
     cy.get('#project-2').should('not.exist')

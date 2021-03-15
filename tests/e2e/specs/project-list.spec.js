@@ -20,27 +20,27 @@ describe("Project_list", () => {
   })
 
     it("Home", () => {
-   cy.visit('http://localhost:8080/home/project/list')
+   cy.visit('/home/project/list')
    cy.wait('@GetProjectByOwner').then((res)=>{
      console.log('@GetProjectByOwner',res.response.body)
    })
   //  -------------Check_Card------------//
-   visible = false;
-   for (i = 0; i < 6; i++) {
-    cy.get('[data-testid="card_contrain"]').then($card => {
+  //  visible = false;
+  //  for (i = 0; i < 6; i++) {
+  //   cy.get('[data-testid="card_contrain"]').then($card => {
 
-      if($card.is(':visible')){
-          visible = true;
-      }else{
-          cy.reload().log('reload').wait(1000)
-        }     
-      });
-      if(visible = true){
-        break; 
-     }else{
-        continue;
-     }
-    }
+  //     if($card.is(':visible')){
+  //         visible = true;
+  //     }else{
+  //         cy.reload().log('reload').wait(1000)
+  //       }     
+  //     });
+  //     if(visible = true){
+  //       break; 
+  //    }else{
+  //       continue;
+  //    }
+  //   }
     
    cy.get('[data-testid="ProjectAdd_btn"]').should('be.visible')
 

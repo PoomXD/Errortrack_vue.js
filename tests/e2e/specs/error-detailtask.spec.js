@@ -28,24 +28,24 @@ describe("Monitor_Detail_Task", () => {
   })
     it("Monitor_Detail_Task", () => {
 
-    cy.visit('http://localhost:8080/home/project/list')
+    cy.visit('/home/project/list')
 
    //-------------Check_Card------------//
 
-   visible = false;
-   for (i = 0; i < 6; i++) {
-    cy.get('[data-testid="card_contrain"]').then($card => {
+  //  visible = false;
+  //  for (i = 0; i < 6; i++) {
+  //   cy.get('[data-testid="card_contrain"]').then($card => {
 
-      if($card.is(':visible')){
-          visible = true
-      }else{
-          cy.reload().log('reload').wait(1000)
-        }     
-      });
-      if(visible = true){
-        break; 
-     }
-    }
+  //     if($card.is(':visible')){
+  //         visible = true
+  //     }else{
+  //         cy.reload().log('reload').wait(1000)
+  //       }     
+  //     });
+  //     if(visible = true){
+  //       break; 
+  //    }
+  //   }
    
    cy.get('[data-testid="input-search"]').clear().type('project 1')
    cy.get('#project-0').click()
@@ -53,7 +53,7 @@ describe("Monitor_Detail_Task", () => {
    cy.get('[data-testid="info"]').scrollTo('bottom').wait(200)
    
    cy.get('tbody > tr:nth-child(1) > .text-center > .icon-list > .svg-inline--fa').click()
-   cy.url().should('eq','http://localhost:8080/home/monitor/task?serviceId=1')
+   cy.url().should('include','/home/monitor/task?serviceId=1')
    cy.get('[data-testid="info"]').scrollTo('bottom').wait(200)
 
    var i = -1;
@@ -93,7 +93,7 @@ describe("Monitor_Detail_Task", () => {
    cy.get('#savecomment').click().wait(500)
    cy.get('.pl-5 > #Comment > #comment9 > .d-flex > #Edit').scrollIntoView().click()
    cy.get('#EditComment9').clear().type('test')
-   cy.get('#Comment > #editComment9 > .card-list > .d-flex > .bt-green').click().click()
+   cy.get('#Comment > #editComment9 > .card-list > .d-flex > .bt-green').click()
   //  cy.get('.pl-5 > #Comment > #comment5 > .d-flex > #Edit').scrollIntoView().click().click()
   //  cy.get('#EditComment5').clear().type('test123')
   //  cy.get('#Comment > #editComment5 > .card-list > .d-flex > .bt-green').click()

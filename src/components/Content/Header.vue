@@ -110,7 +110,7 @@ export default {
     await this.getErrorStatus();
   },
   mounted() {
-    
+    this.getListUser();
   },
   data() {
     return {
@@ -123,6 +123,9 @@ export default {
       }),
   },
   methods: {
+    async getListUser() {
+      this.userName = await this.$store.dispatch("user/getUser");
+    },
     clickLogOut() {
       localStorage.removeItem("refresh_token");
       localStorage.removeItem("access_token");
