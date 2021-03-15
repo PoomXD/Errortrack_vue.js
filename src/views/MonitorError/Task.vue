@@ -56,7 +56,7 @@
             </div>
             <div class="col-8">
               <p
-                v-for="(user, index) in serviceDetail.userMainten"
+                v-for="(user, index) in serviceDetail.userMaintenance"
                 :key="`userMainten-${index}`"
                 class="font-weight-light font-detail"
               >
