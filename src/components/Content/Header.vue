@@ -107,7 +107,6 @@ import { mapState } from "vuex";
 export default {
   name: "component-header",
   async created(){
-    await this.getListUser();
     await this.getErrorStatus();
   },
   mounted() {
@@ -144,9 +143,7 @@ export default {
         return "Un";
       }
     },
-    async getListUser() {
-      this.userName = await this.$store.dispatch("user/getUser");
-    },
+    
     async getErrorStatus() {
       await this.$store.dispatch("errorStatus/getErrorStatus");
     },

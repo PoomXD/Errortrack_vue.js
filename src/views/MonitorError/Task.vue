@@ -228,6 +228,7 @@ export default {
   methods: {
     getService(servId) {
       ServiceService.getService(servId).then((result) => {
+        // console.log("detail ",result)
         this.serviceDetail.serviceId = result.serviceId;
         this.serviceDetail.serviceName = result.serviceName;
         this.serviceDetail.projectId = result.projectId;
@@ -299,13 +300,13 @@ export default {
       this.getService(this.$route.query.serviceId);
     },
   },
-  updated() {},
+  updated() {this.$store.dispatch("header/setQueryLinkHeader", `Task ${this.serviceDetail.projectId}`);},
   created() {},
-  mounted() {
-    this.getService(this.$route.query.serviceId);
+  async mounted() {
+    await this.getService(this.$route.query.serviceId);
     this.setOptions();
     this.$store.dispatch("sidebar/setActiveNav", "monitor");
-    this.$store.dispatch("header/setAllLinkHeader", "Task");
+    // this.$store.dispatch("header/setQueryLinkHeader", `Task ${this.serviceDetail.projectId}`);
   },
   data() {
     return {
@@ -316,6 +317,7 @@ export default {
         serviceId: null,
         serviceName: "",
         userMainten: [],
+        projectId: 0,
       },
       listError: [],
       selected: [], // Must be an array reference!
