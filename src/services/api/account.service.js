@@ -18,43 +18,43 @@ class AccountService {
         "content-type": "application/json",
       },
     };
-    
+    var response
+    let _return;
     try {
-
-      const response = await httpClient(config);
-
+      response = await httpClient(config);
+      if (response.status === 200) {
+        _return = {
+          data: { ...response.data },
+          status: 200,
+        };
+  
+  
+        if (response && response.data) {
+          const { token, refreshToken } = response.data.data;
+         
+          if (token && refreshToken) {
+            TokenService.saveToken(token);
+            TokenService.saveRefreshToken(refreshToken);
+          }
+        }
+      } else {
+        _return = {
+          data: { ...response.data},
+          status: 400,
+        };
+      }
     } catch (error) {
       Swal.fire({
         icon: 'error',
         title: 'Server not ready',
       })
-    }
-    
-    
-    let _return;
-    
-
-    if (response.status === 200) {
       _return = {
-        data: { ...response.data },
-        status: response.resStatusCode,
-      };
-
-
-      if (response && response.data) {
-        const { token, refreshToken } = response.data.data;
-       
-        if (token && refreshToken) {
-          TokenService.saveToken(token);
-          TokenService.saveRefreshToken(refreshToken);
-        }
-      }
-    } else {
-      _return = {
-        data: { ...response.data},
-        status: response.status,
+        data: 'Connect Server Error',
+        status: 500,
       };
     }
+    
+   
     return _return;
   }
 
