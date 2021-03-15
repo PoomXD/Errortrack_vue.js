@@ -511,7 +511,7 @@ export default {
         }
         // console.log("this error : ", this.errorDetail)
         this.addPickUsers();
-        // console.log("after addPick", this.errorDetail)
+        console.log("after addPick", this.errorDetail.comment)
       });
     },
     editComment(str, index, index2) {
@@ -778,6 +778,7 @@ export default {
           userName: this.currentUser.name
         };
 
+        console.log("add comment ",commentParam)
         this.addComment(commentParam).then((res) => {
           if (res.status) {
             ErrorService.getComment(this.errorDetail.errorId).then((com) => {
