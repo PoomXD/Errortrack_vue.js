@@ -8,7 +8,7 @@
           query: { projectId: Project_ID },
         }"
       >
-        <b-button class="bt-blue float-right" style="width: 90px" data-testid="Edit_Button">
+        <b-button class="bt-blue float-right" style="width: 90px" data-testid="Edit_Button" id='Edit_Button'>
           <font-awesome-icon :icon="['fas', 'edit']" /> Edit</b-button
         ></router-link
       >
@@ -46,7 +46,6 @@
                   </b-button>
                 </b-input-group-append>
               </b-input-group>
-              exp : {{ this.exp }}
             </div>
           </div>
         </div>
@@ -57,10 +56,12 @@
               :class="{ move: mobileView }"
               style="font-weight: bold"
             >
-              Update Exp :
+              Exp : 
             </div>
             <div class="font-detail" align="left">
-              <b-input-group>
+              {{ this.exp }}
+              <b-input-group id="datepicker">
+                
                 <b-form-datepicker
                   class="font-detail shadow-sm"
                   :class="{
@@ -68,6 +69,7 @@
                   }"
                   v-model.trim="$v.date.$model"
                   :min="min"
+                  placeholder="select date exp"
                 ></b-form-datepicker>
                 
 
@@ -255,6 +257,7 @@ export default {
     if (this.$route.meta.showEdit == false) {
       document.getElementById("search").style.marginTop = "0%";
       document.getElementById("Edit_Button").style.display = "none";
+      document.getElementById("datepicker").style.display = "none";
       document.getElementById("cardlist").style.marginTop = "-3%";
 
       this.$store.dispatch("sidebar/setActiveNav", "monitor");
@@ -384,22 +387,16 @@ export default {
         this.exp = this.parseJwt(this.token);
         this.User_Maintenance = []
         result.userMaintenance.forEach((e) => {
-          var user = this.dataUser.filter((data) => data.id === e.userId);
-          console.log("user : ", user);
-          if (user.length > 0) {
             this.User_Maintenance.push({
-              name: `${user[0].firstName} ${user[0].lastName}`,
+              name: e.name,
             });
-          }
+          
         });
         this.Project_Owner = []
         result.userOwner.forEach((e) => {
-          var user = this.dataUser.filter((data) => data.id === e.userId);
-          if (user.length > 0) {
-            this.Project_Owner.push({
-              name: `${user[0].firstName} ${user[0].lastName}`,
+          this.Project_Owner.push({
+              name: e.name,
             });
-          }
         }); // this.dataArray.push()
       });
       ServiceService.getListService(projectId).then((result) => {

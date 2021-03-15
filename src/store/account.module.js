@@ -2,40 +2,41 @@ import AccountService from "@/services/api/account.service";
 import { TokenService } from "@/services/storage.service";
 
 const user = {
-  accessToken  : null,
-  refreshToken : null
+  accessToken: null,
+  refreshToken: null,
 };
 
 const detail = {
-  userId : '',
-  fullName : '',
-  airportId : '',
-  airportName : ''
-}
+  userId: "",
+  fullName: "",
+  airportId: "",
+  airportName: "",
+};
 
 const initialState = {
-  isCenter : false,
-  detail : {...detail},
-  userId : '',
-  user : {...user},
-  permissionMenu : []
-}
+  isCenter: false,
+  detail: { ...detail },
+  userId: "",
+  user: { ...user },
+  permissionMenu: [],
+};
 
 const actions = {
   login({ commit }, data) {
-    console.log(data)
+    
     return AccountService.login(data).then(
-      res => {
-        console.log('login:res',res);
+      (res) => {
+       
+
         const user = {
           accessToken: res.data.accessToken,
-          refreshToken: res.data.refreshToken
-        }
+          refreshToken: res.data.refreshToken,
+        };
 
         commit("loginSuccess", user);
         return Promise.resolve(res);
       },
-      error => {
+      (error) => {
         commit("loginFailure");
         return Promise.reject(error);
       }
@@ -43,11 +44,11 @@ const actions = {
   },
   logout({ commit }) {
     return AccountService.logout().then(
-      res => {
+      (res) => {
         commit("logoutSuccess");
         return Promise.resolve(res);
       },
-      error => {
+      (error) => {
         commit("logoutFailure");
         return Promise.reject(error);
       }
@@ -55,28 +56,28 @@ const actions = {
   },
   refresh({ commit }) {
     return AccountService.refreshToken().then(
-      res => {
+      (res) => {
         commit("loginSuccess", res);
         return Promise.resolve(res);
       },
-      error => {
+      (error) => {
         commit("loginFailure");
         return Promise.reject(error);
       }
     );
   },
-  changepassword({commit},data){
+  changepassword({ commit }, data) {
     return AccountService.changepassword(data).then(
-      res => {
+      (res) => {
         // commit("loginSuccess", res);
         return Promise.resolve(res);
       },
-      error => {
+      (error) => {
         commit("loginFailure");
         return Promise.reject(error);
       }
     );
-  }
+  },
 };
 
 const mutations = {
@@ -86,7 +87,7 @@ const mutations = {
     // state.user = user;
   },
   loginFailure(state) {
-    state.user = {}
+    state.user = {};
     // state.status.loggedIn = false;
     // state.user = null;
   },
@@ -94,7 +95,7 @@ const mutations = {
     state.user = {};
     state.detail = {};
     state.isCenter = false;
-    state.userId = '';
+    state.userId = "";
     state.permissionMenu = [];
     // state.status.loggedIn = false;
     // state.user = null;
@@ -105,24 +106,23 @@ const mutations = {
     state.user = {};
     state.detail = {};
     state.isCenter = false;
-    state.userId = '';
+    state.userId = "";
     state.permissionMenu = [];
   },
-  saveLocalToken(state){
-    if(state.user && state.user.accessToken && state.user.refreshToken){
+  saveLocalToken(state) {
+    if (state.user && state.user.accessToken && state.user.refreshToken) {
       TokenService.saveToken(state.user.accessToken);
       TokenService.saveRefreshToken(state.user.refreshToken);
-    }
-    else{
+    } else {
       TokenService.removeToken();
       TokenService.removeRefreshToken();
     }
-  }
+  },
 };
 
 export const account = {
   namespaced: true,
   state: initialState,
   actions,
-  mutations
+  mutations,
 };

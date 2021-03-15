@@ -1,20 +1,15 @@
 import httpClient from "../httpClient";
 import { TokenService } from "../storage.service";
-//import * as _utils from '../utils.service';
+import Swal from "sweetalert2";
 
 const END_POINT = "Login";
 
 class AccountService {
   async login(user) {
-    console.log('login')
-    const params = {
+      const params = {
       UserName: user.username,
       Password: user.password,
     };
-
-    // const data = _utils.request.objToFormData(params);
-    // const json = JSON.stringify(params);
-
     const config = {
       method: "post",
       url: `${END_POINT}`,
@@ -23,35 +18,43 @@ class AccountService {
         "content-type": "application/json",
       },
     };
-
-    const response = await httpClient(config);
-    console.log("login():response", response);
+    var response
     let _return;
-    
-
-    if (response.status === 200) {
-      _return = {
-        data: { ...response.data },
-        status: response.resStatusCode,
-      };
-
-
-      if (response && response.data) {
-        const { token, refreshToken } = response.data.data;
-       
-        if (token && refreshToken) {
-          TokenService.saveToken(token);
-          TokenService.saveRefreshToken(refreshToken);
+    try {
+      response = await httpClient(config);
+      if (response.status === 200) {
+        _return = {
+          data: { ...response.data },
+          status: 200,
+        };
+  
+  
+        if (response && response.data) {
+          const { token, refreshToken } = response.data.data;
+         
+          if (token && refreshToken) {
+            TokenService.saveToken(token);
+            TokenService.saveRefreshToken(refreshToken);
+          }
         }
+      } else {
+        _return = {
+          data: { ...response.data},
+          status: 400,
+        };
       }
-    } else {
+    } catch (error) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Server not ready',
+      })
       _return = {
-        data: { ...response.data},
-        status: response.status,
+        data: 'Connect Server Error',
+        status: 500,
       };
     }
-    console.log("Token : ", TokenService.getToken())
-    console.log("refreshToken : ",TokenService.getRefreshToken())
+    
+   
     return _return;
   }
 
@@ -92,7 +95,6 @@ class AccountService {
     };
   
     const response = await httpClient(config);
-    console.log("Response : ",response)
 
     if (response && response.data && response.status === 200) {
       const { accessToken, refreshToken } = response.data.data;
@@ -119,7 +121,6 @@ class AccountService {
 
     const response = await httpClient(config);
 
-    console.log("res:changepassword", response);
 
     if (response && response.data && response.resStatusCode === 200) {
       const { status } = response.data;

@@ -14,7 +14,7 @@
         :class="{'router-link-active': project == true}">
           <font-awesome-icon :icon="['far', 'check-square']"/>  Project Management
         </router-link></li>
-      <li><router-link to="/page"><font-awesome-icon :icon="['fas', 'chart-pie']"/>  Dashboard</router-link></li>
+      <!-- <li><router-link to="/page"><font-awesome-icon :icon="['fas', 'chart-pie']"/>  Dashboard</router-link></li> -->
       <li><router-link to="/page"><font-awesome-icon :icon="['fas', 'code']"/>  Document API</router-link></li>
     </ul>
     </div>

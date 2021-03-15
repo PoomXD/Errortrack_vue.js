@@ -24,7 +24,7 @@
                 :key="`userOwner-${index}`"
                 class="font-weight-light font-detail"
               >
-                {{ getNameUser(user.userId) }}
+                {{ user.name }}
               </p>
             </div>
           </div>
@@ -56,11 +56,11 @@
             </div>
             <div class="col-8">
               <p
-                v-for="(user, index) in serviceDetail.userMainten"
+                v-for="(user, index) in serviceDetail.userMaintenance"
                 :key="`userMainten-${index}`"
                 class="font-weight-light font-detail"
               >
-                {{ getNameUser(user.userId) }}
+                {{ user.name }}
               </p>
             </div>
           </div>
@@ -193,7 +193,7 @@
               scrollable
               @hidden="doSomethingOnHidden"
             >
-              <ModalForTask :indexError="task.errId" :projectId="projectId"></ModalForTask>
+              <ModalForTask :indexError="task.errId" :servId="serviceDetail.serviceId"></ModalForTask>
             </b-modal>
           </b-card>
         </div>
@@ -204,7 +204,6 @@
 <script>
 import ModalForTask from "./ModalForTask.vue";
 import ServiceService from "@/services/api/service.service";
-import ProjectService from "@/services/api/project.service";
 import ErrorService from "@/services/api/error.service";
 import ErrorStatusService from "@/services/api/errorStatus.service";
 import { mapState } from "vuex";
@@ -229,17 +228,29 @@ export default {
   methods: {
     getService(servId) {
       ServiceService.getService(servId).then((result) => {
+        // console.log("detail ",result)
         this.serviceDetail.serviceId = result.serviceId;
         this.serviceDetail.serviceName = result.serviceName;
-
-        this.projectId = result.projectId;
-        this.$store.dispatch("header/setQueryLinkHeader", `Task ${this.projectId}`);
+        this.serviceDetail.projectId = result.projectId;
+        this.serviceDetail.projectName = result.projectName;
         
-        ProjectService.getProject(result.projectId).then((res) => {
-          this.serviceDetail.projectName = res.projectName;
-          this.serviceDetail.projectOwner = res.userOwner;
-          this.serviceDetail.userMainten = res.userMaintenance;
+        this.serviceDetail.projectOwner = [];
+        result.userOwner.forEach(user => {
+          this.serviceDetail.projectOwner.push(user);
         });
+
+        this.serviceDetail.userMaintenance = [];
+        result.userMaintenance.forEach(user => {
+          this.serviceDetail.userMaintenance.push(user);
+        });
+        // this.projectId = result.projectId;
+        // this.$store.dispatch("header/setQueryLinkHeader", `Task ${this.projectId}`);
+        
+        // ProjectService.getProject(result.projectId).then((res) => {
+        //   this.serviceDetail.projectName = res.projectName;
+        //   this.serviceDetail.projectOwner = res.userOwner;
+        //   this.serviceDetail.userMainten = res.userMaintenance;
+        // });
         this.getListError(result.serviceId);
         console.log(this.serviceDetail)
       });
@@ -271,6 +282,7 @@ export default {
       this.selected = [];
 
       ErrorStatusService.getListErrorStatus().then((res) => {
+        console.log("error status : ",res);
         res.forEach((re) => {
           let errStatus = {
             value: re.errorStatusName,
@@ -279,6 +291,7 @@ export default {
           this.options.push(errStatus);
           this.selected.push(re.errorStatusName);
         });
+        console.log("error status 2 : ",this.status);
       });
   
     },
@@ -287,12 +300,13 @@ export default {
       this.getService(this.$route.query.serviceId);
     },
   },
-  updated() {},
+  updated() {this.$store.dispatch("header/setQueryLinkHeader", `Task ${this.serviceDetail.projectId}`);},
   created() {},
-  mounted() {
-    this.getService(this.$route.query.serviceId);
+  async mounted() {
+    await this.getService(this.$route.query.serviceId);
     this.setOptions();
     this.$store.dispatch("sidebar/setActiveNav", "monitor");
+    // this.$store.dispatch("header/setQueryLinkHeader", `Task ${this.serviceDetail.projectId}`);
   },
   data() {
     return {
@@ -303,6 +317,7 @@ export default {
         serviceId: null,
         serviceName: "",
         userMainten: [],
+        projectId: 0,
       },
       listError: [],
       selected: [], // Must be an array reference!

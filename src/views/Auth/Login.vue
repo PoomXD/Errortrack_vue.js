@@ -43,19 +43,37 @@
             Keep me sign in
           </b-form-checkbox>
           <b-button
-            class="rounded-pill button-font"
+            class="rounded-pill button-font "
             block
             variant="primary"
             @click="clickLogin()"
           >
-            <table class="table-stlay">
+            <div class="d-flex bd-highlight">
+              <div class=" w-100 bd-highlight">Log In</div>
+              <div class="align-self-center">
+                <b-spinner
+                  v-if="statusload"
+                  class="float-right"
+                  variant="light"
+                  label="Spinning"
+                ></b-spinner>
+                <font-awesome-icon
+                  v-if="!statusload"
+                  :icon="['fas', 'arrow-right']"
+                  class="float-right"
+                />
+              </div>
+            </div>
+
+            <!-- <table class="table-stlay">
               <tr>
                 <td class="pl-5">Log In</td>
                 <td class="float-right">
                   <font-awesome-icon :icon="['fas', 'arrow-right']" />
+                  <b-spinner variant="light" label="Spinning"></b-spinner> 
                 </td>
               </tr>
-            </table>
+            </table> -->
           </b-button>
         </div>
       </div>
@@ -75,6 +93,7 @@ export default {
   name: "login",
   data() {
     return {
+      statusload: false,
       username: "",
       password: "",
       checkBoxKeepMeSingnedIn: "false",
@@ -99,12 +118,12 @@ export default {
       }
     },
     clickLogin() {
+      this.statusload = true;
       var data = {
         username: this.username,
         password: this.password,
       };
       this.$store.dispatch("account/login", data).then((res) => {
-        console.log("Res: ", res);
         if (res.data.status) {
           this.getUserIDFromJson();
           if (this.checkBoxKeepMeSingnedIn === "true") {
@@ -116,7 +135,7 @@ export default {
           }
           this.$router.push({ name: "ListProject" });
         } else {
-          document.getElementById("alert-incorrect").style.display = "block";
+          this.statusload = false;
         }
       });
     },
@@ -145,5 +164,9 @@ export default {
 <style>
 .full-height {
   height: 100%;
+}
+.button-login {
+  display: flex;
+  align-items: center;
 }
 </style>
