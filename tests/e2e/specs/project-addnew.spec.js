@@ -19,18 +19,18 @@ describe("Project_Add", () => {
         cy.customlogin();
       })
       it("NewProject", () => {
-       cy.visit('http://localhost:8080/home/project/list')
+       cy.visit('/home/project/list')
  
    cy.reload()
  
-   cy.get('#ProjectAdd_btn').click()
+   cy.get('[data-testid="ProjectAdd_btn"]').click()
   
    cy.get('.container-main > .row > .col:nth-child(2) > .btn').click()
    cy.get('#Name_required').should('be.visible') 
    cy.get('#Owner_required').should('be.visible')
 
    cy.get('#Project_Name').type('project test')
-   cy.get('#ProjectDetail').type('project detail test')
+   cy.get('[data-testid="ProjectDetail"]').type('project detail test')
 
    cy.get('.col-lg-12 > .row > .col-8 > .multiselect > .multiselect__select').click()
    cy.get('.shadow-sm > .multiselect__content-wrapper > .multiselect__content > .multiselect__element')
@@ -70,6 +70,6 @@ describe("Project_Add", () => {
      cy.get('.row > .col-8 > .multiselect > .multiselect__tags > .multiselect__input').type('typeing test')
 
      //cy.get('#Name_required').should('not.visible') 
-     cy.get('#Owner_required').should('not.visible')
+     //cy.get('#Owner_required').should('not.visible')
     });
  });

@@ -3,9 +3,9 @@
 describe("Sign_in", () => {
    it("Sign in", () => {
 
-    cy.visit('http://localhost:8080/login')
-    cy.visit('http://localhost:8080/home/project/list').url().should('eq','http://localhost:8080/login/')
-    cy.visit('http://localhost:8080/home/monitor/list').url().should('eq','http://localhost:8080/login/')
+    cy.visit('/login')
+    cy.visit('/project/list').url().should('include','/login/')
+    cy.visit('/home/monitor/list').url().should('include','/login/')
  
     cy.get('.pl-5').click()
     cy.get('[data-testid="alert-incorrect"]').should('be.visible')
@@ -25,12 +25,12 @@ describe("Sign_in", () => {
     cy.get('[data-testid="checkbox-1"]').check({force: true})
     cy.get('.pl-5').click()
 
-    cy.url().should('eq','http://localhost:8080/home/project/list')
-    cy.visit('http://localhost:8080/login')
-    .url().should('eq','http://localhost:8080/home/project/list').wait(500)
+    cy.url().should('include','/home/project/list')
+    cy.visit('/login')
+    .url().should('include','/home/project/list').wait(500)
     cy.clearLocalStorage().log("clearLocalStorage!!")
     cy.reload()
-    .url().should('eq','http://localhost:8080/login/').wait(500)
+    .url().should('include','/login/').wait(500)
 
 
    });

@@ -20,7 +20,7 @@ describe("Header_Sidebar", () => {
     })
 
     it("Header_Sidebar", () => {
-     cy.visit('http://localhost:8080/home/project/list')
+     cy.visit('/home/project/list')
 
     //------------------Sidebar-----------------//
 
@@ -31,23 +31,23 @@ describe("Header_Sidebar", () => {
      cy.get('[data-testid="sidebar"]').should('be.visible')
 
      cy.get('.sidebar > .mt-4 > .nav > li:nth-child(1) > a').click()
-     cy.url().should('eq','http://localhost:8080/home/monitor/list')
+     cy.url().should('include','/home/monitor/list')
      cy.get('.sidebar > .mt-4 > .nav > li:nth-child(2) > a').click().wait(500)
-     cy.url().should('eq','http://localhost:8080/home/project/list')
+     cy.url().should('include','/home/project/list')
 
      //------------------header-----------------//
 
-      cy.visit('http://localhost:8080/home/monitor/task?serviceId=1').wait(800)
+      cy.visit('/home/monitor/task?serviceId=1').wait(800)
       cy.get('.row > .col-xl > .d-flex > .p-2 > a:nth-child(2)').first().click()
-      cy.url().should('eq','http://localhost:8080/home/monitor/list')
+      cy.url().should('include','/home/monitor/list')
 
-      cy.visit('http://localhost:8080/home/project/detail?projectId=1').wait(800)
+      cy.visit('/home/project/detail?projectId=1').wait(800)
       cy.get('.row > .col-xl > .d-flex > .p-2 > a:nth-child(2)').first().click()
-      cy.url().should('eq','http://localhost:8080/home/project/list')
+      cy.url().should('include','/home/project/list')
 
       cy.get('[data-testid="dropdown"]').click()
       cy.get('.dropdown-menu > li > .dropdown-item > .h-100').click()
-      cy.url().should('eq','http://localhost:8080/login/')
+      cy.url().should('include','/login/')
 
     });
  });
