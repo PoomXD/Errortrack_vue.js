@@ -60,7 +60,7 @@
             </div>
             <div class="font-detail" align="left">
               {{ this.exp }}
-              <b-input-group>
+              <b-input-group id="datepicker">
                 
                 <b-form-datepicker
                   class="font-detail shadow-sm"
@@ -69,6 +69,7 @@
                   }"
                   v-model.trim="$v.date.$model"
                   :min="min"
+                  placeholder="select date exp"
                 ></b-form-datepicker>
                 
 
@@ -256,6 +257,7 @@ export default {
     if (this.$route.meta.showEdit == false) {
       document.getElementById("search").style.marginTop = "0%";
       document.getElementById("Edit_Button").style.display = "none";
+      document.getElementById("datepicker").style.display = "none";
       document.getElementById("cardlist").style.marginTop = "-3%";
 
       this.$store.dispatch("sidebar/setActiveNav", "monitor");
