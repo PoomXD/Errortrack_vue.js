@@ -40,7 +40,7 @@
             </div>
 
             <b-dropdown
-              right
+              left
               variant="link"
               toggle-class="text-decoration-none"
               no-caret
@@ -491,7 +491,17 @@ export default {
         //     this.errorDetail.comment.push(JSON.parse(result.comment)[index])
         //   }
         // }
-        this.errorDetail.comment = result.comment;
+        
+        if(result.comment == null){
+          this.errorDetail.comment = []
+        }else{
+          let com = JSON.parse(result.comment);
+          for (let index = com.length-1; index >= 0; index--) {
+            this.errorDetail.comment.push(com[index]);
+          }
+        }
+        
+        console.log("get comment .length = ",this.errorDetail.comment.length)
         if (result.userAssignment == null) {
           this.errorDetail.userAssignment = [];
         } else {
@@ -499,8 +509,9 @@ export default {
             this.errorDetail.userAssignment.push(user);
           })
         }
-
+        // console.log("this error : ", this.errorDetail)
         this.addPickUsers();
+        // console.log("after addPick", this.errorDetail)
       });
     },
     editComment(str, index, index2) {
@@ -514,17 +525,13 @@ export default {
     },
     getTextAvatar(id) {
       let text = "";
-      console.log("test log usersssssssssss: ",this.pickUsers)
+      // console.log("test log usersssssssssss: ",this.pickUsers)
       this.pickUsers.forEach((user) => {
-        console.log("WTF")
         if(user.userId == id){
-          console.log("testttttttttttttt")
           if(user.userName != ""){
-            console.log("test 1",user)
             let uName = user.userName.split(" ");
             if(uName.length == 2){
               text = `${uName[0][0]}${uName[1][0]}`;
-              console.log("test length",text)
             }else if(uName.length == 1){
               text = `${uName[0][0]}`;
             }
@@ -714,7 +721,7 @@ export default {
       this.users = [];
       ServiceService.getService(this.servId).then((result) => {
 
-        console.log("getService ",result);
+        // console.log("getService ",result);
         result.userOwner.forEach((user) => {
           this.users.push(user);
         });
@@ -722,11 +729,11 @@ export default {
           this.users.push(user);
         });
 
-        console.log("users: ",this.users);
+        // console.log("users: ",this.users);
         this.users.forEach((user) => {
           let text = "";
           if(user.name != ""){
-            console.log("test length: ",user.name)
+            // console.log("test length: ",user.name)
             let uName = user.name.split(" ");
             if(uName.length == 2){
               text = `${uName[0][0]}${uName[1][0]}`;
@@ -753,7 +760,7 @@ export default {
             }
           });
         });
-        console.log("test user:", this.pickUsers)
+        // console.log("test user:", this.pickUsers)
       });
     },
     updateUserAndStatus(upParam) {
@@ -776,7 +783,8 @@ export default {
             ErrorService.getComment(this.errorDetail.errorId).then((com) => {
               console.log("comment ",com)
               this.errorDetail.comment = []
-              for (let index = com.length-1; index > 0; index--) {
+              // this.errorDetail.comment = com
+              for (let index = com.length-1; index >= 0; index--) {
                 this.errorDetail.comment.push(com[index]);
               }
               this.commentInput = "";
@@ -796,7 +804,12 @@ export default {
       ErrorService.editComment(editCommentParam).then((result) => {
         if (result.status) {
           ErrorService.getComment(this.errorDetail.errorId).then((com) => {
-            this.errorDetail.comment = com;
+            this.errorDetail.comment = [];
+
+            for (let index = com.length-1; index >= 0; index--) {
+                this.errorDetail.comment.push(com[index]);
+              }
+
             this.commentInput = "";
 
             this.cancelEditComment(`comment${ind}`, `editComment${ind}`);
@@ -821,7 +834,10 @@ export default {
           ErrorService.deleteComment(delParam).then((result) => {
             if (result.status) {
               ErrorService.getComment(this.errorDetail.errorId).then((com) => {
-                this.errorDetail.comment = com;
+                this.errorDetail.comment = [];
+                for (let index = com.length-1; index >= 0; index--) {
+                  this.errorDetail.comment.push(com[index]);
+                }
               });
             }
           });
