@@ -281,6 +281,7 @@ export default {
       this.selected = [];
 
       ErrorStatusService.getListErrorStatus().then((res) => {
+        console.log("error status : ",res);
         res.forEach((re) => {
           let errStatus = {
             value: re.errorStatusName,
@@ -289,6 +290,7 @@ export default {
           this.options.push(errStatus);
           this.selected.push(re.errorStatusName);
         });
+        console.log("error status 2 : ",this.status);
       });
   
     },
