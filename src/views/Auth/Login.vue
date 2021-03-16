@@ -28,7 +28,15 @@
             class="alert-incorrect"
             data-testid="alert-incorrect"
             id="alert-incorrect"
-            :style="{ display: 'none' }"
+            v-if="!$v.username.required && cliclStatus || !$v.password.required && cliclStatus"
+          >
+            Username or Password is required
+          </div>
+          <div
+            class="alert-incorrect"
+            data-testid="alert-incorrect"
+            id="alert-incorrect"
+            v-if="responseLogin"
           >
             Username or Password is incorrect
           </div>
@@ -89,15 +97,27 @@ var passwordEven = document.getElementById("password");
 //   if(event.keyCode === 13)
 // })
 import AccountService from "../../services/api/account.service.js";
+import { required} from "vuelidate/lib/validators";
 export default {
   name: "login",
+  
   data() {
     return {
       statusload: false,
       username: "",
       password: "",
       checkBoxKeepMeSingnedIn: "false",
+      cliclStatus: false,
+      responseLogin: false
     };
+  },
+  validations: {
+    username: {
+      required,
+    },
+    password: {
+      required,
+    }
   },
   mounted() {
     this.setKeepMeSignedIn();
@@ -118,6 +138,7 @@ export default {
       }
     },
     clickLogin() {
+      this.cliclStatus = true
       this.statusload = true;
       var data = {
         username: this.username,
@@ -136,8 +157,10 @@ export default {
           this.$router.push({ name: "ListProject" });
         } else {
           this.statusload = false;
+          this.responseLogin = true;
         }
       });
+
     },
     getUserIDFromJson() {
       console.log(

@@ -677,6 +677,7 @@ export default {
     // ################################### file upload method ####################
 
     async del(index) {
+      console.log("Delete file")
       // delby index
       let param = {
         fileId: index,
