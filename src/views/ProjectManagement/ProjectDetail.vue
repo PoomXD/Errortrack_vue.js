@@ -415,6 +415,7 @@ export default {
       });
       ServiceService.getListService(projectId).then((result) => {
         console.log("service", result);
+        this.dataArray = []
         var i = 1;
         result.forEach((e) => {
           this.dataArray.push({
