@@ -479,9 +479,11 @@ export default {
     },
     getError(errId) {
       ErrorService.getErrorById(errId).then((result) => {
+        console.log("result = ",result)
         this.errorDetail.errorId = result.errorId;
         this.errorDetail.errorDetail = result.errorDetail;
         this.selected = result.errorStatusId;
+        this.errorDetail.errorStatusId = result.errorStatusId;
         // if (result.comment == null) {
         //   this.errorDetail.comment = [];
         // } else {
@@ -511,7 +513,7 @@ export default {
         }
         // console.log("this error : ", this.errorDetail)
         this.addPickUsers();
-        console.log("after addPick", this.errorDetail.comment)
+        console.log("after addPick", this.errorDetail)
       });
     },
     editComment(str, index, index2) {
@@ -649,6 +651,7 @@ export default {
       });
     },
     confirmChange() {
+      console.log("error : ",this.errorDetail)
       Swal.fire({
         title: "Edit Status",
         text: "Do you want to change this error status?",
@@ -668,8 +671,10 @@ export default {
               this.errorDetail.errorStatusId = this.selected;
             }
           });
-        } else {
-          this.selected = this.errorDetail.errorStatusId;
+        } else { 
+
+          console.log("else selected = ",this.errorDetail)
+          this.selected = ""+this.errorDetail.errorStatusId;
         }
       });
     },
