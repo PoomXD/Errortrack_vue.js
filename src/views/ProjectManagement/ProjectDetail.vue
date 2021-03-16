@@ -357,9 +357,9 @@ export default {
       }).then((result) => {
         if (result.isConfirmed) {
           ProjectService.revokeToken({ projectId: projectId });
+          this.getDetail(projectId);
         }
       });
-      
     },
     async refresh(projectId, date) {
       this.save = true;
