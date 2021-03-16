@@ -231,6 +231,7 @@ import ServiceService from "@/services/api/service.service";
 import { mapState } from "vuex";
 import { required } from "vuelidate/lib/validators";
 import moment from "moment";
+import Swal from "sweetalert2";
 
 export default {
   name: "ProjectDetail",
@@ -345,7 +346,20 @@ export default {
       return moment(JSON.parse(jsonPayload).exp * 1000).format("MM/DD/YYYY");
     },
     async revoke(projectId) {
-      await ProjectService.revokeToken({ projectId: projectId });
+      // await ProjectService.revokeToken({ projectId: projectId });
+      await Swal.fire({
+        title: "Refresh Token",
+        text: "Do you want to refresh this token?",
+        icon: "warning",
+        confirmButtonText: "yes",
+        cancelButtonText: "no",
+        showCancelButton: true,
+      }).then((result) => {
+        if (result.isConfirmed) {
+          ProjectService.revokeToken({ projectId: projectId });
+        }
+      });
+      
     },
     async refresh(projectId, date) {
       this.save = true;

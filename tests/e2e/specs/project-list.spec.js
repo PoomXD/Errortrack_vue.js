@@ -44,17 +44,17 @@ describe("Project_list", () => {
     
    cy.get('[data-testid="ProjectAdd_btn"]').should('be.visible')
 
-   cy.get('[data-testid="input-search"]').type('2')
+   cy.get('[data-testid="input-search"]').type('52')
    cy.get('#project-2').should('not.exist')
    cy.get('#project-1').should('not.exist')
    
    cy.get('[data-testid="input-search"]').clear().type('project 1')
    cy.get('#project-2').should('not.exist')
-   cy.get('#project-0 > a > .card-list > .table-grid > tr > .float-left > .row > div').should('have.length','7')
+   cy.get('#project-0 > a > .card-list > .table-grid > tr > .float-left > .row > div').should('have.length','6')
    cy.get('#project-0').click()
    
    cy.get('[data-testid="info"]').scrollTo('bottom').wait(500)
-   cy.get('tbody > tr:nth-child(1) > .text-center > .icon-list > .svg-inline--fa').click().wait(2000)
-   cy.get('.row > .col-xl > .d-flex > .p-2 > a:nth-child(2)').first().click()
+  //  cy.get('tbody > tr:nth-child(1) > .text-center > .icon-list > .svg-inline--fa').click().wait(2000)
+  //  cy.get('.row > .col-xl > .d-flex > .p-2 > a:nth-child(2)').first().click()
     });
  });
