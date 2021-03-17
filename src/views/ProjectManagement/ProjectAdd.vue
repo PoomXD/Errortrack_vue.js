@@ -70,21 +70,18 @@
                   >
                     Project Owner is required
                   </div>
+                  
                 </div>
               </div>
 
-              <div
-                class="row mb-3 form-group"
-                
-              >
+              <div class="row mb-3 form-group">
                 <div class="col-3 text-right font-gen">Expires Date* :</div>
                 <div class="col-8 font-detail">
                   <b-form-datepicker
-                  class="font-detail shadow-sm"
+                    class="font-detail shadow-sm"
                     :class="{
                       'input-invalid': !$v.exp.required && save,
                     }"
-                    
                     v-model.trim="$v.exp.$model"
                     :min="min"
                   ></b-form-datepicker>
@@ -194,8 +191,8 @@
 import Multiselect from "vue-multiselect";
 import ProjectService from "@/services/api/project.service";
 import UserService from "@/services/api/user.service";
-import { required} from "vuelidate/lib/validators";
-// import { mapState } from "vuex"; 
+import { required } from "vuelidate/lib/validators";
+// import { mapState } from "vuex";
 
 export default {
   name: "ProjectAdd",
@@ -218,12 +215,11 @@ export default {
     valueOwner: {
       required,
     },
-    exp:{
+    exp: {
       required,
-    }
+    },
   },
   data() {
-    
     const now = new Date();
     const today = new Date(
       now.getFullYear(),
@@ -243,13 +239,27 @@ export default {
       listUserOwner: [],
       valueMaintenance: [],
       valueOwner: [],
+      ID: "",
     };
+  },
+  updated() {
+    // var name = this.users.filter(
+    //   (data) => data.id == localStorage.getItem("userId")
+    // );
+    // console.log('users ', this.users)
+    // console.log("name ", name);
+    // if (name.length > 0) {
+    //   this.valueOwner.push({
+    //     id: localStorage.removeItem("userId"),
+    //     name: name[0].name,
+    //   });
+    //   console.log("val owner", this.valueOwner);
+    // }
   },
   async mounted() {
     this.$store.dispatch("header/setAllLinkHeader", "ProjectAdd");
 
     await this.getListUser();
-
     this.users.forEach((data) => {
       this.listUserOwner.push({
         id: data.userId,
@@ -258,11 +268,25 @@ export default {
     });
     this.listUserMaintenance = this.listUserOwner;
     this.$store.dispatch("sidebar/setActiveNav", "project");
+    this.ID = localStorage.getItem("userId");
+    
+    var name = this.users.filter(
+      (data) => data.userId == localStorage.getItem("userId")
+    );
+    console.log('users ', this.users)
+    console.log("name ", name);
+    if (name.length > 0) {
+      this.valueOwner.push({
+        id: name[0].userId,
+        name: name[0].name,
+      });
+      console.log("val owner", this.valueOwner);
+    }
   },
   methods: {
-    async getListUser(){
-      await UserService.getListUser().then(res => {
-        this.users = res
+    async getListUser() {
+      await UserService.getListUser().then((res) => {
+        this.users = res;
       });
     },
     onDelete(index) {
