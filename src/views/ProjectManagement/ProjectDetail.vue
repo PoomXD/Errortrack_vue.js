@@ -348,8 +348,8 @@ export default {
     async revoke(projectId) {
       // await ProjectService.revokeToken({ projectId: projectId });
       await Swal.fire({
-        title: "Refresh Token",
-        text: "Do you want to refresh this token?",
+        title: "Change Token Application",
+        text: "Do you want to change this token application?",
         icon: "warning",
         confirmButtonText: "yes",
         cancelButtonText: "no",
