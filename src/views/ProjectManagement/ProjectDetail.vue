@@ -130,7 +130,7 @@
               Project Details :
             </div>
             <div
-              class="font-detail"
+              class="font-detail col p-0"
               :class="{ go_up: mobileView }"
               align="left"
             >

@@ -28,7 +28,10 @@
             class="alert-incorrect"
             data-testid="alert-incorrect"
             id="alert-incorrect"
-            v-if="!$v.username.required && cliclStatus || !$v.password.required && cliclStatus"
+            v-if="
+              (!$v.username.required && cliclStatus) ||
+                (!$v.password.required && cliclStatus)
+            "
           >
             Username or Password is required
           </div>
@@ -36,7 +39,7 @@
             class="alert-incorrect"
             data-testid="alert-incorrect"
             id="alert-incorrect"
-            v-if="responseLogin"
+            v-if="responseLogin && $v.username.required"
           >
             Username or Password is incorrect
           </div>
@@ -72,16 +75,6 @@
                 />
               </div>
             </div>
-
-            <!-- <table class="table-stlay">
-              <tr>
-                <td class="pl-5">Log In</td>
-                <td class="float-right">
-                  <font-awesome-icon :icon="['fas', 'arrow-right']" />
-                  <b-spinner variant="light" label="Spinning"></b-spinner> 
-                </td>
-              </tr>
-            </table> -->
           </b-button>
         </div>
       </div>
@@ -93,14 +86,11 @@
 var usernameEven = document.getElementById("username");
 var passwordEven = document.getElementById("password");
 
-// usernameEven.addEventListener("keyup", function(event){
-//   if(event.keyCode === 13)
-// })
 import AccountService from "../../services/api/account.service.js";
-import { required} from "vuelidate/lib/validators";
+import { required } from "vuelidate/lib/validators";
 export default {
   name: "login",
-  
+
   data() {
     return {
       statusload: false,
@@ -108,7 +98,7 @@ export default {
       password: "",
       checkBoxKeepMeSingnedIn: "false",
       cliclStatus: false,
-      responseLogin: false
+      responseLogin: false,
     };
   },
   validations: {
@@ -117,7 +107,7 @@ export default {
     },
     password: {
       required,
-    }
+    },
   },
   mounted() {
     this.setKeepMeSignedIn();
@@ -138,14 +128,15 @@ export default {
       }
     },
     clickLogin() {
-      this.cliclStatus = true
+      this.cliclStatus = true;
       this.statusload = true;
       var data = {
         username: this.username,
         password: this.password,
       };
       this.$store.dispatch("account/login", data).then((res) => {
-        if (res.data.status) {
+        console.log(res.status);
+        if (res.status == 200) {
           this.getUserIDFromJson();
           if (this.checkBoxKeepMeSingnedIn === "true") {
             localStorage.setItem("username", this.username);
@@ -155,12 +146,11 @@ export default {
             localStorage.removeItem("password");
           }
           this.$router.push({ name: "ListProject" });
-        } else {
-          this.statusload = false;
+        } else if (res.status == 400) {
           this.responseLogin = true;
         }
+        this.statusload = false;
       });
-
     },
     getUserIDFromJson() {
       console.log(
