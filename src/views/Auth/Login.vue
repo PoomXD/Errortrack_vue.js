@@ -128,29 +128,32 @@ export default {
       }
     },
     clickLogin() {
-      this.cliclStatus = true;
-      this.statusload = true;
-      var data = {
-        username: this.username,
-        password: this.password,
-      };
-      this.$store.dispatch("account/login", data).then((res) => {
-        console.log(res.status);
-        if (res.status == 200) {
-          this.getUserIDFromJson();
-          if (this.checkBoxKeepMeSingnedIn === "true") {
-            localStorage.setItem("username", this.username);
-            localStorage.setItem("password", this.password);
-          } else if (this.checkBoxKeepMeSingnedIn === "false") {
-            localStorage.removeItem("username");
-            localStorage.removeItem("password");
+      if (!this.statusload) {
+        console.log("Click login")
+        this.cliclStatus = true;
+        this.statusload = true;
+        var data = {
+          username: this.username,
+          password: this.password,
+        };
+        this.$store.dispatch("account/login", data).then((res) => {
+          console.log(res.status);
+          if (res.status == 200) {
+            this.getUserIDFromJson();
+            if (this.checkBoxKeepMeSingnedIn === "true") {
+              localStorage.setItem("username", this.username);
+              localStorage.setItem("password", this.password);
+            } else if (this.checkBoxKeepMeSingnedIn === "false") {
+              localStorage.removeItem("username");
+              localStorage.removeItem("password");
+            }
+            this.$router.push({ name: "ListProject" });
+          } else if (res.status == 400) {
+            this.responseLogin = true;
           }
-          this.$router.push({ name: "ListProject" });
-        } else if (res.status == 400) {
-          this.responseLogin = true;
-        }
-        this.statusload = false;
-      });
+          this.statusload = false;
+        });
+      }
     },
     getUserIDFromJson() {
       console.log(
