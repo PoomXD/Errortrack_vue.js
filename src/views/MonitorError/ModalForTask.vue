@@ -14,6 +14,12 @@
             {{ errorDetail.errorDetail }}
           </div>
         </div>
+         <div class="row">
+          <div class="col-3 font-gen text-right">Error param :</div>
+          <div class="col-9 font-detail text-left">
+            {{ errorDetail.errorParameter }}
+          </div>
+        </div>
         <div class="row mt-3">
           <div class="col-3 font-gen text-right">User Assign :</div>
           <div class="col-9 font-detail text-left">
@@ -479,11 +485,12 @@ export default {
     },
     getError(errId) {
       ErrorService.getErrorById(errId).then((result) => {
-        console.log("result = ",result)
+        console.log("result = 555555 ",result)
         this.errorDetail.errorId = result.errorId;
         this.errorDetail.errorDetail = result.errorDetail;
         this.selected = result.errorStatusId;
         this.errorDetail.errorStatusId = result.errorStatusId;
+        this.errorDetail.errorParameter = result.errorParameter;
         // if (result.comment == null) {
         //   this.errorDetail.comment = [];
         // } else {
@@ -884,6 +891,7 @@ export default {
         userAssignment: [],
         errorStatusId: 1,
         comment: [],
+        errorParameter:"",
       },
       pickUsers: [],
       showDropdown: false,
