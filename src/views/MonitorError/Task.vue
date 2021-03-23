@@ -28,16 +28,7 @@
               </p>
             </div>
           </div>
-          <!-- <div class="row">
-            <div class="col-4 text-right">
-              <p class="font-weight-bold font-gen">Service ID :</p>
-            </div>
-            <div class="col-8">
-              <p class="font-weight-light font-detail">
-                {{ serviceDetail.serviceId }}
-              </p>
-            </div>
-          </div> -->
+  
         </div>
         <div class="col-xl-6 col-lg-12">
           <div class="row">
@@ -117,7 +108,7 @@
           :key="index"
         >
           <b-card class="card-list" v-b-modal="`modalPopover${task.errId}`">
-            <b-card-title class="font-gen">{{ task.errDetail }}</b-card-title>
+            <b-card-title class="font-gen max-lines">{{ task.errDetail }}</b-card-title>
             <b-card-text class="cut-text font-weight-light font-detail">
               {{ task.errParameter }}
             </b-card-text>
@@ -186,7 +177,7 @@
             <b-modal
               :ref="`errorModal-${task.errId}`"
               :id="`modalPopover${task.errId}`"
-              :title="task.errDetail"
+              title="Detail"
               size="xl"
               class="font-gen"
               hide-footer
@@ -243,14 +234,7 @@ export default {
         result.userMaintenance.forEach(user => {
           this.serviceDetail.userMaintenance.push(user);
         });
-        // this.projectId = result.projectId;
-        // this.$store.dispatch("header/setQueryLinkHeader", `Task ${this.projectId}`);
-        
-        // ProjectService.getProject(result.projectId).then((res) => {
-        //   this.serviceDetail.projectName = res.projectName;
-        //   this.serviceDetail.projectOwner = res.userOwner;
-        //   this.serviceDetail.userMainten = res.userMaintenance;
-        // });
+
         this.getListError(result.serviceId);
         console.log(this.serviceDetail)
       });
@@ -354,5 +338,13 @@ export default {
 }
 .comment-size-buttom {
   width: 100px;
+}
+.max-lines {
+ overflow: hidden;
+   text-overflow: ellipsis;
+   display: -webkit-box;
+   -webkit-line-clamp: 2; /* number of lines to show */
+   -webkit-box-orient: vertical;
+
 }
 </style>
