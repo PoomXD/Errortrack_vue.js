@@ -78,6 +78,7 @@
                 <div class="col-3 text-right font-gen">Expires Date* :</div>
                 <div class="col-8 font-detail">
                   <b-form-datepicker
+                    data-testid="exp_date"
                     class="font-detail shadow-sm"
                     :class="{
                       'input-invalid': !$v.exp.required && save,
@@ -168,6 +169,7 @@
             <router-link
               :to="{ name: 'ListProject' }"
               class="btn bt-cancel-blue font-no-size-color"
+              id="cancel"
             >
               Cancel
             </router-link>

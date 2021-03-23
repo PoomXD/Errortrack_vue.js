@@ -1,9 +1,20 @@
-{
-    "errorId": 2,
-    "errorDetail": "Error 500 Bad Request",
-    "comment": "[{\"commentId\":5,\"userId\":\"08d8c9bc-ee3c-43e2-8d32-7c9a7f452dbc\",\"commentDetail\":\"test123xxxx กดดดดด\",\"commentDate\":\"2021-03-09T04:17:39.6389629Z\"},{\"commentId\":6,\"userId\":\"08d8c9bc-ee3c-43e2-8d32-7c9a7f452dbc\",\"commentDetail\":\"add\",\"commentDate\":\"2021-03-09T04:37:31.2356551Z\"},{\"commentId\":7,\"userId\":\"08d8c9bc-ee3c-43e2-8d32-7c9a7f452dbc\",\"commentDetail\":\"123 เทสภาษาไทย\",\"commentDate\":\"2021-03-09T04:40:49.5506345Z\"},{\"commentId\":8,\"userId\":\"08d8c9bc-ee3c-43e2-8d32-7c9a7f452dbc\",\"commentDetail\":\"อีกครั้ง\",\"commentDate\":\"2021-03-09T04:41:18.1293672Z\"}]",
-    "errorStatusId": 5,
-    "errorStatusName": "Done",
-    "errorParameter": "parameter",
-    "userAssignment": null
-}
+[
+    {
+        "errorId": "08d8e512-b547-4c47-87d2-fbeaf2c3796a",
+        "errorDetail": "Serialization and deserialization of 'System.Type' instances are not supported and should be avoided since they can lead to security issues. Path: $.TargetSite.DeclaringType.",
+        "comment": "",
+        "errorStatusId": 1,
+        "errorStatusName": "Waiting",
+        "errorParameter": "?st=12ltest",
+        "userAssignment": null
+    },
+    {
+        "errorId": "08d8e777-a2b6-4544-82b7-61e7f16440cb",
+        "errorDetail": "Error 400 Bad Request",
+        "comment": "[{\"commentId\":1,\"userId\":\"08d8e1de-d55a-4c62-8236-a7fa247ab947\",\"userName\":\"Super Piesoft\",\"commentDetail\":\"test\",\"commentDate\":\"2021-03-15T11:04:55.6735232Z\"},{\"commentId\":2,\"userId\":\"08d8e1de-d55a-4c62-8236-a7fa247ab947\",\"userName\":\"Super Piesoft\",\"commentDetail\":\"wertyu\",\"commentDate\":\"2021-03-15T18:05:00.7841611+07:00\"}]",
+        "errorStatusId": 2,
+        "errorStatusName": "To Do",
+        "errorParameter": "parameter",
+        "userAssignment": null
+    }
+]

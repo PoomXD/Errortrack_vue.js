@@ -203,6 +203,7 @@
                       <div class="row">
                         <div class="col">
                           <b-button
+                            data-testid="cancel-btn"
                             class="w-100 bt-cancel-grey py-1"
                             @click="
                               $refs['dropdownEdit' + item.id][0].hide(true)
@@ -311,7 +312,7 @@
           ></b-form-textarea>
           <div class="d-flex justify-content-end">
             <b-button
-              id="cancel"
+              data-testid="cancel-comment"
               class="m-2 comment-size-buttom bt-cancel-grey"
               @click="commentInput = ''"
               >Cancel</b-button

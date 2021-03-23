@@ -53,7 +53,7 @@ describe("Monitor_Detail_Task", () => {
    cy.get('[data-testid="info"]').scrollTo('bottom').wait(200)
    
    cy.get('tbody > tr:nth-child(1) > .text-center > .icon-list > .svg-inline--fa').click()
-   cy.url().should('include','/home/monitor/task?serviceId=1')
+   cy.url().should('include','serviceId=08d8e512-b535-4b76-8288-90fdd358af09')
    cy.get('[data-testid="info"]').scrollTo('bottom').wait(200)
 
    var i = -1;
@@ -80,7 +80,7 @@ describe("Monitor_Detail_Task", () => {
    cy.get('.col-9 > .wrap > .wrap-span > .svg-inline--fa > path').first().click()
    cy.get('.col-9 > #dropdown-member > #dropdown-member__BV_toggle_ > .no-color > .svg-inline--fa').click()
    cy.get('#dropdown-form-member').click().type('Test').clear()
-   cy.get('#dropdown-form-member').click().type('Aristeaz')
+   cy.get('#dropdown-form-member').click().type('Super')
    cy.get('.menu-width > li:nth-child(1) > .dropdown-item').scrollIntoView().click().wait(500)
    cy.get('li > .dropdown-header > .row > .col > .btn').scrollIntoView().click().wait(500)
    cy.get('.row > .col-9 > #dropdown-member > #dropdown-member__BV_toggle_ > .no-color').scrollIntoView().click().wait(500)
@@ -88,16 +88,16 @@ describe("Monitor_Detail_Task", () => {
    cy.get('li > .dropdown-header > .row > .col > .btn').click()
 
    cy.get('#Comment > .card-list').scrollIntoView().type('test3')
-   cy.get('#cancel').click().wait(500)
+   cy.get('[data-testid="cancel-comment"]').click().wait(500)
    cy.get('#Comment > .card-list').scrollIntoView().type('test3')
    cy.get('#savecomment').click().wait(500)
-   cy.get('.pl-5 > #Comment > #comment9 > .d-flex > #Edit').scrollIntoView().click()
-   cy.get('#EditComment9').clear().type('test')
-   cy.get('#Comment > #editComment9 > .card-list > .d-flex > .bt-green').click()
+   cy.get('.pl-5 > #Comment > #comment1 > .d-flex > #Edit').scrollIntoView().click()
+   cy.get('#EditComment1').clear().type('test')
+   cy.get('#Comment > #editComment1 > .card-list > .d-flex > .bt-green').click()
   //  cy.get('.pl-5 > #Comment > #comment5 > .d-flex > #Edit').scrollIntoView().click().click()
   //  cy.get('#EditComment5').clear().type('test123')
   //  cy.get('#Comment > #editComment5 > .card-list > .d-flex > .bt-green').click()
-   cy.get('.pl-5 > #Comment > #comment9 > .d-flex > #Delete').scrollIntoView().first().click()
+   cy.get('.pl-5 > #Comment > #comment1 > .d-flex > #Delete').scrollIntoView().first().click()
    cy.get('.modal-open > .swal2-container > .swal2-popup > .swal2-actions > .swal2-confirm').click()
    cy.get('#modalPopover2 > .modal-dialog > #modalPopover2___BV_modal_content_ > #modalPopover2___BV_modal_header_ > .close').click()
 

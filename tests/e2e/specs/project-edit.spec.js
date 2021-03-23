@@ -56,7 +56,7 @@ describe("Project_Edit", () => {
    cy.get(' .font-detail:nth-child(6) > .py-2 > .del-icon').click()
    cy.get(' .font-detail > .py-2 > .multiselect > .multiselect__tags').click()
    cy.get('.multiselect--active > .multiselect__content-wrapper > .multiselect__content > .multiselect__element')
-   .eq(1).click()
+   .last().click()
   
    cy.get('.table-color-alt > .font-detail > td > .add-icon').click()
 

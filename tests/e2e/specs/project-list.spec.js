@@ -2,12 +2,14 @@ describe("Project_list", () => {
   beforeEach(()=>{
  
     cy.intercept('GET','**/getListErrorStatus',{fixture: 'error-status.json'}).as('GetErrorStatus')
-    // cy.intercept('GET','**/getListErrorByServiceId?',{fixture: 'ErrorStatus.json'}).as('GetErrorStatusByID2')
-
+    cy.intercept('GET','**/getError?errorId=2',{fixture: 'error-get.json'}).as('GetErrorByErrorID')
     cy.intercept('GET','**/getListErrorByServiceId*',{fixture: 'TaskError.json'}).as('TaskError')
+    // cy.intercept('GET','**/updateUserAndErrorStatus',{fixture: 'updateErrorStatus.json'}).as('UpdateError')
+
+    cy.intercept('GET','**/getFiles?*',{fixture: 'getfile.json'}).as('getfile')
 
     cy.intercept('GET','**/getListProjectByOwner?*',{fixture: 'listproject-project.json'}).as('GetProjectByOwner')
-    cy.intercept('GET','**/getListProject?*',{fixture: 'listproject-project.json'}).as('GetListProject')
+    cy.intercept('GET','**/getListProject?*',{fixture: 'listproject-error.json'}).as('GetListProject')
     // cy.intercept('GET','**/getProject',{fixture: 'GetListProject.json'}).as('GetProject')
     cy.intercept('GET','**/getProject?*',{fixture: 'Projectid.json'}).as('GetProject2')
 
@@ -15,6 +17,12 @@ describe("Project_list", () => {
     
     cy.intercept('GET','**/getService?*',{fixture: 'Serviceobj.json'}).as('ServiceID')
     cy.intercept('GET','**/getListService?*',{fixture: 'Service.json'}).as('ServiceByProject')
+
+    cy.intercept('PUT','**/updateUserAndErrorStatus',{statusCode: 200}).as('UpdateError')
+    cy.intercept('PUT','**/addComment',{fixture: 'addComment.json'}).as('addcomment')
+    cy.intercept('PUT','**/updateComment',{fixture: 'updateComment.json'}).as('updatecomment')
+    cy.intercept('get','**/getComment*',{fixture: 'comment-get.json'}).as('getcomment')
+    cy.intercept('PUT','**/deleteComment',{ statusCode: 200}).as('deletecomment')
 
     cy.customlogin();
   })

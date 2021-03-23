@@ -49,7 +49,7 @@ describe("Monitor_List", () => {
     cy.get('#project-3').should('not.exist')
 
     cy.get('[data-testid="input-search"]').clear().type('project 1')
-    cy.get('#project-0 > a > .card-list > .table-grid > tr > .float-left > .row > [data-testid="Member"]').should('have.length','8')
+    cy.get('#project-0 > a > .card-list > .table-grid > tr > .float-left > .row > [data-testid="Member"]').should('have.length','6')
     cy.get('#project-0').click()
    
     cy.get('tbody > tr:nth-child(1) > .text-center > .icon-list > .svg-inline--fa').click().wait(2000)

@@ -1,7 +1,32 @@
 
     {
-        "serviceId": 1,
-        "projectId": 1,
-        "serviceName": "service1",
-        "createDate": "2021-02-05T17:28:28.568195"
+        "serviceId": "08d8e512-b535-4b76-8288-90fdd358af09",
+        "projectId": "08d8e512-6dba-4ef8-8ec1-6a3687e82f42",
+        "serviceName": "/Test",
+        "createDate": "2021-03-12T11:52:58.526161",
+        "projectName": "Project",
+        "userOwner": [
+            {
+                "userId": "08d8e1de-d55a-4c62-8236-a7fa247ab947",
+                "name": "Super Piesoft"
+            },
+            {
+                "userId": "08d8e1de-d597-45a4-86af-8b8f096b4407",
+                "name": "Administrator Piesoft"
+            }
+        ],
+        "userMaintenance": [
+            {
+                "userId": "08d8e521-d729-40ce-8762-6c09165cdd55",
+                "name": "Princess Ariel"
+            },
+            {
+                "userId": "08d8e521-d1e8-453c-8219-b91ecdd12bcf",
+                "name": "Princess Jasmine"
+            },
+            {
+                "userId": "08d8e521-c915-4cf3-83cc-fecb416c0d35",
+                "name": "Princess Aurora"
+            }
+        ]
     }
