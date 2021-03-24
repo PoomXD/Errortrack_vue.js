@@ -4,20 +4,13 @@ describe("Monitor_Detail_Task", () => {
     cy.intercept('GET','**/getListErrorStatus',{fixture: 'error-status.json'}).as('GetErrorStatus')
     cy.intercept('GET','**/getError?errorId=2',{fixture: 'error-get.json'}).as('GetErrorByErrorID')
     cy.intercept('GET','**/getListErrorByServiceId*',{fixture: 'TaskError.json'}).as('TaskError')
-    // cy.intercept('GET','**/updateUserAndErrorStatus',{fixture: 'updateErrorStatus.json'}).as('UpdateError')
-
     cy.intercept('GET','**/getFiles?*',{fixture: 'getfile.json'}).as('getfile')
-
     cy.intercept('GET','**/getListProjectByOwner?*',{fixture: 'listproject-project.json'}).as('GetProjectByOwner')
     cy.intercept('GET','**/getListProject?*',{fixture: 'listproject-error.json'}).as('GetListProject')
-    // cy.intercept('GET','**/getProject',{fixture: 'GetListProject.json'}).as('GetProject')
     cy.intercept('GET','**/getProject?*',{fixture: 'Projectid.json'}).as('GetProject2')
-
     cy.intercept('GET','**/getListUser',{fixture: 'getlistUser.json'}).as('ListUser')
-    
     cy.intercept('GET','**/getService?*',{fixture: 'Serviceobj.json'}).as('ServiceID')
     cy.intercept('GET','**/getListService?*',{fixture: 'Service.json'}).as('ServiceByProject')
-
     cy.intercept('PUT','**/updateUserAndErrorStatus',{statusCode: 200}).as('UpdateError')
     cy.intercept('PUT','**/addComment',{fixture: 'addComment.json'}).as('addcomment')
     cy.intercept('PUT','**/updateComment',{fixture: 'updateComment.json'}).as('updatecomment')
@@ -30,76 +23,60 @@ describe("Monitor_Detail_Task", () => {
 
     cy.visit('/home/project/list')
 
-   //-------------Check_Card------------//
-
-  //  visible = false;
-  //  for (i = 0; i < 6; i++) {
-  //   cy.get('[data-testid="card_contrain"]').then($card => {
-
-  //     if($card.is(':visible')){
-  //         visible = true
-  //     }else{
-  //         cy.reload().log('reload').wait(1000)
-  //       }     
-  //     });
-  //     if(visible = true){
-  //       break; 
-  //    }
-  //   }
-   
    cy.get('[data-testid="input-search"]').clear().type('project 1')
    cy.get('#project-0').click()
 
    cy.get('[data-testid="info"]').scrollTo('bottom').wait(200)
    
-   cy.get('tbody > tr:nth-child(1) > .text-center > .icon-list > .svg-inline--fa').click()
+   cy.get('[data-testid="icon-list"]').eq(0).click()
    cy.url().should('include','serviceId=08d8e512-b535-4b76-8288-90fdd358af09')
    cy.get('[data-testid="info"]').scrollTo('bottom').wait(200)
 
+
+   //------------check-box--------------//
    var i = -1;
-   cy.get('#checkbox-group-1 > .custom-control').each(()=>{
-
+   cy.get('[data-testid="checkbox-group1"]').find('.custom-control').each(()=>{
     i = i + 1;
-    cy.get('#checkbox-group-1 > .custom-control').eq(i).click().wait(100)
-
+    cy.get('[data-testid="checkbox-group1"]').find('.custom-control').eq(i).click().wait(100)
    })
-   
-   cy.get('#checkbox-group-1 > .custom-control').each(()=>{
-   cy.get('#checkbox-group-1 > .custom-control').eq(i--).click().wait(100)
-
+   cy.get('[data-testid="checkbox-group1"]').find('.custom-control').each(()=>{
+   cy.get('[data-testid="checkbox-group1"]').find('.custom-control').eq(i--).click().wait(100)
    })
+
+   //----------check-card---------------//
    cy.get('[data-testid="info"]').scrollTo('bottom').wait(500)
-   cy.get('.row > .col-xl-3:nth-child(1) > .card > .card-body').click()
+   cy.get('[data-testid="Error-card"]').eq(0).click()
    
-   cy.get('.row > .col-9 > #dropdown-member > #dropdown-member__BV_toggle_ > .no-color').scrollIntoView().click().wait(500)
-   cy.get('.menu-width > li:nth-child(1) > .dropdown-item').scrollIntoView().click().wait(500)
-   cy.get('li > .dropdown-header > .row > .col > .btn').click()
-   cy.get('.row > .col-9 > #dropdown-member > #dropdown-member__BV_toggle_ > .no-color').scrollIntoView().click().wait(500)
-   cy.get('.menu-width > li:nth-child(4) > .dropdown-item').scrollIntoView().click().wait(500)
-   cy.get('li > .dropdown-header > .row > .col > .btn').click()
-   cy.get('.col-9 > .wrap > .wrap-span > .svg-inline--fa > path').first().click()
-   cy.get('.col-9 > #dropdown-member > #dropdown-member__BV_toggle_ > .no-color > .svg-inline--fa').click()
-   cy.get('#dropdown-form-member').click().type('Test').clear()
-   cy.get('#dropdown-form-member').click().type('Super')
-   cy.get('.menu-width > li:nth-child(1) > .dropdown-item').scrollIntoView().click().wait(500)
-   cy.get('li > .dropdown-header > .row > .col > .btn').scrollIntoView().click().wait(500)
-   cy.get('.row > .col-9 > #dropdown-member > #dropdown-member__BV_toggle_ > .no-color').scrollIntoView().click().wait(500)
-   cy.get('.menu-width > li:nth-child(1) > .dropdown-item').scrollIntoView().click().wait(500)
-   cy.get('li > .dropdown-header > .row > .col > .btn').click()
+   //----------check-User---------------//
+   cy.get('[data-testid="dropdown-member"]').scrollIntoView().click().wait(200)
+   cy.get('[data-testid="dropdown-item"]').eq(0).scrollIntoView().click().wait(200)
+   cy.get('[data-testid="close-model"]').click()
+   cy.get('[data-testid="dropdown-member"]').scrollIntoView().click().wait(200)
+   cy.get('[data-testid="dropdown-item"]').eq(3).scrollIntoView().click().wait(200)
+   cy.get('[data-testid="close-model"]').click()
+   cy.get('[data-testid="delete-user"]').first().click()
+   cy.get('[data-testid="dropdown-member"]').click()
+   cy.get('[data-testid="Search-member"]').click().type('Test').clear()
+   cy.get('[data-testid="Search-member"]').click().type('Super')
+   cy.get('[data-testid="dropdown-item"]').eq(0).scrollIntoView().click().wait(200)
+   cy.get('[data-testid="close-model"]').scrollIntoView().click().wait(200)
+   cy.get('[data-testid="dropdown-member"]').scrollIntoView().click().wait(200)
+   cy.get('[data-testid="dropdown-item"]').eq(0).scrollIntoView().click().wait(200)
+   cy.get('[data-testid="close-model"]').click()
 
+   //----------check-Comment---------------//
    cy.get('#Comment > .card-list').scrollIntoView().type('test3')
    cy.get('[data-testid="cancel-comment"]').click().wait(500)
    cy.get('#Comment > .card-list').scrollIntoView().type('test3')
-   cy.get('#savecomment').click().wait(500)
-   cy.get('.pl-5 > #Comment > #comment1 > .d-flex > #Edit').scrollIntoView().click()
+   cy.get('[data-testid="save-comment"]').click().wait(500)
+   cy.get('#comment1').find('[data-testid="Edit"]').scrollIntoView().click()
    cy.get('#EditComment1').clear().type('test')
-   cy.get('#Comment > #editComment1 > .card-list > .d-flex > .bt-green').click()
-  //  cy.get('.pl-5 > #Comment > #comment5 > .d-flex > #Edit').scrollIntoView().click().click()
-  //  cy.get('#EditComment5').clear().type('test123')
-  //  cy.get('#Comment > #editComment5 > .card-list > .d-flex > .bt-green').click()
-   cy.get('.pl-5 > #Comment > #comment1 > .d-flex > #Delete').scrollIntoView().first().click()
+   cy.get('#editComment1 > .card-list').find('[data-testid="Save-edit"]').click()
+   cy.get('#comment1').find('[data-testid="Delete"]').scrollIntoView().first().click()
    cy.get('.modal-open > .swal2-container > .swal2-popup > .swal2-actions > .swal2-confirm').click()
-   cy.get('#modalPopover2 > .modal-dialog > #modalPopover2___BV_modal_content_ > #modalPopover2___BV_modal_header_ > .close').click()
+
+   //----------close---------------//
+   cy.get('.close').click()
 
    cy.get('[data-testid="info"]').scrollTo('bottom').wait(500)
   

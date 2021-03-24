@@ -107,6 +107,7 @@
                     </td>
                     <td>
                       <font-awesome-icon
+                        data-testid="add-icon"
                         class="add-icon"
                         :icon="['fas', 'plus-circle']"
                         @click="addUserMaintenance()"
@@ -122,6 +123,7 @@
                     <td class="float-left py-2">{{ item.name }}</td>
                     <td class="py-2">
                       <font-awesome-icon
+                        data-testid="del-icon"
                         class="del-icon"
                         :icon="['fas', 'trash-alt']"
                         @click="delUserMaintenance(item)"

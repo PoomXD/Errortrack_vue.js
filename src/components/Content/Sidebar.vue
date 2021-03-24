@@ -6,11 +6,11 @@
     <!-- <router-link to="/">Main</router-link> -->
     <div class="mt-4" >
     <ul class="nav font-no-size-color">
-      <li><router-link :to="{name : 'MonitorList' }"
+      <li data-testid="side-menu1"><router-link :to="{name : 'MonitorList' }"
         :class="{'router-link-active': monitor == true}">
           <font-awesome-icon :icon="['fas', 'desktop']"/>  Monitor Error
         </router-link></li>
-      <li><router-link :to="{name : 'ListProject' }" 
+      <li data-testid="side-menu2"><router-link :to="{name : 'ListProject' }" 
         :class="{'router-link-active': project == true}">
           <font-awesome-icon :icon="['far', 'check-square']"/>  Project Management
         </router-link></li>

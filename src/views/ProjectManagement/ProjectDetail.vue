@@ -214,6 +214,7 @@
               query: { serviceId: data.item.Service_ID },
             }"
             style="text-decoration: underline"
+            data-testid="icon-list"
             class="icon-list"
           >
             <font-awesome-icon :icon="['fas', 'search']" />

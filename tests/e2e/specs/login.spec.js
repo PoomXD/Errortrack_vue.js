@@ -1,12 +1,12 @@
-// https://docs.cypress.io/api/introduction/api.html
-
 describe("Sign_in", () => {
    it("Sign in", () => {
 
+   //------------check-redirect(Before-Login)-----------//
     cy.visit('/login')
     cy.visit('/project/list').url().should('include','/login/')
     cy.visit('/home/monitor/list').url().should('include','/login/')
- 
+      
+    //-----------check-alert-incorrect-----------//
     cy.get('.w-100').click()
     cy.get('[data-testid="alert-incorrect"]').should('be.visible')
 
@@ -19,12 +19,14 @@ describe("Sign_in", () => {
     cy.get('[data-testid="username"]').clear()
     cy.get('.w-100').click()
     cy.get('[data-testid="alert-incorrect"]').should('be.visible')
-
+      
+    //------------login-in---------------//
     cy.wait(200)
-    cy.get('[data-testid="username"]').clear().type('GameKanna')
+    cy.get('[data-testid="username"]').type('GameKanna')
     cy.get('[data-testid="checkbox-1"]').check({force: true})
     cy.get('.w-100').click()
 
+    //------------check-redirect(after-Login)-----------//
     cy.url().should('include','/home/project/list')
     cy.visit('/login')
     .url().should('include','/home/project/list').wait(500)

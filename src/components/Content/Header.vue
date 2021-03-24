@@ -4,6 +4,7 @@
       <b-col class="col-xl col-lg"
         ><div class="d-flex justify-content-start">
           <div
+            data-testid="navi"
             class="p-2 font-no-size-color"
             v-for="(val, index) in header"
             :key="index"

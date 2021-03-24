@@ -34,7 +34,7 @@
                 :text="getTextAvatar(user.userId)"
               >
               </b-avatar>
-              <span class="wrap-span" @click="delUser(user.userId)">
+              <span data-testid="delete-user" class="wrap-span" @click="delUser(user.userId)">
                 <font-awesome-icon :icon="['fas', 'times']" />
               </span>
               <b-popover
@@ -56,6 +56,7 @@
                 'show-dropdown': showDropdown == false,
               }"
               id="dropdown-member"
+              data-testid="dropdown-member"
             >
               <template #button-content>
                 <button class="no-color" @click="show()">
@@ -66,7 +67,7 @@
                 <div class="row">
                   <div class="col font-topic">Add User Assign</div>
                   <div class="col text-right">
-                    <b-button class="no-color" @click="closeDropDown()">
+                    <b-button data-testid="close-model" class="no-color" @click="closeDropDown()">
                       x
                     </b-button>
                   </div>
@@ -80,12 +81,14 @@
                   <b-form-input
                     v-model="filterText"
                     id="dropdown-form-member"
+                    data-testid="Search-member"
                     placeholder="Search Member"
                   ></b-form-input>
 
                   <b-dropdown-item disabled> User Assign </b-dropdown-item>
                   <div class="menu-width">
                     <b-dropdown-item
+                      data-testid="dropdown-item"
                       href="#"
                       @click="pick(userInList.userId)"
                       v-for="(userInList, i) in filteredUsers"
@@ -324,6 +327,7 @@
               >Cancel</b-button
             >
             <b-button
+              data-testid="save-comment"
               id="savecomment"
               class="m-2 comment-size-buttom bt-green"
               @click="saveComment()"
@@ -367,6 +371,7 @@
           >
             <a
               class="fontColor-comment mr-4 cursor-pointer font-detail"
+              data-testid="Edit"
               id="Edit"
               @click="
                 editComment(
@@ -379,6 +384,7 @@
               Edit
             </a>
             <a
+              data-testid="Delete"
               id="Delete"
               class="fontColor-comment cursor-pointer font-detail"
               @click="delComment(message.commentId)"
@@ -416,6 +422,7 @@
 
             <div class="d-flex justify-content-end">
               <b-button
+                data-testid="Cancel-edit"
                 class="m-2 comment-size-buttom bt-cancel-grey"
                 @click="
                   cancelEditComment(
@@ -426,6 +433,7 @@
                 >Cancel</b-button
               >
               <b-button
+                data-testid="Save-edit"
                 class="m-2 comment-size-buttom bt-green"
                 @click="editMyComment(message.commentId)"
                 >Save</b-button
