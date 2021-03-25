@@ -108,10 +108,10 @@
           v-for="(task, index) in filteredRows"
           :key="index"
         >
-          <b-card data-testid="Error-card" class="card-list" v-b-modal="`modalPopover${task.errId}`">
-            <b-card-title class="font-gen max-lines">{{ task.errDetail }}</b-card-title>
+          <b-card class="card-list" v-b-modal="`modalPopover${task.errId}`">
+            <b-card-title class="font-gen max-lines">Error {{ task.errStatusCode }}</b-card-title>
             <b-card-text class="cut-text font-weight-light font-detail">
-              {{ task.errParameter }}
+              {{ task.errDetail }}
             </b-card-text>
             <div class="d-flex justify-content-end">
               <div
@@ -175,10 +175,11 @@
                 </p>
               </div>
             </div>
+            
             <b-modal
               :ref="`errorModal-${task.errId}`"
               :id="`modalPopover${task.errId}`"
-              title="Detail"
+              :title="`Error ${task.errStatusCode}`"
               size="xl"
               class="font-gen"
               hide-footer
@@ -257,6 +258,7 @@ export default {
             errDetail: res.errorDetail,
             errParameter: res.errorParameter,
             errStatus: res.errorStatusName,
+            errStatusCode: res.errorStatusCode,
           };
           this.listError.push(err);
         });

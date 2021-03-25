@@ -43,7 +43,7 @@ class ProjectService {
         "content-type": "application/json",
       },
     };
-
+    console.log(config);
     const response = await httpClient(config);
 
     return response.data;
