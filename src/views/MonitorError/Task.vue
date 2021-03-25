@@ -108,7 +108,7 @@
           v-for="(task, index) in filteredRows"
           :key="index"
         >
-          <b-card class="card-list" v-b-modal="`modalPopover${task.errId}`">
+          <b-card data-testid="Error-card" class="card-list" v-b-modal="`modalPopover${task.errId}`">
             <b-card-title class="font-gen max-lines">Error {{ task.errStatusCode }}</b-card-title>
             <b-card-text class="cut-text font-weight-light font-detail">
               {{ task.errDetail }}
