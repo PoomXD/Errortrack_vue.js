@@ -75,6 +75,7 @@
                         </div>
                       </div> -->
                       <div
+                        data-testid="Member"
                         v-for="(user, i) in project.projectUser"
                         :key="`user-${index}-${i}`"
                       >

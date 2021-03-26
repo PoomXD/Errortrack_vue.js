@@ -51,6 +51,7 @@
                 <div class="col-3 text-right font-gen">Project Owner* :</div>
                 <div class="col-8 font-detail">
                   <multiselect
+                    data-testid="multiselect-owner"
                     id="Project_Owner"
                     class="shadow-sm multiselect"
                     :class="{
@@ -125,6 +126,7 @@
                     <td></td>
                     <td class="py-2">
                       <multiselect
+                      data-testid="multiselect-member"
                         class="multiselect"
                         v-model="value"
                         :options="listUserMaintenance"
@@ -178,7 +180,10 @@
           </div>
           <div class="col text-left pl-4">
             <!-- <router-link :to="{ name: 'ListProject' }"> -->
-            <b-button type="submit" class="bt-blue font-no-size-color">
+            <b-button 
+             type="submit"
+             data-testid="save-btn"
+             class="bt-blue font-no-size-color">
               Save
             </b-button>
             <!-- </router-link> -->

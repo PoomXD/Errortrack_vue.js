@@ -40,26 +40,26 @@ describe("Project_Edit", () => {
    cy.get('[data-testid="del-icon"]').eq(3).click()
 
    //------------add-member---------------//
-   cy.get(' .font-detail > .py-2 > .multiselect > .multiselect__tags').click()
-   cy.get('.multiselect--active > .multiselect__content-wrapper > .multiselect__content > .multiselect__element')
+   cy.get('[data-testid="multiselect-owner"]').click()
+   cy.get('[data-testid="multiselect-owner"]').find('.multiselect__element')
    .last().click()
    cy.get('[data-testid="add-icon"]').click()
 
    //------------add-Owner---------------//
-   cy.get('.col-lg-12 > .row > .col-8 > .multiselect > .multiselect__select').click()
-   cy.get('.shadow-sm > .multiselect__content-wrapper > .multiselect__content > .multiselect__element > .multiselect__option--highlight').click()
+   cy.get('[data-testid="multiselect-owner"]').click()
+   cy.get('[data-testid="multiselect-owner"]').find('.multiselect__option--highlight').click()
    
    //------------remove-Owner-------------//
-   cy.get('.col-lg-12 > .row > .col-8 > .multiselect > .multiselect__select').click()
-   cy.get('.shadow-sm > .multiselect__content-wrapper > .multiselect__content > .multiselect__element > .multiselect__option--highlight').click()
+   cy.get('[data-testid="multiselect-owner"]').click()
+   cy.get('[data-testid="multiselect-owner"]').find('.multiselect__option--highlight').click()
   
    //---------typeing-test(member)--------------//
-   cy.get('.table-color-alt > .font-detail > .py-2 > .multiselect > .multiselect__tags').click()
-   cy.get('.font-detail > .py-2 > .multiselect > .multiselect__tags > .multiselect__input').type('typeing test')
+   cy.get('[data-testid="multiselect-member"]').click()
+   cy.get('[data-testid="multiselect-member"]').find('.multiselect__input').type('typeing test')
     
    //---------typeing-test(Owner)--------------//
-   cy.get('.col-lg-12 > .row > .col-8 > .multiselect > .multiselect__select').click()
-   cy.get('.row > .col-8 > .multiselect > .multiselect__tags > .multiselect__input').type('typeing test')
+   cy.get('[data-testid="multiselect-owner"]').click()
+   cy.get('[data-testid="multiselect-owner"]').find('.multiselect__input').type('typeing test')
     
     });
  });

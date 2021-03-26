@@ -45,7 +45,7 @@
                 <div class="col-3 text-right font-gen">
                   <label class="form__label">Project Owner* :</label>
                 </div>
-                <div class="col-8 font-detail">
+                <div data-testid="multiselect-owner" class="col-8 font-detail">
                   <multiselect
                     class="shadow-sm multiselect"
                     :class="{
@@ -96,6 +96,7 @@
                     <td></td>
                     <td class="py-2">
                       <multiselect
+                        data-testid="multiselect-member"
                         class="multiselect"
                         v-model="value"
                         :options="listUserMaintenance"
